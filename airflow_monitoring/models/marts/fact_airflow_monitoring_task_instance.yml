@@ -10,7 +10,7 @@ models:
           - unique
           - not_null
 
-      - name: task_fk
+      - name: task_fk 
         description: "Identificador das tarefas"
         tests:
           - relationships:

@@ -6,3 +6,4 @@
 {% macro default__cast_as_date(column) -%}
    cast({{ column }} as date) 
 {%- endmacro %}
+

@@ -8,7 +8,7 @@ models:
         description: "Chave surrogate key. Composta por: task_id e dag_id"
         tests:
           - unique
-          - not_null
+          - not_null 
             
       - name: task_id
         description: "Identificador da tarefa."

@@ -19,3 +19,4 @@ with
     )
 select *
 from stg_dag_with_sk
+

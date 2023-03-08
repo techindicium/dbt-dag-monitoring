@@ -11,7 +11,7 @@ models:
           - not_null
             
       - name: dag_fk
-        description: "Identificador das DAGs."
+        description: "Identificador das DAGs." 
         tests: 
           - relationships:
               to: ref('dim_airflow_monitoring_dag')
