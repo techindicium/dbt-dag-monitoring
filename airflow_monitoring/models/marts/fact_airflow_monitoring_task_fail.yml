@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: fact_airflow_monitoring_task_fail
+    description: "Tabela de eventos das falhas das tarefas do Airflow"
+    columns:
+      - name: task_fail_sk
+        description: "Chave surrogate key. Composta por: task_fail_id, execution_end_date e execution_start_date"
+        tests:
+          - unique
+          - not_null
+            
+      - name: task_fk
+        description: "Identificador unico da execução das tarefas."
+        tests:
+          - relationships:
+              to: ref('dim_airflow_monitoring_task')
+              field: task_sk
+
+      - name: dag_fk
+        description: "Identificador das DAGs."
+        tests:
+          - relationships:
+              to: ref('dim_airflow_monitoring_dag')
+              field: dag_sk
+
+      - name: generated_date
+        description: "Data de execução da DAG."
+        tests:
+          - relationships:
+              to: ref('dim_datas')
+              field: generated_date
+
+      - name: execution_start_date
+        description: "Data e hora em que iniciou a execução da DAG."
+
+      - name: execution_end_date
+        description: "Data e hora em que finalizou a execução da DAG."
+
+      - name: duration
+        description: "Tempo de duração da execução em segundos."

@@ -1,0 +1,151 @@
+version: 2
+
+sources:
+  - name: raw_airflow_monitoring
+    description: "Dados brutos retirados do Airflow para análise de monitoramento do Airflow."
+    schema: raw_airflow_monitoring
+    tables:
+      - name: dag_run
+        description: "Tabela que contem dados das execuções das DAGs do Airflow."
+        columns:
+          - name: id
+            description: "Identificador único da tabela."
+            tests:
+              - not_null
+              - unique
+
+          - name: dag_id
+            description: "Identificador da dag run."
+            tests:
+              - not_null
+
+          - name: execution_date
+            description: "Data de execução."
+
+          - name: state
+            description: "O estado da DAG run."
+
+          - name: external_trigger
+            description: "Aponta se a execução da DAG foi acionada externamente (True / False)."
+
+          - name: start_date
+            description: "Data e hora em que iniciou a execução da DAG."
+
+          - name: end_date
+            description: "Data e hora em que encerrou a execução da DAG."
+
+          - name: run_type
+            description: "Tipo de DAG run."
+
+      - name: task_instance
+        description: "Tabela que contem dados das instâncias das tarefas do Airflow."
+        columns:
+          - name: task_id
+            description: "Identificador da tarefa executada."
+            tests:
+              - not_null
+
+          - name: dag_id
+            description: "Identificador da dag."
+            tests:
+              - not_null
+          
+          - name: run_id
+            description: "Identificador da execução"
+
+          - name: start_date
+            description: "Data e hora inicio da execução."
+
+          - name: end_date
+            description: "Data e hora final da execução."
+
+          - name: duration
+            description: "Duração da execução em segundos."
+
+          - name: state
+            description: "O estado da execução da tarefa."
+
+          - name: try_number
+            description: "Número de tentativas de execução."
+
+          - name: hostname
+            description: "Hostname da tarefa."
+
+          - name: pool
+            description: "O pool do Airflow no qual a tarefa deve ser executada."
+
+          - name: priority_weight
+            description: "Prioridade da tarefa."
+
+          - name: operator
+            description: "Operador modelo da tarefa."
+
+          - name: queue
+            description: "Fileira de tarefas."
+
+          - name: pool_slots
+            description: "Quantidade de pool slots."
+
+          - name: map_index
+            description: "Índice de mapeamento."
+
+      - name: task_fail
+        description: "Tabela que contem dados das tarefas com falhas do Airflow."
+        columns:
+          - name: id
+            description: "Identificador único da tabela."
+            tests:
+              - not_null
+              - unique
+
+          - name: task_id
+            description: "Identificador da tarefa."
+            tests:
+              - not_null
+
+          - name: dag_id
+            description: "Identificador da dag."
+            tests:
+              - not_null
+
+          - name: start_date
+            description: "Data e hora inicio da execução."
+
+          - name: end_date
+            description: "Data e hora final da execução."
+
+          - name: duration
+            description: "Duração da execução em segundos."
+
+          - name: map_index
+            description: "Índice de mapeamento."
+
+      - name: dag
+        description: "Tabela que contem informações sobre as DAGs do Airflow."
+        columns:
+          - name: dag_id
+            description: "Identificador único da tabela."
+            tests:
+              - not_null
+              - unique
+
+          - name: is_paused
+            description: "Se a DAG está pausada."
+
+          - name: is_active
+            description: "Se a DAG está ativa."
+
+          - name: description
+            description: "Descrição sobre a DAG."
+
+          - name: fileloc
+            description: "Caminho do arquivo que precisa ser importado para carregar este DAG."
+
+          - name: owners
+            description: "Proprietário da DAG."
+
+          - name: timetable_description
+            description: "Descrição da tabela de agendamento"
+
+          - name: ind_extraction_date
+            description: "Data de extração da tabela"
