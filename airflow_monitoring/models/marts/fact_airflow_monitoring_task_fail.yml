@@ -13,7 +13,7 @@ models:
       - name: task_fk
         description: "Identificador unico da execução das tarefas."
         tests:
-          - relationships: 
+          - relationships:
               to: ref('dim_airflow_monitoring_task')
               field: task_sk
 

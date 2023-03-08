@@ -8,7 +8,7 @@ with
     , dim_datas as (
         select generated_date
         from {{ ref('dim_datas') }}
-    )
+    ) 
     , stg_dag_run as (
         select 
             dag_run_id

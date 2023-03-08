@@ -8,4 +8,4 @@ config-version: 2
 target-path: "target"
 clean-targets: ["target", "dbt_modules", "dbt_packages"]
 macro-paths: ["macros"]
-log-path: "logs"
+log-path: "logs" 

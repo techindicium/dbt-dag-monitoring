@@ -14,7 +14,7 @@ with
     )
     , dim_datas as (
         select generated_date
-        from {{ ref('dim_datas') }}
+        from {{ ref('dim_datas') }} 
     )
     , stg_task_instance as (
         select 

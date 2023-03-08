@@ -8,7 +8,7 @@ with
             , is_paused
             , is_active
             , fileloc
-            , owners
+            , owners 
         from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_dag') }}
     )
     , stg_dag_with_sk as (

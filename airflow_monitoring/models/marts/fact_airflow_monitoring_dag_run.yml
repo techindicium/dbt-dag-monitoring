@@ -10,7 +10,7 @@ models:
           - unique
           - not_null
             
-      - name: dag_fk
+      - name: dag_fk 
         description: "Identificador das DAGs."
         tests: 
           - relationships:
