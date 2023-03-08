@@ -10,7 +10,7 @@ with
             task_sk as task_fk
             , task_id
             , dag_id
-        from {{ ref('dim_airflow_monitoring_task') }} 
+        from {{ ref('dim_airflow_monitoring_task') }}
     )
     , dim_datas as (
         select generated_date

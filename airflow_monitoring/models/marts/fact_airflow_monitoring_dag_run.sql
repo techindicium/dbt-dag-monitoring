@@ -9,7 +9,7 @@ with
         select generated_date
         from {{ ref('dim_datas') }}
     )
-    , stg_dag_run as ( 
+    , stg_dag_run as (
         select 
             dag_run_id
             , dag_id

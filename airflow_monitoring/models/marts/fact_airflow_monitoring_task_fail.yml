@@ -7,7 +7,7 @@ models:
       - name: task_fail_sk
         description: "Chave surrogate key. Composta por: task_fail_id, execution_end_date e execution_start_date"
         tests:
-          - unique
+          - unique 
           - not_null
             
       - name: task_fk

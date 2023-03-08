@@ -7,7 +7,7 @@ with
             , operator
             , task_pool
             , map_index
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance') }} 
+        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance') }}
     )   
     , stg_task_fail as (
         select distinct 

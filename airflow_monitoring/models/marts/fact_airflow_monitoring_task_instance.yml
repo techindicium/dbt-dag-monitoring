@@ -8,7 +8,7 @@ models:
         description: "Chave surrogate key. Composta por: task_instance_id, execution_end_date e execution_start_date"
         tests:
           - unique
-          - not_null
+          - not_null 
 
       - name: task_fk 
         description: "Identificador das tarefas"
