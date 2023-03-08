@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: dim_airflow_monitoring_dag
+    description: "Tabela de dimensão das DAGs do Airflow"
+    columns:
+      - name: 'dag_sk'
+        description: "Chave surrogate key. Composta por: dag_id"
+        tests:
+          - unique
+          - not_null
+            
+      - name: dag_id
+        description: "Identificador único da tabela source."
+        tests:
+          - unique
+          - not_null
+
+      - name: dag_description
+        description: "Descrição sobre a DAG."
+
+      - name: dag_frequency
+        description: "Frequência com o que as DAGs são executadas."
+
+      - name: timetable_description
+        description: "Agendamento da execução das DAGs."
+
+      - name: is_paused
+        description: "Se a DAG está em pausa"
+
+      - name: is_active
+        description: "Se a DAG está ativa."
+
+      - name: fileloc
+        description: "Caminho do arquivo que precisa ser importado para carregar este DAG. `codigo_atributo` na source: 11"
+
+      - name: owners
+        description: "Proprietário da DAG." 
