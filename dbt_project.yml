@@ -1,4 +1,4 @@
-name: 'dbt-airflow-monitoring'
+name: 'dbt_airflow_monitoring'
 version: '0.1.0'
 
 require-dbt-version: [">=1.0.0", "<2.0.0"]
