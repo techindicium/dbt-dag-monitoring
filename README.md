@@ -11,6 +11,9 @@ New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/bu
 dbt version
 * ```dbt version >= 1.0.0```
 
+dbt_utils package. Read more about them [here](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/).
+* ```dbt-labs/dbt_utils version: 0.8.0``` 
+
 ## Installation
 
 1. Include this package in your `packages.yml` file.
