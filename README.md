@@ -1,22 +1,31 @@
 # Airflow Monitoring
-This document contains the dbt package for monitoring airflow of DAGs and tasks, prepared by Indicium. Here you will find the necessary steps to install the package in your project. We recommend this [tutorial](https://docs.getdbt.com/docs/build/packages#how-do-i-add-a-package-to-my-project).
+
+This package allows you to easily monitor your airflow DAGs, providing helpful info to improve your data pipeline.
 
 
-## How to add a package in the project?
-1. Use packages.yml file from your dbt project. This should be at the same level as your dbt_project.yml file.
-2. Specify the package(s) you wish to add using one of the supported syntaxes, for example:
+# :running: Quickstart
 
-```
+New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/building-a-dbt-project/package-management/).
+
+## Requirements
+dbt version
+* ```dbt version >= 1.0.0```
+
+## Installation
+
+1. Include this package in your `packages.yml` file.
+```yaml
 packages:
   - git: "git@github.com:techindicium/dbt-airflow-monitoring.git" # insert git SSH URL
 ```
 
-## Installing package
-To install the packages described in the packages.yml file. To run the dbt_airflow_monitoring package you must use the command:
+2. Run `dbt deps` to install the package.
 
-`dbt deps`
 
-The dbt_airflow folder will be installed in dbt_packages folder and ready to run in your project. To run the package, the models must be documented in your project file (dbt_project.yml), for example:
+
+## Configuring models package
+
+The package's models can be configured in your `dbt_project.yml` by specifying the package under `models`.
 
 ```
 models:
