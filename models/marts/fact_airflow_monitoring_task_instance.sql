@@ -12,9 +12,9 @@ with
             , dag_id
         from {{ ref('dim_airflow_monitoring_task') }}
     )
-    , dim_datas as (
-        select generated_date
-        from {{ ref('dim_datas') }} 
+    , util_days as (
+        select * 
+        from {{ ref('dbt_utils_day') }}
     )
     , stg_task_instance as (
         select 
@@ -39,7 +39,7 @@ with
             , stg_task_instance.run_id
             , dim_dag.dag_fk
             , dim_task.task_fk
-            , dim_datas.generated_date
+            , util_days.date_day
             , stg_task_instance.execution_start_date
             , stg_task_instance.execution_end_date
             , stg_task_instance.duration
@@ -51,7 +51,7 @@ with
         left join dim_task on 
             stg_task_instance.task_id = dim_task.task_id
             and stg_task_instance.dag_id = dim_task.dag_id
-        left join dim_datas on stg_task_instance.execution_date = dim_datas.generated_date
+        left join util_days on stg_task_instance.execution_date = util_days.date_day
     )
     , surrogate_key as (
         select 
@@ -62,7 +62,7 @@ with
                 , 'run_id']) }} as task_instance_sk
             , dag_fk
             , task_fk
-            , generated_date
+            , util_days as generated_date
             , execution_start_date
             , execution_end_date
             , duration

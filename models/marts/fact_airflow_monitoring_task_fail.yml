@@ -28,8 +28,8 @@ models:
         description: "Data de execução da DAG."
         tests:
           - relationships:
-              to: ref('dim_datas')
-              field: generated_date
+              to: ref('dbt_utils_day')
+              field: date_day
 
       - name: execution_start_date
         description: "Data e hora em que iniciou a execução da DAG."

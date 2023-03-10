@@ -5,10 +5,10 @@ with
             , dag_sk as dag_fk
         from {{ ref('dim_airflow_monitoring_dag') }}
     )
-    , dim_datas as (
-        select generated_date
-        from {{ ref('dim_datas') }}
-    ) 
+    , util_days as (
+        select * 
+        from {{ ref('dbt_utils_day') }}
+    )
     , stg_dag_run as (
         select 
             dag_run_id
@@ -28,7 +28,7 @@ with
             , dim_dag.dag_fk
             , dim_dag.dag_id
             , stg_dag_run.run_id
-            , dim_datas.generated_date
+            , util_days.date_day
             , stg_dag_run.execution_start_date
             , stg_dag_run.execution_end_date
             , stg_dag_run.dag_state
@@ -36,7 +36,7 @@ with
             , stg_dag_run.run_type 
         from stg_dag_run
         left join dim_dag on stg_dag_run.dag_id = dim_dag.dag_id
-        left join dim_datas on stg_dag_run.run_date = dim_datas.generated_date
+        left join util_days on stg_dag_run.run_date = util_days.date_day
     )
     , joined_with_sk as (
         select 
@@ -46,7 +46,7 @@ with
                 , 'execution_end_date'
                 , 'run_id']) }} as dag_run_sk
             , dag_fk
-            , generated_date
+            , date_day as generated_date
             , execution_start_date
             , execution_end_date
             , dag_state

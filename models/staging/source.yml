@@ -149,3 +149,6 @@ sources:
 
           - name: ind_extraction_date
             description: "Data de extração da tabela"
+
+      - name: dbt_utils_day
+        description: "Tabela que contem dados das datas criadas a partir da macro do dbt_utils."
