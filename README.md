@@ -28,7 +28,7 @@ packages:
 
 ## Configuring models package
 
-The package's models can be configured in your `dbt_project.yml` by specifying the package under `models`.
+The package's models can be configured in your `dbt_project.yml` by specifying the package under `models` and the start date of the airflow monitoring data must be declared in vars.
 
 ```
 models:
@@ -37,4 +37,11 @@ models:
             materialized: ephemeral
         marts:
             materialized: table
+```
+...
+
+```
+vars:
+    dbt_airflow_monitoring:
+       airflow_monitoring_start_date: cast('2023-01-01' as date)
 ```
