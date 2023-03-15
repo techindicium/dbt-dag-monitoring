@@ -43,5 +43,5 @@ models:
 ```
 vars:
     dbt_airflow_monitoring:
-       airflow_monitoring_start_date: cast('2023-01-01' as date)
+       airflow_monitoring_start_date: cast('2023-01-01' as date) # edit date here
 ```
