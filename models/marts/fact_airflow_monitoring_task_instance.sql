@@ -62,7 +62,7 @@ with
                 , 'run_id']) }} as task_instance_sk
             , dag_fk
             , task_fk
-            , util_days as generated_date
+            , date_day as generated_date
             , execution_start_date
             , execution_end_date
             , duration
