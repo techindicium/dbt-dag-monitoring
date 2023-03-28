@@ -1,0 +1,25 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+ name: Airflow Monitoring
+ description: |
+    This product allows you to easily monitor your airflow DAGs, providing helpful info to improve your data pipeline.
+ links:
+    - title: Link
+     url: http://backstage.io
+   - title: Link 1
+     url: https://backstage.io/docs
+   - title: Link 2
+     url: https://backstage.io/storybook
+   - title: Link 3
+     url: https://discord.com/invite/EBHEGzX
+ annotations:
+   indicium.tech/product-url: https://app.powerbi.com/groups/a882b472-29a2-4236-a83c-57f51c6d209b/reports/36105e23-bd0e-4d23-8f1b-2369f69d8d41/ReportSection
+spec:
+ title: Airflow Monitoring
+ type: product
+ owner: CNCF
+ lifecycle: experimental
+ version: v0.1.0
+ vertical: HydraI
+ interface: App
