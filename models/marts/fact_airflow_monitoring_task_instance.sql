@@ -13,7 +13,7 @@ with
         from {{ ref('dim_airflow_monitoring_task') }}
     )
     , util_days as (
-        select * 
+        select cast(date_day as date) as date_day
         from {{ ref('dbt_utils_day') }}
     )
     , stg_task_instance as (
