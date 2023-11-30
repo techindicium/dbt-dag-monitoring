@@ -2,7 +2,7 @@ with exploded_by_pipeline as (
     select 
         *
     from 
-        dev_vitor_avancini.adf_triggers
+        {{ source('raw_adf_monitoring', 'adf_triggers') }}
     lateral view explode(properties.pipelines) as pipelines
 ), 
 
