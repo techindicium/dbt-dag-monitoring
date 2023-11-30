@@ -35,3 +35,6 @@ models:
 
       - name: run_type
         description: "Tipo de execução da DAG."
+
+      - name: duration
+        description: "Tempo de execução em segundos."
