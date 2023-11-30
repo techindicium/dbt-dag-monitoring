@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: raw_adf_monitoring
     description: "Dados brutos retirados do ADF para análise de monitoramento do ADF."
-    schema: dev_vitor_avancini
+    schema: raw_adf_monitoring
     tables:
       - name: adf_pipeline_runs
         description: "Tabela que contem dados das execuções dos Pipelines do ADF."
