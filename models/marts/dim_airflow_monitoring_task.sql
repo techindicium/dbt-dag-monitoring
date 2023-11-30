@@ -50,6 +50,9 @@ with
                 partition by 
                     task_id
                     , dag_id
+                order by 
+                    task_id
+                    , dag_id
                 ) as dedup
         from union_task_instance_with_fail
     )
