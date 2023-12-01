@@ -8,6 +8,7 @@ with
             , external_trigger
             , start_date as execution_start_date
             , end_date as execution_end_date
+            , (end_date - start_date) as duration
             , run_type
             , run_id
         from {{ source('raw_airflow_monitoring', 'dag_run') }}

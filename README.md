@@ -1,7 +1,5 @@
 # Airflow Monitoring
-
 This package allows you to easily monitor your airflow DAGs, providing helpful info to improve your data pipeline.
-
 
 # :running: Quickstart
 
@@ -45,3 +43,34 @@ vars:
     dbt_airflow_monitoring:
        airflow_monitoring_start_date: cast('2023-01-01' as date) # edit date here
 ```
+
+To switch between Azure datafactory and Airflow simply change the models config,
+example for running adf instead of airflow:
+```
+models:
+  dbt_airflow_monitoring:
+    marts:
+      materialized: table
+    staging:
+      airflow_sources:
+        enabled: false
+      adf_sources:
+        enabled: true
+```
+
+
+## Airflow metadata
+
+The airflow sources are based on the Airflow metadata database, any form of extraction from it should suffice
+
+## ADF Metadata
+
+The adf models rely on sources extracted by our adf tap:
+
+https://bitbucket.org/indiciumtech/platform_meltano_el/src/6b9c9e970518db1e21086ec75a7442d1b6978c93/plugins/custom/tap-azuredatafactory/?at=featuer%2Fadd_adf_extractor
+
+# Improvements
+
+## ADF
+
+- maybe we should change the unique key for pipelines instead of deduping here. etag is the pipeline version, we are using it for deduping

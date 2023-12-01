@@ -17,6 +17,7 @@ with
             , run_date
             , execution_start_date
             , execution_end_date
+            , duration
             , dag_state
             , external_trigger
             , run_type
@@ -34,6 +35,7 @@ with
             , stg_dag_run.dag_state
             , stg_dag_run.external_trigger
             , stg_dag_run.run_type 
+            , stg_dag_run.duration
         from stg_dag_run
         left join dim_dag on stg_dag_run.dag_id = dim_dag.dag_id
         left join util_days on stg_dag_run.run_date = util_days.date_day
@@ -51,7 +53,8 @@ with
             , execution_end_date
             , dag_state
             , external_trigger
-            , run_type 
+            , run_type
+            , duration 
         from joined
     )
 select *
