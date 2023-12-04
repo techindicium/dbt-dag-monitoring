@@ -1,0 +1,144 @@
+version: 2
+
+sources:
+  - name: raw_databricks_workflow_monitoring
+    description: "Dados brutos retirados do databricks para análise de monitoramento do databricks."
+    schema: dev_vitor_avancini
+    tables:
+      - name: databricks_pipeline_runs
+        description: "Tabela que contem dados das execuções dos Pipelines do databricks."
+        columns:
+          - name: id
+            description: "Identificador único da tabela."
+            tests:
+              - not_null
+              - unique
+
+          - name: pipelineName
+            description: "Nome do pipeline da dag run."
+            tests:
+              - not_null
+
+          - name: runStart
+            description: "Data de execução."
+
+          - name: status
+            description: "O estado da DAG run."
+
+          - name: invokedBy
+            description: "Aponta se a execução da DAG foi acionada externamente (True / False)."
+
+          - name: runStart
+            description: "Data e hora em que iniciou a execução da DAG."
+
+          - name: runEnd
+            description: "Data e hora em que encerrou a execução da DAG."
+
+          - name: durationInMs
+            description: "Duração do dag em Millisegundos"
+
+      - name: databricks_activity_runs
+        description: "Tabela que contem dados das tarefas com falhas do databricks."
+        columns:
+          - name: activityRunId
+            description: "Identificador da tarefa."
+            tests:
+              - not_null
+
+          - name: pipelineName
+            description: "Identificador da pipeline a qual pertence essa activity."
+            tests:
+              - not_null
+
+          - name: pipelineRunId
+            description: "Identificador da execução da pipeline a qual pertence essa activity."
+            tests:
+              - not_null
+
+          - name: activityRunStart
+            description: "Data e hora inicio da execução."
+
+          - name: activityRunEnd
+            description: "Data e hora final da execução."
+
+          - name: durationInMs
+            description: "Duração da execução em Millisegundos."
+
+          - name: map_index
+            description: "Índice de mapeamento."
+
+      - name: databricks_jobs
+        description: "Tabela que contem informações sobre as jobs(DAGs) do databricks."
+        columns:
+          - name: job_id
+            description: "Identificador único da tabela."
+            tests:
+              - not_null
+              - unique
+
+          - name: settings
+            description: 'Json de configs do job, com o formato a seguir:
+            {
+                "email_notifications": {
+                    "no_alert_for_skipped_runs": false,
+                    "on_failure": null,
+                    "on_start": null,
+                    "on_success": null
+                },
+                "format": "MULTI_TASK",
+                "max_concurrent_runs": "1",
+                "name": "Fact_TransactionProtected_V2",
+                "notification_settings": null,
+                "schedule": {
+                    "pause_status": "UNPAUSED",
+                    "quartz_cron_expression": "19 0 9 * * ?",
+                    "timezone_id": "America/Sao_Paulo"
+                },
+                "timeout_seconds": "0"
+              }
+            '
+
+          - name: created_time
+            description: "Timestamp de criação do job."
+
+          - name: creator_user_name
+            description: "Email do criador do job."
+
+          - name: ind_extraction_date
+            description: "Data de extração da tabela"
+
+      - name: databricks_triggers
+        description: "Tabela que contem informações sobre as triggers do databricks."
+        columns:
+          - name: id
+            description: "Identificador único da tabela."
+            tests:
+              - not_null
+              - unique
+
+          - name: properties.runtimeState
+            description: "Se o gatilhos está ativo ou nao"
+
+          - name: properties.annotations
+            description: "Annotations no trigger."
+
+          - name: properties.pipelines
+            description: "Pipelines que são executados por esse gatilho."
+
+          - name: properties.typeProperties.recurrence.frequency
+            description: "Frequência com que o pipeline é executado e.g Hour, Day, Week, Month"
+          
+          - name: properties.typeProperties.recurrence.interval
+            description: "A cada quantas 'frequency' esse trigger é executado e.g 1 Day, 2 Week, sendo 1 e 2 o interval"
+          
+          - name: properties.typeProperties.recurrence.schedule
+            description: "Agendamento definido pela tabela"
+
+          - name: properties.typeProperties.recurrence.startTime
+            description: "Primeira execução"
+
+          - name: properties.typeProperties.recurrence.timeZone
+            description: "Fuso horário do gatilho"
+    
+      - name: dbt_utils_day
+        description: "Tabela que contem dados das datas criadas a partir da macro do dbt_utils."
