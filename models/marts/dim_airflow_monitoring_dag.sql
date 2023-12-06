@@ -2,6 +2,7 @@ with
     stg_dag as (
         select
             dag_id
+            , dag_name
             , dag_description
             , dag_frequency
             , timetable_description
