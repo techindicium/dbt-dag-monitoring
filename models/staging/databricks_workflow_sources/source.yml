@@ -5,68 +5,6 @@ sources:
     description: "Dados brutos retirados do databricks para análise de monitoramento do databricks."
     schema: dev_vitor_avancini
     tables:
-      - name: databricks_pipeline_runs
-        description: "Tabela que contem dados das execuções dos Pipelines do databricks."
-        columns:
-          - name: id
-            description: "Identificador único da tabela."
-            tests:
-              - not_null
-              - unique
-
-          - name: pipelineName
-            description: "Nome do pipeline da dag run."
-            tests:
-              - not_null
-
-          - name: runStart
-            description: "Data de execução."
-
-          - name: status
-            description: "O estado da DAG run."
-
-          - name: invokedBy
-            description: "Aponta se a execução da DAG foi acionada externamente (True / False)."
-
-          - name: runStart
-            description: "Data e hora em que iniciou a execução da DAG."
-
-          - name: runEnd
-            description: "Data e hora em que encerrou a execução da DAG."
-
-          - name: durationInMs
-            description: "Duração do dag em Millisegundos"
-
-      - name: databricks_activity_runs
-        description: "Tabela que contem dados das tarefas com falhas do databricks."
-        columns:
-          - name: activityRunId
-            description: "Identificador da tarefa."
-            tests:
-              - not_null
-
-          - name: pipelineName
-            description: "Identificador da pipeline a qual pertence essa activity."
-            tests:
-              - not_null
-
-          - name: pipelineRunId
-            description: "Identificador da execução da pipeline a qual pertence essa activity."
-            tests:
-              - not_null
-
-          - name: activityRunStart
-            description: "Data e hora inicio da execução."
-
-          - name: activityRunEnd
-            description: "Data e hora final da execução."
-
-          - name: durationInMs
-            description: "Duração da execução em Millisegundos."
-
-          - name: map_index
-            description: "Índice de mapeamento."
-
       - name: databricks_jobs
         description: "Tabela que contem informações sobre as jobs(DAGs) do databricks."
         columns:
@@ -107,38 +45,77 @@ sources:
           - name: ind_extraction_date
             description: "Data de extração da tabela"
 
-      - name: databricks_triggers
-        description: "Tabela que contem informações sobre as triggers do databricks."
+      - name: databricks_job_runs
+        description: "Tabela que contem dados das execuções dos Pipelines(jobs) do databricks."
         columns:
-          - name: id
-            description: "Identificador único da tabela."
+          - name: run_id
+            description: "Identificador único da tabela. Id do job run"
             tests:
               - not_null
               - unique
 
-          - name: properties.runtimeState
-            description: "Se o gatilhos está ativo ou nao"
+          - name: job_id
+            description: "Id do job"
+       
+          - name: state
+            description: | 
+              Json com propriedades do estado da execução do pipeline no seguinte formato:
+              {
+                  "life_cycle_state": "TERMINATED",
+                  "result_state": "SUCCESS",
+                  "state_message": "",
+                  "user_cancelled_or_timedout": false
+              }
+                
 
-          - name: properties.annotations
-            description: "Annotations no trigger."
+          - name: trigger
+            description: "Aponta como foi disparada a execução do pipeline."
 
-          - name: properties.pipelines
-            description: "Pipelines que são executados por esse gatilho."
+          - name: start_time
+            description: "Timestamp em que iniciou a execução da DAG."
 
-          - name: properties.typeProperties.recurrence.frequency
-            description: "Frequência com que o pipeline é executado e.g Hour, Day, Week, Month"
-          
-          - name: properties.typeProperties.recurrence.interval
-            description: "A cada quantas 'frequency' esse trigger é executado e.g 1 Day, 2 Week, sendo 1 e 2 o interval"
-          
-          - name: properties.typeProperties.recurrence.schedule
-            description: "Agendamento definido pela tabela"
+          - name: end_time
+            description: "Timestamp em que encerrou a execução da DAG."
 
-          - name: properties.typeProperties.recurrence.startTime
-            description: "Primeira execução"
+          - name: execution_duration
+            description: "Duração do dag em Millisegundos"
 
-          - name: properties.typeProperties.recurrence.timeZone
-            description: "Fuso horário do gatilho"
-    
+          - name: run_type
+            description: "Tipo da execução"
+
+          - name: tasks
+            description: |
+              Lista de objetos com informação sobre as tasks. Exemplo de json de task:
+              {
+                "attempt_number": "0",
+                "cleanup_duration": "0",
+                "cluster_instance": {
+                    "cluster_id": "0426-123-kq2r1tew",
+                    "spark_context_id": "123"
+                },
+                "dbt_task": null,
+                "depends_on": null,
+                "description": null,
+                "end_time": "1701855074931",
+                "execution_duration": "110000",
+                "existing_cluster_id": "0426-123-kq2r1tew",
+                "git_source": null,
+                "libraries": null,
+                "notebook_task": {
+                    "notebook_path": "/notebook",
+                    "source": "WORKSPACE"
+                },
+                "run_id": "123",
+                "setup_duration": "1000",
+                "start_time": "1701854963851",
+                "state": {
+                    "life_cycle_state": "TERMINATED",
+                    "result_state": "SUCCESS",
+                    "state_message": "",
+                    "user_cancelled_or_timedout": false
+                },
+                "task_key": "ADFafb-123"
+              }
+         
       - name: dbt_utils_day
         description: "Tabela que contem dados das datas criadas a partir da macro do dbt_utils."

@@ -22,8 +22,8 @@ models:
       materialized: table
     staging:
       airflow_sources:
-        enabled: false
+        enabled: true
       adf_sources:
         enabled: false
       databricks_workflow_sources:
-        enabled: true
+        enabled: false

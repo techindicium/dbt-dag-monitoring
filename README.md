@@ -53,9 +53,11 @@ models:
       materialized: table
     staging:
       airflow_sources:
-        enabled: false
-      adf_sources:
         enabled: true
+      adf_sources:
+        enabled: false
+      databricks_workflow_sources:
+        enabled: false
 ```
 
 
@@ -68,6 +70,16 @@ The airflow sources are based on the Airflow metadata database, any form of extr
 The adf models rely on sources extracted by our adf tap:
 
 https://bitbucket.org/indiciumtech/platform_meltano_el/src/6b9c9e970518db1e21086ec75a7442d1b6978c93/plugins/custom/tap-azuredatafactory/?at=featuer%2Fadd_adf_extractor
+
+## Databricks Workflow Data
+The databricks workflow models rely on sources extracted by our adf tap:
+
+https://bitbucket.org/indiciumtech/platform_meltano_el/src/main/plugins/custom/tap-databricksops/
+
+specifically the streams:
+
+- jobs
+- job_runs
 
 # Improvements
 

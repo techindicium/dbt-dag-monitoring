@@ -1,18 +1,17 @@
-with
-    renamed as (
-        select distinct
-            activityRunId as task_fail_id
-            , activityRunId as task_id
-            , pipelineName as dag_id
-            , pipelineRunId as run_id
-            , {{ cast_as_date('activityRunStart') }} as execution_date
-            , activityRunStart as execution_start_date
-            , activityRunEnd as execution_end_date
-            , durationInMs / 1000 as duration
-            , "not_implemented_for_adf" as map_index
-        from {{ source('raw_adf_monitoring', 'adf_activity_runs') }}
-        where status in ('TimedOut', 'Cancelled', 'Failed')
-    )
-select *
-from renamed
-
+with renamed as (
+    select
+        task_id as task_fail_id
+        , task_id
+        , dag_id
+        , run_id
+        , execution_date
+        , execution_start_date
+        , execution_end_date
+        , duration
+        , 'not_implemented_for_databricks_workflow' as map_index
+    from 
+        {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance') }}
+    where 
+        state_task_instance in ('MAXIMUM_CONCURRENT_RUNS_REACHED', 'CANCELED', 'FAILED', 'UPSTREAM_FAILED')
+)
+select * from renamed
