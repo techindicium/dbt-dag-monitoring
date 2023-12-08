@@ -17,6 +17,7 @@ with
         from {{ ref('dbt_utils_day') }}
     )
     , stg_task_instance as (
+        {% for src in var('enabled_sources') -%}
         select 
             task_instance_sk
             , task_id
@@ -29,7 +30,9 @@ with
             , state_task_instance
             , try_number
             , priority_weight
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance') }}
+        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance_' + src) }}
+        {% if not loop.last -%} union {% endif -%}
+        {% endfor -%}
     )
     , joined as (
         select

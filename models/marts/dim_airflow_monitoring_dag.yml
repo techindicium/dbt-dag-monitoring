@@ -38,4 +38,7 @@ models:
         description: "Caminho do arquivo que precisa ser importado para carregar este DAG. `codigo_atributo` na source: 11"
 
       - name: owners
-        description: "Proprietário da DAG." 
+        description: "Proprietário da DAG."
+
+      - name: source_system
+        description: "Sistema de onde os dados foram extraidos, atualmente os valores possiveis são airflow, adf e databricks_workflow"

@@ -1,5 +1,6 @@
 with
     stg_task_instance as (
+        {% for src in var('enabled_sources') -%}
         select distinct 
             task_id
             , dag_id
@@ -7,9 +8,13 @@ with
             , operator
             , task_pool
             , map_index
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance') }} 
+            , '{{ src }}' as source_system
+        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance_' + src) }}
+        {% if not loop.last -%} union {% endif -%}
+        {% endfor -%}
     )   
     , stg_task_fail as (
+        {% for src in var('enabled_sources') -%}
         select distinct 
             task_id
             , dag_id
@@ -17,7 +22,10 @@ with
             , null as hostname
             , null as operator
             , null as task_pool
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_fail') }}
+            , '{{ src }}' as source_system
+        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_fail_' + src) }}
+        {% if not loop.last -%} union {% endif -%}
+        {% endfor -%}
     )
     , union_task_instance_with_fail as (
         select
