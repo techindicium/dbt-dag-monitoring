@@ -1,7 +1,7 @@
 with
     renamed as (
         select distinct
-            dag_id as dag_id
+            dag_id
             , dag_id as dag_name
             , description as dag_description
             , case 

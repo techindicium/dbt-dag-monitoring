@@ -54,8 +54,8 @@ pipelines_and_triggers as (
 )
 select 
     dag_name as dag_id
-    ,dag_name as dag_name
-    ,"not_implemented_for_adf" as dag_description
+    , dag_name
+    , "not_implemented_for_adf" as dag_description
     , dag_frequency
     , timetable_description
     , is_paused

@@ -1,7 +1,7 @@
 with renamed as (
     select 
-        job_id as dag_id,
-        settings.name as dag_name
+        job_id as dag_id
+        , settings.name as dag_name
         , "not_implemented_for_databricks_workflow" as dag_description
         , "not_implemented_for_databricks_workflow"  as dag_frequency
         , settings.schedule.quartz_cron_expression as timetable_description

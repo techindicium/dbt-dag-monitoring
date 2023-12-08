@@ -4,7 +4,8 @@ with tasks as (
     from 
         {{ source('raw_databricks_workflow_monitoring', 'databricks_job_runs') }} dag_runs
     lateral view explode(dag_runs.tasks) as task
-), renamed as (
+),  
+renamed as (
     select 
         task.task_key as task_id
         , job_id as dag_id
@@ -26,7 +27,7 @@ with tasks as (
     from tasks
 )
 select 
-    {{ dbt_utils.surrogate_key(['task_id', 'dag_id', 'run_id']) }} as task_instance_sk,
-    * 
+    {{ dbt_utils.surrogate_key(['task_id', 'dag_id', 'run_id']) }} as task_instance_sk
+    , * 
 from 
     renamed
