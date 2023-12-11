@@ -25,3 +25,5 @@ models:
         enabled: true
       adf_sources:
         enabled: false
+      databricks_workflow_sources:
+        enabled: false

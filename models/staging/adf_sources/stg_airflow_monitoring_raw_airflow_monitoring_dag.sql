@@ -45,15 +45,17 @@ pipeline_dedup as (
 ),
 pipelines_and_triggers as (
     select 
-        pipelines.name as dag_id
+        pipelines.id as dag_id
+        ,pipelines.name as dag_name
         ,triggers.*
     from pipeline_dedup pipelines
     left join triggers_renamed triggers
     on pipelines.name = triggers.pipeline_name
 )
 select 
-    dag_id
-    ,"not_implemented_for_adf" as dag_description
+    dag_name as dag_id
+    , dag_name
+    , "not_implemented_for_adf" as dag_description
     , dag_frequency
     , timetable_description
     , is_paused

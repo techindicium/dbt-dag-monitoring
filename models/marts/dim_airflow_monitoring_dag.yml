@@ -15,6 +15,9 @@ models:
         tests:
           - unique
           - not_null
+      
+      - name: dag_name
+        description: "Nome descritivo do dag."
 
       - name: dag_description
         description: "Descrição sobre a DAG."

@@ -1,0 +1,121 @@
+version: 2
+
+sources:
+  - name: raw_databricks_workflow_monitoring
+    description: "Dados brutos retirados do databricks para análise de monitoramento do databricks."
+    schema: raw_databricks_workflow_monitoring
+    tables:
+      - name: databricks_jobs
+        description: "Tabela que contem informações sobre as jobs(DAGs) do databricks."
+        columns:
+          - name: job_id
+            description: "Identificador único da tabela."
+            tests:
+              - not_null
+              - unique
+
+          - name: settings
+            description: 'Json de configs do job, com o formato a seguir:
+            {
+                "email_notifications": {
+                    "no_alert_for_skipped_runs": false,
+                    "on_failure": null,
+                    "on_start": null,
+                    "on_success": null
+                },
+                "format": "MULTI_TASK",
+                "max_concurrent_runs": "1",
+                "name": "Fact_TransactionProtected_V2",
+                "notification_settings": null,
+                "schedule": {
+                    "pause_status": "UNPAUSED",
+                    "quartz_cron_expression": "19 0 9 * * ?",
+                    "timezone_id": "America/Sao_Paulo"
+                },
+                "timeout_seconds": "0"
+              }
+            '
+
+          - name: created_time
+            description: "Timestamp de criação do job."
+
+          - name: creator_user_name
+            description: "Email do criador do job."
+
+          - name: ind_extraction_date
+            description: "Data de extração da tabela"
+
+      - name: databricks_job_runs
+        description: "Tabela que contem dados das execuções dos Pipelines(jobs) do databricks."
+        columns:
+          - name: run_id
+            description: "Identificador único da tabela. Id do job run"
+            tests:
+              - not_null
+              - unique
+
+          - name: job_id
+            description: "Id do job"
+       
+          - name: state
+            description: | 
+              Json com propriedades do estado da execução do pipeline no seguinte formato:
+              {
+                  "life_cycle_state": "TERMINATED",
+                  "result_state": "SUCCESS",
+                  "state_message": "",
+                  "user_cancelled_or_timedout": false
+              }
+                
+
+          - name: trigger
+            description: "Aponta como foi disparada a execução do pipeline."
+
+          - name: start_time
+            description: "Timestamp em que iniciou a execução da DAG."
+
+          - name: end_time
+            description: "Timestamp em que encerrou a execução da DAG."
+
+          - name: execution_duration
+            description: "Duração do dag em Millisegundos"
+
+          - name: run_type
+            description: "Tipo da execução"
+
+          - name: tasks
+            description: |
+              Lista de objetos com informação sobre as tasks. Exemplo de json de task:
+              {
+                "attempt_number": "0",
+                "cleanup_duration": "0",
+                "cluster_instance": {
+                    "cluster_id": "0426-123-kq2r1tew",
+                    "spark_context_id": "123"
+                },
+                "dbt_task": null,
+                "depends_on": null,
+                "description": null,
+                "end_time": "1701855074931",
+                "execution_duration": "110000",
+                "existing_cluster_id": "0426-123-kq2r1tew",
+                "git_source": null,
+                "libraries": null,
+                "notebook_task": {
+                    "notebook_path": "/notebook",
+                    "source": "WORKSPACE"
+                },
+                "run_id": "123",
+                "setup_duration": "1000",
+                "start_time": "1701854963851",
+                "state": {
+                    "life_cycle_state": "TERMINATED",
+                    "result_state": "SUCCESS",
+                    "state_message": "",
+                    "user_cancelled_or_timedout": false
+                },
+                "task_key": "ADFafb-123"
+              }
+         
+      - name: dbt_utils_day
+        description: "Tabela que contem dados das datas criadas a partir da macro do dbt_utils."
