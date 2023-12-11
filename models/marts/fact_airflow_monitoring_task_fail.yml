@@ -39,3 +39,6 @@ models:
 
       - name: duration
         description: "Tempo de duração da execução em segundos."
+
+      - name: source_system
+        description: "Sistema de onde os dados foram extraidos, atualmente os valores possiveis são airflow, adf e databricks_workflow"

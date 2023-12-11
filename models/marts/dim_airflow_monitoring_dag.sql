@@ -1,5 +1,6 @@
 with
     stg_dag as (
+    {% for src in var('enabled_sources') -%}
         select
             dag_id
             , dag_name
@@ -10,7 +11,11 @@ with
             , is_active
             , fileloc
             , owners 
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_dag') }}
+            , '{{ src }}' as source_system
+        from         
+            {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_dag_' + src) }}
+        {% if not loop.last -%} union {% endif -%}
+    {% endfor -%}
     )
     , stg_dag_with_sk as (
         select

@@ -49,3 +49,5 @@ models:
       - name: priority_weight
         description: "Prioridade da tarefa."
 
+      - name: source_system
+        description: "Sistema de onde os dados foram extraidos, atualmente os valores possiveis são airflow, adf e databricks_workflow"

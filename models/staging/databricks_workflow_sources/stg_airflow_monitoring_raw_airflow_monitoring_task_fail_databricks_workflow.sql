@@ -10,7 +10,7 @@ with renamed as (
         , duration
         , 'not_implemented_for_databricks_workflow' as map_index
     from 
-        {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance') }}
+        {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance_databricks_workflow') }}
     where 
         state_task_instance in ('MAXIMUM_CONCURRENT_RUNS_REACHED', 'CANCELED', 'FAILED', 'UPSTREAM_FAILED')
 )

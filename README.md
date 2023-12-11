@@ -28,6 +28,8 @@ packages:
 
 The package's models can be configured in your `dbt_project.yml` by specifying the package under `models` and the start date of the airflow monitoring data must be declared in vars.
 
+You should also populate a variable with the enabled dags metadata sources. This variable is named `enabled_sources`
+
 ```
 models:
     dbt_airflow_monitoring:
@@ -40,12 +42,13 @@ models:
 
 ```
 vars:
+    enabled_sources: ['airflow', 'adf'] # Possible values airflow, adf and databricks_workflow.
     dbt_airflow_monitoring:
        airflow_monitoring_start_date: cast('2023-01-01' as date) # edit date here
 ```
 
-To switch between Azure datafactory and Airflow simply change the models config,
-example for running adf instead of airflow:
+It's also necessary to switch on/off the models from dags sources you have data from.
+example for running for adf and airflow:
 ```
 models:
   dbt_airflow_monitoring:
@@ -55,7 +58,7 @@ models:
       airflow_sources:
         enabled: true
       adf_sources:
-        enabled: false
+        enabled: true
       databricks_workflow_sources:
         enabled: false
 ```
@@ -86,3 +89,6 @@ specifically the streams:
 ## ADF
 
 - maybe we should change the unique key for pipelines instead of deduping here. etag is the pipeline version, we are using it for deduping
+
+
+

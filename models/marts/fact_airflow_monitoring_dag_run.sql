@@ -10,6 +10,7 @@ with
         from {{ ref('dbt_utils_day') }}
     )
     , stg_dag_run as (
+        {% for src in var('enabled_sources') -%}
         select 
             dag_run_id
             , dag_id
@@ -21,7 +22,10 @@ with
             , dag_state
             , external_trigger
             , run_type
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_dag_run') }}
+            , '{{ src }}' as source_system
+        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_dag_run_' + src) }}
+        {% if not loop.last -%} union {% endif -%}
+        {% endfor -%}
     )
     , joined as (
         select

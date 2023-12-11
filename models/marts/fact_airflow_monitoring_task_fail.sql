@@ -17,6 +17,7 @@ with
         from {{ ref('dbt_utils_day') }}
     )
     , stg_task_fail as (
+        {% for src in var('enabled_sources') -%}
         select 
             task_fail_id
             , task_id
@@ -27,7 +28,10 @@ with
             , duration
             , execution_date
             , map_index
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_fail') }}
+            , '{{ src }}' as source_system
+        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_fail_' + src) }}
+        {% if not loop.last -%} union {% endif -%}
+        {% endfor -%}
     )
     , joined as (
         select

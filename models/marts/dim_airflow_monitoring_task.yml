@@ -31,3 +31,6 @@ models:
 
       - name: task_pool
         description: "O pool do Airflow no qual a tarefa deve ser executada."
+
+      - name: source_system
+        description: "Sistema de onde os dados foram extraidos, atualmente os valores possiveis são airflow, adf e databricks_workflow"
