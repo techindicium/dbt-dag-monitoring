@@ -1,9 +1,9 @@
 with
     renamed as (
         select distinct
-            activityRunId::string as task_id
-            , pipelineName::string as dag_id
-            , pipelineRunId::string as run_id
+            {{ cast_as_string('activityRunId') }} as task_id
+            , {{ cast_as_string('pipelineName') }} as dag_id
+            , {{ cast_as_string('pipelineRunId') }} as run_id
             , {{ cast_as_date('activityRunStart') }} as execution_date
             , activityRunStart as execution_start_date
             , activityRunEnd as execution_end_date

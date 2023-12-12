@@ -1,6 +1,6 @@
 with renamed as (
     select 
-        job_id::string as dag_id
+        {{ cast_as_string('job_id') }} as dag_id
         , settings.name as dag_name
         , "not_implemented_for_databricks_workflow" as dag_description
         , "not_implemented_for_databricks_workflow"  as dag_frequency
