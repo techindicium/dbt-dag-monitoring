@@ -66,7 +66,7 @@ with
     )
     , dim_task_with_sk as (
         select
-            {{ dbt_utils.surrogate_key([
+            {{ dbt_utils.generate_surrogate_key([
                 'task_id'
                 , 'dag_id']
             ) }} as task_sk

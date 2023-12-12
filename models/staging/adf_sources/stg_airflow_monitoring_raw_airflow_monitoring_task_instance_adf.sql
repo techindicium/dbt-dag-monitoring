@@ -20,7 +20,7 @@ with
     , created_id as (
         /*Im not sure this is necessary for adf*/
         select 
-            {{ dbt_utils.surrogate_key(['task_id', 'dag_id', 'run_id']) }} as task_instance_sk
+            {{ dbt_utils.generate_surrogate_key(['task_id', 'dag_id', 'run_id']) }} as task_instance_sk
             , task_id
             , dag_id
             , run_id
