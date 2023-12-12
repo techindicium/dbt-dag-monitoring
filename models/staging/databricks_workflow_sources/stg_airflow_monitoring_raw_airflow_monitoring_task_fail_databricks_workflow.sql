@@ -1,8 +1,8 @@
 with renamed as (
     select
-        task_id as task_fail_id
-        , task_id
-        , dag_id
+        {{ cast_as_string('task_id') }} as task_fail_id
+        , {{ cast_as_string('task_id') }} as task_id
+        , {{ cast_as_string('dag_id') }} as dag_id
         , run_id
         , execution_date
         , execution_start_date

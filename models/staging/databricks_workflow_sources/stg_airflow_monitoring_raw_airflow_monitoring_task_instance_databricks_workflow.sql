@@ -7,9 +7,9 @@ with tasks as (
 ),  
 renamed as (
     select 
-        task.task_key as task_id
-        , job_id as dag_id
-        , run_id as run_id
+        {{ cast_as_string('task.task_key') }} as task_id
+        , {{ cast_as_string('job_id') }} as dag_id
+        , {{ cast_as_string('run_id') }} as run_id
         , from_unixtime( task.start_time / 1000) as execution_date
         , from_unixtime( task.start_time / 1000) as execution_start_date
         , from_unixtime( task.end_time / 1000) as execution_end_date

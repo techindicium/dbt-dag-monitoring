@@ -1,8 +1,8 @@
 with
     renamed as (
         select distinct
-            dag_id
-            , dag_id as dag_name
+            {{ cast_as_string('dag_id') }} as dag_id
+            , {{ cast_as_string('dag_id') }} as dag_name
             , description as dag_description
             , case 
                 when timetable_description like '% hour, between %' then 'hourly'
