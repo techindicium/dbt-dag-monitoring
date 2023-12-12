@@ -53,8 +53,8 @@ pipelines_and_triggers as (
     on pipelines.name = triggers.pipeline_name
 )
 select 
-    dag_name as dag_id
-    , dag_name
+    dag_name::string as dag_id
+    , dag_name::string
     , "not_implemented_for_adf" as dag_description
     , dag_frequency
     , timetable_description

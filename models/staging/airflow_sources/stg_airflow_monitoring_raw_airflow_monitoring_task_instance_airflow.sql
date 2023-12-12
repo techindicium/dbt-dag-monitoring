@@ -1,9 +1,9 @@
 with
     renamed as (
         select distinct
-            task_id
-            , dag_id
-            , run_id
+            task_id::string
+            , dag_id::string
+            , run_id::string
             , {{ cast_as_date('start_date') }} as execution_date
             , start_date as execution_start_date
             , end_date as execution_end_date

@@ -1,10 +1,10 @@
 with
     renamed as (
         select distinct
-            id as task_fail_id
-            , task_id
-            , dag_id
-            , run_id
+            id::string as task_fail_id
+            , task_id::string
+            , dag_id::string
+            , run_id::string
             , {{ cast_as_date('start_date') }} as execution_date
             , start_date as execution_start_date
             , end_date as execution_end_date

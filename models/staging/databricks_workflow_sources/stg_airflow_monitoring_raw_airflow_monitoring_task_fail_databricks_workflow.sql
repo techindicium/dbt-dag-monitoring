@@ -1,8 +1,8 @@
 with renamed as (
     select
-        task_id as task_fail_id
-        , task_id
-        , dag_id
+        task_id::string as task_fail_id
+        , task_id::string
+        , dag_id::string
         , run_id
         , execution_date
         , execution_start_date

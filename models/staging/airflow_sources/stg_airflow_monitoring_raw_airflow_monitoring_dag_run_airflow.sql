@@ -1,8 +1,8 @@
 with
     renamed as (
         select distinct
-            id as dag_run_id
-            , dag_id
+            id::string as dag_run_id
+            , dag_id::string
             , {{ cast_as_date('start_date') }} as run_date
             , state as dag_state
             , external_trigger
@@ -10,7 +10,7 @@ with
             , end_date as execution_end_date
             , (end_date - start_date) as duration
             , run_type
-            , run_id
+            , run_id::string
         from {{ source('raw_airflow_monitoring', 'dag_run') }}
     )
 select *

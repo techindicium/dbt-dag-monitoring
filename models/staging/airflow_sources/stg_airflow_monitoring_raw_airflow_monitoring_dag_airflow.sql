@@ -1,8 +1,8 @@
 with
     renamed as (
         select distinct
-            dag_id
-            , dag_id as dag_name
+            dag_id::string
+            , dag_id::string as dag_name
             , description as dag_description
             , case 
                 when timetable_description like '% hour, between %' then 'hourly'
