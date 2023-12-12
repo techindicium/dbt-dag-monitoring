@@ -19,7 +19,7 @@ with
     )
     , stg_dag_with_sk as (
         select
-            {{ dbt_utils.surrogate_key(['dag_id']) }} as dag_sk
+            {{ dbt_utils.generate_surrogate_key(['dag_id']) }} as dag_sk
             , *
         from stg_dag
     )

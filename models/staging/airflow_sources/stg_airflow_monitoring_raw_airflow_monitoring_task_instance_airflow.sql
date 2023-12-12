@@ -22,7 +22,7 @@ with
     , created_id as (
         /*Table does not have a unique identifier, the id was created as the unique identification of records*/
         select 
-            {{ dbt_utils.surrogate_key(['task_id', 'dag_id', 'run_id']) }} as task_instance_sk
+            {{ dbt_utils.generate_surrogate_key(['task_id', 'dag_id', 'run_id']) }} as task_instance_sk
             , task_id
             , dag_id
             , run_id

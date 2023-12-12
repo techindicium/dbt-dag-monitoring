@@ -46,7 +46,7 @@ with
     )
     , joined_with_sk as (
         select 
-            {{ dbt_utils.surrogate_key([
+            {{ dbt_utils.generate_surrogate_key([
                 'dag_run_id'
                 , 'execution_start_date'
                 , 'execution_end_date'

@@ -54,7 +54,7 @@ with
     )
     , surrogate_key as (
         select
-            {{ dbt_utils.surrogate_key([
+            {{ dbt_utils.generate_surrogate_key([
                 'task_fail_id'
                 , 'execution_start_date'
                 , 'execution_end_date'
