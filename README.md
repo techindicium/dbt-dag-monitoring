@@ -63,6 +63,12 @@ models:
         enabled: false
 ```
 
+To set the package`s source you can add/modify the following variables inside dbt_project.yml
+```
+vars:
+  airflow_monitoring_database: landing_zone
+  airflow_monitoring_schema: airflow_metadata
+```
 
 ## Airflow metadata
 
