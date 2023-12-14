@@ -30,6 +30,7 @@ with
             , state_task_instance
             , try_number
             , priority_weight
+            , '{{ src }}' as source_system
         from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance_' + src) }}
         {% if not loop.last -%} union {% endif -%}
         {% endfor -%}
@@ -49,6 +50,7 @@ with
             , stg_task_instance.state_task_instance
             , stg_task_instance.try_number
             , stg_task_instance.priority_weight
+            , stg_task_instance.source_system
         from stg_task_instance
         left join dim_dag on stg_task_instance.dag_id = dim_dag.dag_id
         left join dim_task on 
@@ -72,6 +74,7 @@ with
             , state_task_instance
             , try_number
             , priority_weight
+            , source_system
         from joined
     )
 select *
