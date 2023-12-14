@@ -35,6 +35,7 @@ with
             , hostname
             , operator
             , task_pool
+            , source_system
         from stg_task_instance
         union all
         select
@@ -44,6 +45,7 @@ with
             , hostname
             , operator
             , task_pool
+            , source_system
         from stg_task_fail
     )
     , dedup_dim_task as (
@@ -54,13 +56,16 @@ with
             , hostname
             , operator
             , task_pool
+            , source_system
             , row_number() over(
                 partition by 
                     task_id
                     , dag_id
+                    , source_system
                 order by 
                     task_id
                     , dag_id
+                    , source_system
                 ) as dedup
         from union_task_instance_with_fail
     )
@@ -76,6 +81,7 @@ with
             , hostname
             , operator
             , task_pool
+            , source_system
         from dedup_dim_task
         where dedup = 1
     )

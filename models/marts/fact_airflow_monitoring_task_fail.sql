@@ -45,6 +45,7 @@ with
             , stg_task_fail.execution_start_date
             , stg_task_fail.execution_end_date
             , stg_task_fail.duration
+            , stg_task_fail.source_system
         from stg_task_fail
         left join dim_dag on stg_task_fail.dag_id = dim_dag.dag_id
         left join dim_task on 
@@ -66,6 +67,7 @@ with
             , execution_start_date
             , execution_end_date
             , duration
+            , source_system
         from joined
     )
 select *

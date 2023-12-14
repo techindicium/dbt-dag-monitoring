@@ -40,6 +40,7 @@ with
             , stg_dag_run.external_trigger
             , stg_dag_run.run_type 
             , stg_dag_run.duration
+            , stg_dag_run.source_system
         from stg_dag_run
         left join dim_dag on stg_dag_run.dag_id = dim_dag.dag_id
         left join util_days on stg_dag_run.run_date = util_days.date_day
@@ -58,7 +59,8 @@ with
             , dag_state
             , external_trigger
             , run_type
-            , duration 
+            , duration
+            , source_system
         from joined
     )
 select *
