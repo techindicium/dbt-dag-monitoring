@@ -68,6 +68,10 @@ To set the package`s source you can add/modify the following variables inside db
 vars:
   airflow_monitoring_database: landing_zone
   airflow_monitoring_schema: airflow_metadata
+  airflow_monitoring_databricks_database: raw_catalog
+  airflow_monitoring_databricks_schema: databricks_metadata
+  airflow_monitoring_adf_database: raw
+  airflow_monitoring_adf_schema: adf_metadata
 ```
 
 ## Airflow metadata
