@@ -18,7 +18,6 @@ with
             , is_active
             , fileloc
             , owners
-            , ind_extraction_date
         from {{ source('raw_airflow_monitoring', 'dag') }}
     )
 select *
