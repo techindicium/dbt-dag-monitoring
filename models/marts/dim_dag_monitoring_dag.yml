@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: dim_airflow_monitoring_dag
+  - name: dim_dag_monitoring_dag
     description: "Tabela de dimensão das DAGs do Airflow"
     columns:
       - name: 'dag_sk'

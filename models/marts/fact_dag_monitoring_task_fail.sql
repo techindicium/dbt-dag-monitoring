@@ -3,14 +3,14 @@ with
         select 
             dag_id
             , dag_sk as dag_fk
-        from {{ ref('dim_airflow_monitoring_dag') }}
+        from {{ ref('dim_dag_monitoring_dag') }}
     )
     , dim_task as (
         select
             task_sk as task_fk
             , task_id
             , dag_id
-        from {{ ref('dim_airflow_monitoring_task') }} 
+        from {{ ref('dim_dag_monitoring_task') }} 
     )
     , util_days as (
         select cast(date_day as date) as date_day
@@ -29,7 +29,7 @@ with
             , execution_date
             , map_index
             , '{{ src }}' as source_system
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_fail_' + src) }}
+        from {{ ref('stg_task_fail_' + src) }}
         {% if not loop.last -%} union {% endif -%}
         {% endfor -%}
     )

@@ -1,5 +1,5 @@
-name: 'dbt_airflow_monitoring'
-version: '0.1.0'
+name: 'dbt_dag_monitoring'
+version: '0.2.0'
 
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 
@@ -10,15 +10,15 @@ clean-targets: ["target", "dbt_modules", "dbt_packages"]
 macro-paths: ["macros"]
 log-path: "logs" 
 
-profile: dbt_airflow_monitoring
+profile: dbt_dag_monitoring
 
 vars:
   enabled_sources: ['airflow']
-  dbt_airflow_monitoring:
-    airflow_monitoring_start_date: cast('2023-01-01' as date)
+  dbt_dag_monitoring:
+    dag_monitoring_start_date: cast('2023-01-01' as date)
 
 models:
-  dbt_airflow_monitoring:
+  dbt_dag_monitoring:
     marts:
       materialized: table
     staging:

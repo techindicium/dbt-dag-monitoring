@@ -13,7 +13,7 @@ with
             , owners 
             , '{{ src }}' as source_system
         from         
-            {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_dag_' + src) }}
+            {{ ref('stg_dag_' + src) }}
         {% if not loop.last -%} union {% endif -%}
     {% endfor -%}
     )

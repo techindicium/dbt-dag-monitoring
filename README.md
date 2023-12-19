@@ -32,7 +32,7 @@ You should also populate a variable with the enabled dags metadata sources. This
 
 ```
 models:
-    dbt_airflow_monitoring:
+    dbt_dag_monitoring:
         staging:
             materialized: ephemeral
         marts:
@@ -43,15 +43,15 @@ models:
 ```
 vars:
     enabled_sources: ['airflow', 'adf'] # Possible values airflow, adf and databricks_workflow.
-    dbt_airflow_monitoring:
-       airflow_monitoring_start_date: cast('2023-01-01' as date) # edit date here
+    dbt_dag_monitoring:
+       dag_monitoring_start_date: cast('2023-01-01' as date) # edit date here
 ```
 
 It's also necessary to switch on/off the models from dags sources you have data from.
 example for running for adf and airflow:
 ```
 models:
-  dbt_airflow_monitoring:
+  dbt_dag_monitoring:
     marts:
       materialized: table
     staging:
@@ -66,12 +66,12 @@ models:
 To set the package`s source you can add/modify the following variables inside dbt_project.yml
 ```
 vars:
-  airflow_monitoring_airflow_database: landing_zone
-  airflow_monitoring_airflow_schema: airflow_metadata
-  airflow_monitoring_databricks_database: raw_catalog
-  airflow_monitoring_databricks_schema: databricks_metadata
-  airflow_monitoring_adf_database: raw
-  airflow_monitoring_adf_schema: adf_metadata
+  dag_monitoring_airflow_database: landing_zone
+  dag_monitoring_airflow_schema: airflow_metadata
+  dag_monitoring_databricks_database: raw_catalog
+  dag_monitoring_databricks_schema: databricks_metadata
+  dag_monitoring_adf_database: raw
+  dag_monitoring_adf_schema: adf_metadata
 ```
 
 ## Airflow metadata

@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fact_airflow_monitoring_dag_run
+  - name: fact_dag_monitoring_dag_run
     description: "Tabela de eventos das execuções das DAGs do Airflow"
     columns:
       - name: 'dag_run_sk'
@@ -14,7 +14,7 @@ models:
         description: "Identificador das DAGs."
         tests: 
           - relationships:
-              to: ref('dim_airflow_monitoring_dag')
+              to: ref('dim_dag_monitoring_dag')
               field: dag_sk
 
       - name: generated_date
