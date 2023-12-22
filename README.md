@@ -23,7 +23,7 @@ dbt_utils package. Read more about them [here](https://hub.getdbt.com/dbt-labs/d
 1. Include this package in your `packages.yml` file.
 ```yaml
 packages:
-  - git: "https://github.com/techindicium/dbt-airflow-monitoring.git" # insert git URL
+  - git: "https://github.com/techindicium/dbt-dag-monitoring.git" # insert git URL
 ```
 
 2. Run `dbt deps` to install the package.
