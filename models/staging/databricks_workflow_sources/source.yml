@@ -3,8 +3,8 @@ version: 2
 sources:
   - name: raw_databricks_workflow_monitoring
     description: "Dados brutos retirados do databricks para análise de monitoramento do databricks."
-    database: "{{ var('airflow_monitoring_databricks_database', '')}}"
-    schema: "{{ var('airflow_monitoring_databricks_schema',  raw_databricks_workflow_monitoring) }}"
+    database: "{{ var('dag_monitoring_databricks_database', '')}}"
+    schema: "{{ var('dag_monitoring_databricks_schema',  raw_databricks_workflow_monitoring) }}"
     tables:
       - name: databricks_jobs
         description: "Tabela que contem informações sobre as jobs(DAGs) do databricks."

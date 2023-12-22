@@ -3,7 +3,7 @@ with
         select 
             dag_id
             , dag_sk as dag_fk
-        from {{ ref('dim_airflow_monitoring_dag') }}
+        from {{ ref('dim_dag_monitoring_dag') }}
     )
     , util_days as (
         select cast(date_day as date) as date_day
@@ -23,7 +23,7 @@ with
             , external_trigger
             , run_type
             , '{{ src }}' as source_system
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_dag_run_' + src) }}
+        from {{ ref('stg_dag_run_' + src) }}
         {% if not loop.last -%} union {% endif -%}
         {% endfor -%}
     )

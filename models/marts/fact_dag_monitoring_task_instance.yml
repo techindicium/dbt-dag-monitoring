@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fact_airflow_monitoring_task_instance
+  - name: fact_dag_monitoring_task_instance
     description: "Tabela de eventos das instâncias das tarefas do Airflow"
     columns:
       - name: task_instance_sk
@@ -14,14 +14,14 @@ models:
         description: "Identificador das tarefas"
         tests:
           - relationships:
-              to: ref('dim_airflow_monitoring_task')
+              to: ref('dim_dag_monitoring_task')
               field: task_sk 
 
       - name: dag_fk
         description: "Identificador das DAGs."
         tests:
           - relationships:
-              to: ref('dim_airflow_monitoring_dag')
+              to: ref('dim_dag_monitoring_dag')
               field: dag_sk
 
       - name: generated_date

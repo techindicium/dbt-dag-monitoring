@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: dim_airflow_monitoring_task
+  - name: dim_dag_monitoring_task
     description: "Tabela de dimensões das tarefas do Airflow"
     columns:
       - name: task_sk

@@ -5,7 +5,7 @@
 {% if execute %}
     {% set today = run_query(my_query).columns[0].values()[0] %}
     {% set tomorrow = dateadd('day', 1, "'" ~ today ~ "'") %}
-    {% set start_date = var('dbt_airflow_monitoring')['airflow_monitoring_start_date'] %}
+    {% set start_date = var('dbt_dag_monitoring')['dag_monitoring_start_date'] %}
     {% else %}
     {% set tomorrow = ' ' %}
     {% set start_date = ' ' %}

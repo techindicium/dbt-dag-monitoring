@@ -9,7 +9,7 @@ with
             , task_pool
             , map_index
             , '{{ src }}' as source_system
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_instance_' + src) }}
+        from {{ ref('stg_task_instance_' + src) }}
         {% if not loop.last -%} union {% endif -%}
         {% endfor -%}
     )   
@@ -23,7 +23,7 @@ with
             , null as operator
             , null as task_pool
             , '{{ src }}' as source_system
-        from {{ ref('stg_airflow_monitoring_raw_airflow_monitoring_task_fail_' + src) }}
+        from {{ ref('stg_task_fail_' + src) }}
         {% if not loop.last -%} union {% endif -%}
         {% endfor -%}
     )
