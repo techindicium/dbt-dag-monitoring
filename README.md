@@ -7,6 +7,8 @@ Tools supported:
 - Apache Airflow
 - Databricks Workflows
 
+If you are cloning this repository, we recommend that the clone happens via SSH key. 
+
 # :running: Quickstart
 
 New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/building-a-dbt-project/package-management/).
@@ -16,7 +18,7 @@ dbt version
 * ```dbt version >= 1.0.0```
 
 dbt_utils package. Read more about them [here](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/).
-* ```dbt-labs/dbt_utils version: 0.8.0``` 
+* ```dbt-labs/dbt_utils version: 1.1.0``` 
 
 ## Installation
 
@@ -27,8 +29,6 @@ packages:
 ```
 
 2. Run `dbt deps` to install the package.
-
-
 
 ## Configuring models package
 
@@ -54,7 +54,8 @@ vars:
 ```
 
 It's also necessary to switch on/off the models from dags sources you have data from.
-example for running for adf and airflow:
+
+Example for running for adf and airflow:
 ```
 models:
   dbt_dag_monitoring:
@@ -69,8 +70,21 @@ models:
         enabled: false
 ```
 
-To set the package`s source you can add/modify the following variables inside dbt_project.yml
+To set the package`s source you can add/modify the following variables inside dbt_project.yml. It's necessary to activate/deactivate the corresponding sources.
 ```
+sources:
+dbt_dag_monitoring:
+    staging:
+     adf_sources:
+        raw_adf_monitoring:
+         +enabled: # true/false
+     databricks_workflow_sources:
+        raw_databricks_workflow_monitoring:
+         +enabled: # true/false
+     airflow_sources:
+        raw_airflow_monitoring:
+         +enabled: # true/false
+
 vars:
   dag_monitoring_airflow_database: landing_zone
   dag_monitoring_airflow_schema: airflow_metadata
@@ -78,11 +92,18 @@ vars:
   dag_monitoring_databricks_schema: databricks_metadata
   dag_monitoring_adf_database: raw
   dag_monitoring_adf_schema: adf_metadata
-```
+
 
 ## Airflow metadata
 
-The airflow sources are based on the Airflow metadata database, any form of extraction from it should suffice
+The airflow sources are based on the Airflow metadata database, any form of extraction from it should suffice.
+
+The package is consistent with any type of EL process, and the data warehouse must have the following tables:
+- dag_run
+- task_instance
+- task_fail
+- dag
+
 
 ## ADF Metadata
 
@@ -105,6 +126,3 @@ specifically the streams:
 ## ADF
 
 - maybe we should change the unique key for pipelines instead of deduping here. etag is the pipeline version, we are using it for deduping
-
-
-
