@@ -121,8 +121,4 @@ specifically the streams:
 - jobs
 - job_runs
 
-# Improvements
 
-## ADF
-
-- maybe we should change the unique key for pipelines instead of deduping here. etag is the pipeline version, we are using it for deduping
