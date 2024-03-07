@@ -6,7 +6,7 @@ sources:
     database: "{{ var('dag_monitoring_databricks_database', '')}}"
     schema: "{{ var('dag_monitoring_databricks_schema',  raw_databricks_workflow_monitoring) }}"
     tables:
-      - name: databricks_jobs
+      - name: jobs
         description: "Tabela que contem informações sobre as jobs(DAGs) do databricks."
         columns:
           - name: job_id
@@ -46,7 +46,7 @@ sources:
           - name: ind_extraction_date
             description: "Data de extração da tabela"
 
-      - name: databricks_job_runs
+      - name: job_runs
         description: "Tabela que contem dados das execuções dos Pipelines(jobs) do databricks."
         columns:
           - name: run_id
