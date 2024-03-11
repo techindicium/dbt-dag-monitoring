@@ -35,7 +35,8 @@ packages:
 ## Configuring models package
 
 ### Models:
-The functioning of the package on the desired platform depends on the configuration of dbt_project.yml. To define which platform we are transforming the data to, “true” information must appear in the “enabled” field of the referring platform. Other platforms must keep the field “enabled” filled with the information “false” .
+The functioning of the package on the desired platform depends on the configuration of dbt_project.yml. To define which platform we are transforming the data to, the enabled field must be "true", for the desired platform, and "false" for all others.
+
 ### Vars:
 Then, we define the variables: in the first line we determine which platform dbt should consider the variables for. In the third line we define which data the monitoring will be based on, and in the following lines we define which database and data schema will be used, according to the platform defined above.
 ```
@@ -50,6 +51,8 @@ models:
         enabled: #true or false
       databricks_workflow_sources:
         enabled: #true or false
+```
+...
 ```
 vars:
   enabled_sources: ['airflow'] #Possible values: 'airflow', 'adf' or 'databricks_workflow'
