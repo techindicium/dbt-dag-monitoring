@@ -15,12 +15,7 @@ profile: dbt_dag_monitoring
 models:
   dbt_dag_monitoring:
     marts:
-     materialized: table
+      +materialized: table
     staging:
-     airflow_sources:
-        enabled: true
-     adf_sources:
-        enabled: false
-     databricks_workflow_sources:
-        enabled: false
+      +materialized: view
 
