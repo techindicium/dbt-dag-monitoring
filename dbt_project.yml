@@ -1,14 +1,14 @@
 name: 'dbt_dag_monitoring'
 version: '0.2.0'
 
-require-dbt-version: [">=1.0.0", "<2.0.0"]
+require-dbt-version: [">=1.3.0", "<2.0.0"]
 
 config-version: 2
 
 target-path: "target"
 clean-targets: ["target", "dbt_modules", "dbt_packages"]
 macro-paths: ["macros"]
-log-path: "logs" 
+log-path: "logs"
 
 profile: dbt_dag_monitoring
 

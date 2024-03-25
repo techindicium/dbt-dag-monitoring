@@ -15,7 +15,7 @@ New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/bu
 
 ## Requirements
 dbt version
-* ```dbt version >= 1.0.0```
+* ```dbt version >= 1.3.0```
 
 dbt_utils package. Read more about them [here](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/).
 * ```dbt-labs/dbt_utils version: 1.1.0``` 
@@ -55,15 +55,15 @@ models:
 ...
 ```
 vars:
-  enabled_sources: ['airflow'] #Possible values: 'airflow', 'adf' or 'databricks_workflow'
   dbt_dag_monitoring:
-  dag_monitoring_start_date: cast('2023-01-01' as date)
-  dag_monitoring_airflow_database: #landing_zone
-  dag_monitoring_airflow_schema: #airflow_metadata
-  dag_monitoring_databricks_database: #raw_catalog
-  dag_monitoring_databricks_schema: #databricks_metadata
-  dag_monitoring_adf_database: #raw
-  dag_monitoring_adf_schema: #adf_metadata
+    enabled_sources: ['airflow'] #Possible values: 'airflow', 'adf' or 'databricks_workflow'
+    dag_monitoring_start_date: cast('2023-01-01' as date)
+    dag_monitoring_airflow_database: #landing_zone
+    dag_monitoring_airflow_schema: #airflow_metadata
+    dag_monitoring_databricks_database: #raw_catalog
+    dag_monitoring_databricks_schema: #databricks_metadata
+    dag_monitoring_adf_database: #raw
+    dag_monitoring_adf_schema: #adf_metadata
 ```
 
 ## Airflow metadata
