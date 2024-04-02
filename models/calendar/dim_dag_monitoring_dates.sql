@@ -4,7 +4,7 @@ with
     {{ dbt_utils.date_spine(
         datepart="day",
         start_date="cast('1970-01-01' as date)",
-        end_date="dateadd(year, 100, to_date(current_date()))"
+        end_date="dateadd(year, 100, cast(current_date as date))"
         )
     }}
 )
@@ -13,7 +13,7 @@ with
     , days_info as (
         select
             cast(date_day as date) as data_dia
-            , dayofweek(date_day) as dia_da_semana
+            , extract(DOW from date_day) as dia_da_semana
             , extract(month from date_day) as mes
             , extract(quarter from date_day) as trimestre
             , extract(dayofyear from date_day) as dia_do_ano
