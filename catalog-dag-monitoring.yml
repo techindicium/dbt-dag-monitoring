@@ -1,0 +1,30 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+ name: dbt_dag_monitoring
+ description: |
+    DAG Monitoring is a product designed to monitor orquestration metadata, formed by a tap, a dbt package and a Power BI dashboard.
+ tags:
+   - product
+   - airflow
+   - monitoring
+   - powerbi
+ links:
+   - title: Wiki
+     url: https://wiki.indicium.tech/en/central_dados/squad_produtos_horizontais/squad_produtos_horizontais/dag-monitoring
+   - title: Repository
+     url: https://github.com/techindicium/dbt-dag-monitoring
+ annotations:
+   indicium.tech/product-url: https://app.powerbi.com/groups/1c5de32c-67f7-493c-ad6d-1d1c574b98bb/reports/132e0228-08ba-4f24-b6c4-a4974414e4b8/ReportSection?experience=power-bi
+spec:
+ title: DAG Monitoring
+ team: Produtos Horizontais
+ class: Técnico
+ vertical: Monitoring
+ businessUnit: TI
+ interface: Dashboard
+ language: Portuguese
+ owner: Indicium
+ type: product
+ lifecycle: experimental
+ system: public-websites
