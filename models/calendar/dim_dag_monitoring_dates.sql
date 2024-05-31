@@ -16,7 +16,7 @@ with
             , extract(DOW from date_day) as dia_da_semana
             , extract(month from date_day) as mes
             , extract(quarter from date_day) as trimestre
-            , extract(dayofyear from date_day) as dia_do_ano
+            , {{ day_of_year("date_day") }} as dia_do_ano
             , extract(year from date_day) as ano
             , to_char(date_day, 'DD-MM') AS dia_mes
         from dates_raw
