@@ -60,8 +60,9 @@ jobs:
           NEXT_VERSION="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.${VERSION_PARTS[2]}"
           echo ::set-output name=NEXT_VERSION::"$NEXT_VERSION"
 
-#      - name: Create and publish new tag
-#        run: |
+      - name: Create and publish new tag
+        run: |
+           echo ${{ steps.nextversion.outputs.NEXT_VERSION }}
 #          git tag ${{ steps.nextversion.outputs.NEXT_VERSION }}
 #          git push origin ${{ steps.nextversion.outputs.NEXT_VERSION }}
 
