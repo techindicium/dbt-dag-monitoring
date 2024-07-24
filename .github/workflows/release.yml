@@ -10,7 +10,7 @@ name: Release Drafter and Publisher
 on:
   push:
       branches:
-        - hotfix/automatic-releases
+        - major/automatic-releases
 
 permissions:
   contents: read
