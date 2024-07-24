@@ -1,6 +1,14 @@
 # Dag Monitoring
 This package allows you to easily monitor your DAGs from well known orchestration tools, providing helpful info to improve your data pipeline.
 
+## Before creating a branch
+
+Pay attention, it is very important to know if your modification to this repository is a release/major (breaking changes), a feature/minor (functionalities) or a patch(to fix bugs). With that information, create your branch name like this:
+
+- `release/<branch-name>` or `major/<branch-name>` or `Release/<branch-name>` or `Major/<branch-name>`
+- `feature/<branch-name>` or `minor/<branch-name>` with capitalised letters work as well
+- `patch/<branch-name>` or `fix/<branch-name>` or `hotfix/<branch-name>` with capitalised letters work as well
+
 # Revisions
 0.3.0 - For Snowflake warehouses
 0.3.1 - For Redshift warehouses
