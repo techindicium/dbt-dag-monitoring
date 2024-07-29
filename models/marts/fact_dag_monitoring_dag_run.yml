@@ -2,42 +2,42 @@ version: 2
 
 models:
   - name: fact_dag_monitoring_dag_run
-    description: "Tabela de eventos das execuções das DAGs do Airflow"
+    description: "Events table of Airflow DAG executions"
     columns:
       - name: 'dag_run_sk'
-        description: "Chave surrogate key. Composta por: dag_run_id, execution_start_date e execution_end_date"
+        description: "Surrogate key. Composed of: dag_run_id, execution_start_date and execution_end_date"
         tests:
           - unique
           - not_null
             
       - name: dag_fk 
-        description: "Identificador das DAGs."
+        description: "DAGs ids."
         tests: 
           - relationships:
               to: ref('dim_dag_monitoring_dag')
               field: dag_sk
 
       - name: generated_date
-        description: "Data de execução da DAG."
+        description: "date of execution of the DAG."
         tests:
           - relationships:
               to: ref('dbt_utils_day')
               field: date_day
 
       - name: external_trigger
-        description: "Aponta se a execução da DAG foi acionada externamente (True / False)."
+        description: "Points out if the DAG execution was triggered externally (True / False)."
 
       - name: execution_start_date
         description: "Data e hora em que iniciou a execução da DAG."
 
       - name: execution_end_date
-        description: "Data e hora em que finalizou a execução da DAG."
+        description: "Date and hour when the DAG execution ended."
 
       - name: run_type
-        description: "Tipo de execução da DAG."
+        description: "Type of execution of the DAG."
 
       - name: duration
-        description: "Tempo de execução em segundos."
+        description: "Execution time in seconds."
 
       - name: source_system
-        description: "Sistema de onde os dados foram extraidos, atualmente os valores possiveis são airflow, adf e databricks_workflow"
+        description: "System where the data was extracted from, currently the possible values are airflow, adf and databricks_workflow."
