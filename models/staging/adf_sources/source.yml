@@ -2,134 +2,134 @@ version: 2
 
 sources:
   - name: raw_adf_monitoring
-    description: "Dados brutos retirados do ADF para análise de monitoramento do ADF."
+    description: " Raw data extracted from ADF for ADF monitoring analysis."
     database: "{{ var('dag_monitoring_adf_database', '')}}"
     schema: "{{ var('dag_monitoring_adf_schema',  raw_adf_monitoring) }}"
     tables:
       - name: adf_pipeline_runs
-        description: "Tabela que contem dados das execuções dos Pipelines do ADF."
+        description: "table that contains data from ADF pipeline runs."
         columns:
           - name: id
-            description: "Identificador único da tabela."
+            description: "Table id."
             tests:
               - not_null
               - unique
 
           - name: pipelineName
-            description: "Nome do pipeline da dag run."
+            description: " Name of the pipeline of the dag run."
             tests:
               - not_null
 
           - name: runStart
-            description: "Data de execução."
+            description: "Execution date"
 
           - name: status
-            description: "O estado da DAG run."
+            description: "DAG run state."
 
           - name: invokedBy
-            description: "Aponta se a execução da DAG foi acionada externamente (True / False)."
+            description: "Points if the DAG run was triggered externally (True / False)."
 
           - name: runStart
-            description: "Data e hora em que iniciou a execução da DAG."
+            description: "Date and time when the DAG run started."
 
           - name: runEnd
-            description: "Data e hora em que encerrou a execução da DAG."
+            description: "Date and time when the DAG run ended."
 
           - name: durationInMs
-            description: "Duração do dag em Millisegundos"
+            description: "DAG duration in Milliseconds"
 
       - name: adf_activity_runs
-        description: "Tabela que contem dados das tarefas com falhas do ADF."
+        description: "table that contains data from ADF activity runs."
         columns:
           - name: activityRunId
-            description: "Identificador da tarefa."
+            description: "task id."
             tests:
               - not_null
 
           - name: pipelineName
-            description: "Identificador da pipeline a qual pertence essa activity."
+            description: "Pipeline id to which this activity belongs."
             tests:
               - not_null
 
           - name: pipelineRunId
-            description: "Identificador da execução da pipeline a qual pertence essa activity."
+            description: "Pipeline execution id to which this activity belongs."
             tests:
               - not_null
 
           - name: activityRunStart
-            description: "Data e hora inicio da execução."
+            description: " Date and time when the execution started."
 
           - name: activityRunEnd
-            description: "Data e hora final da execução."
+            description: "Date and time when the execution ended."
 
           - name: durationInMs
-            description: "Duração da execução em Millisegundos."
+            description: "Duration of the execution in Milliseconds."
 
           - name: map_index
-            description: "Índice de mapeamento."
+            description: "Mapping index"
 
       - name: adf_pipelines
-        description: "Tabela que contem informações sobre as pipelines(DAGs) do ADF."
+        description: "Table that contains information about ADF pipelines."
         columns:
           - name: id
-            description: "Identificador único da tabela."
+            description: "table id."
             tests:
               - not_null
               - unique
 
           - name: is_paused
-            description: "Se a DAG está pausada."
+            description: "If the dag is paused."
 
           - name: is_active
-            description: "Se a DAG está ativa."
+            description: "If the DAG is active."
 
           - name: description
-            description: "Descrição sobre a DAG."
+            description: "DAG description"
 
           - name: fileloc
-            description: "Caminho do arquivo que precisa ser importado para carregar este DAG."
+            description: "File path that needs to be imported to load this DAG."
 
           - name: owners
-            description: "Proprietário da DAG."
+            description: "DAG owner."
 
           - name: timetable_description
-            description: "Descrição da tabela de agendamento"
+            description: "Description of the scheduling table"
 
           - name: ind_extraction_date
-            description: "Data de extração da tabela"
+            description: "Date of extraction of the table"
 
       - name: adf_triggers
-        description: "Tabela que contem informações sobre as triggers do ADF."
+        description: "Table that contains information about ADF triggers."
         columns:
           - name: id
-            description: "Identificador único da tabela."
+            description: "Identification of the table."
             tests:
               - not_null
               - unique
 
           - name: properties.runtimeState
-            description: "Se o gatilhos está ativo ou nao"
+            description: "If the trigger is active or not."
 
           - name: properties.annotations
-            description: "Annotations no trigger."
+            description: "Annotations in the trigger."
 
           - name: properties.pipelines
-            description: "Pipelines que são executados por esse gatilho."
+            description: "Pipelines that are executed by this trigger."
 
           - name: properties.typeProperties.recurrence.frequency
-            description: "Frequência com que o pipeline é executado e.g Hour, Day, Week, Month"
+            description: "Frequency with which the pipeline is executed e.g Hour, Day, Week, Month"
           
           - name: properties.typeProperties.recurrence.interval
-            description: "A cada quantas 'frequency' esse trigger é executado e.g 1 Day, 2 Week, sendo 1 e 2 o interval"
+            description: "In how many 'frequency' this trigger is executed e.g 1 Day, 2 Week, being 1 and 2 the interval"
           
           - name: properties.typeProperties.recurrence.schedule
-            description: "Agendamento definido pela tabela"
+            description: "Scheduling defined by the table"
 
           - name: properties.typeProperties.recurrence.startTime
-            description: "Primeira execução"
+            description: "First execution"
 
           - name: properties.typeProperties.recurrence.timeZone
-            description: "Fuso horário do gatilho"
+            description: "Time zone of the trigger"
     
       - name: dbt_utils_day
-        description: "Tabela que contem dados das datas criadas a partir da macro do dbt_utils."
+        description: "Table that contains data from the dates created from the dbt_utils macro."

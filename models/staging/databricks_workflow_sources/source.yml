@@ -2,21 +2,22 @@ version: 2
 
 sources:
   - name: raw_databricks_workflow_monitoring
-    description: "Dados brutos retirados do databricks para análise de monitoramento do databricks."
+    description: "Raw data from databricks for databricks monitoring analysis."
     database: "{{ var('dag_monitoring_databricks_database', '')}}"
     schema: "{{ var('dag_monitoring_databricks_schema',  raw_databricks_workflow_monitoring) }}"
     tables:
       - name: jobs
-        description: "Tabela que contem informações sobre as jobs(DAGs) do databricks."
+        description: " Table that contains information about databricks jobs(DAGs)."
         columns:
           - name: job_id
-            description: "Identificador único da tabela."
+            description: "Table unique identifier."
             tests:
               - not_null
               - unique
 
           - name: settings
-            description: 'Json de configs do job, com o formato a seguir:
+            description: |
+            Job configuration json like the following:
             {
                 "email_notifications": {
                     "no_alert_for_skipped_runs": false,
@@ -35,58 +36,56 @@ sources:
                 },
                 "timeout_seconds": "0"
               }
-            '
 
           - name: created_time
-            description: "Timestamp de criação do job."
+            description: "Timestamp of the job creation"
 
           - name: creator_user_name
-            description: "Email do criador do job."
+            description: "E-mail of the job creator"
 
           - name: ind_extraction_date
-            description: "Data de extração da tabela"
+            description: "Date of extraction of the table"
 
       - name: job_runs
-        description: "Tabela que contem dados das execuções dos Pipelines(jobs) do databricks."
+        description: "Table that contains the execution data of the Databricks pipelines(jobs)"
         columns:
           - name: run_id
-            description: "Identificador único da tabela. Id do job run"
+            description: "Unique identifier of the table. Job run id"
             tests:
               - not_null
               - unique
 
           - name: job_id
-            description: "Id do job"
+            description: "Job id."
        
           - name: state
             description: | 
-              Json com propriedades do estado da execução do pipeline no seguinte formato:
+              Json with state property of the pipeline execution in the following format:
               {
                   "life_cycle_state": "TERMINATED",
                   "result_state": "SUCCESS",
                   "state_message": "",
                   "user_cancelled_or_timedout": false
               }
-                
 
           - name: trigger
-            description: "Aponta como foi disparada a execução do pipeline."
+            description: "It tells how the pipeline execution was triggered."
 
           - name: start_time
-            description: "Timestamp em que iniciou a execução da DAG."
+            description: "Timestamp when the DAG execution started."
 
           - name: end_time
-            description: "Timestamp em que encerrou a execução da DAG."
+            description: "Timestamp when the DAG execution ended."
 
           - name: execution_duration
-            description: "Duração do dag em Millisegundos"
+            description: "Duration of DAG in milliseconds."
 
           - name: run_type
-            description: "Tipo da execução"
+            description: "Type of execution"
 
           - name: tasks
             description: |
-              Lista de objetos com informação sobre as tasks. Exemplo de json de task:
+              List of objects with information about the tasks. Example of a task in json:
               {
                 "attempt_number": "0",
                 "cleanup_duration": "0",
@@ -119,4 +118,4 @@ sources:
               }
          
       - name: dbt_utils_day
-        description: "Tabela que contem dados das datas criadas a partir da macro do dbt_utils."
+        description: "Table that contains data of the dates created by the dbt_utils macro."

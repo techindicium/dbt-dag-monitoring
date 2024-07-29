@@ -1,4 +1,4 @@
-/* gerando datas usando a macro do pacote dbt-utils */
+/* generating dates using a dbt-utils macro */
 with
     dates_raw as (
     {{ dbt_utils.date_spine(
@@ -9,7 +9,7 @@ with
     }}
 )
 
-/* extraindo algumas informações da data e renomeando algumas colunas para o português */
+/* extracting some date information and changing some columns language to portuguese */
     , days_info as (
         select
             cast(date_day as date) as data_dia
@@ -22,7 +22,7 @@ with
         from dates_raw
     )
 
-/* renomeando os significados das colunas, traduzindo-os para o português */
+/* changing meaning of columns to portuguese */
     , days_named as (
         select
             *
@@ -81,7 +81,7 @@ with
     )
 
     , flags_cte as (
-        /*flags de feriado e dia util*/
+        /*flags related to holidays and business days*/
         select
             *
             , case
@@ -111,7 +111,7 @@ with
         from days_named
     )
 
-/* reorganizando as colunas */
+/* reorganizing the columns */
     , final_cte as (
         select
             data_dia

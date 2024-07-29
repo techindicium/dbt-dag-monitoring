@@ -11,43 +11,43 @@ models:
           - not_null 
 
       - name: task_fk 
-        description: "Identificador das tarefas"
+        description: "Id of the tasks"
         tests:
           - relationships:
               to: ref('dim_dag_monitoring_task')
               field: task_sk 
 
       - name: dag_fk
-        description: "Identificador das DAGs."
+        description: "Id of the DAG."
         tests:
           - relationships:
               to: ref('dim_dag_monitoring_dag')
               field: dag_sk
 
       - name: generated_date
-        description: "Data de execução da DAG."
+        description: "Date of execution of the DAG."
         tests:
           - relationships:
               to: ref('dbt_utils_day')
               field: date_day
 
       - name: execution_start_date
-        description: "Data e hora em que iniciou a execução da DAG."
+        description: " Date and hour when the DAG execution started."
 
       - name: execution_end_date
-        description: "Data e hora em que finalizou a execução da DAG."
+        description: "Date and hour when the DAG execution ended."
 
       - name: duration
-        description: "Duração da execução da tarefa."
+        description: "Duration of the execution in seconds."
       
       - name: state_task_instance
-        description: "O estado da execução da tarefa."
+        description: "The state of the task execution."
 
       - name: try_number
-        description: "Número de tentativas de execução."
+        description: "The number of attempts to execute."
 
       - name: priority_weight
-        description: "Prioridade da tarefa."
+        description: "Task priority."
 
       - name: source_system
-        description: "Sistema de onde os dados foram extraidos, atualmente os valores possiveis são airflow, adf e databricks_workflow"
+        description: " System where the data was extracted from, currently the possible values are airflow, adf and databricks_workflow."

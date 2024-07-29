@@ -11,34 +11,34 @@ models:
           - not_null
             
       - name: dag_id
-        description: "Identificador único da tabela source."
+        description: "Source table ID."
         tests:
           - unique
           - not_null
       
       - name: dag_name
-        description: "Nome descritivo do dag."
+        description: "Descriptive name for DAG."
 
       - name: dag_description
-        description: "Descrição sobre a DAG."
+        description: "Description about the DAG."
 
       - name: dag_frequency
-        description: "Frequência com o que as DAGs são executadas."
+        description: "DAG frequency for execution."
 
       - name: timetable_description
-        description: "Agendamento da execução das DAGs."
+        description: "DAGs execution scheduling."
 
       - name: is_paused
-        description: "Se a DAG está em pausa"
+        description: "Is the DAG paused."
 
       - name: is_active
-        description: "Se a DAG está ativa."
+        description: "Is the DAG active."
 
       - name: fileloc
-        description: "Caminho do arquivo que precisa ser importado para carregar este DAG. `codigo_atributo` na source: 11"
+        description: "path to file that needs to be imported to load this DAG. `source_code` in source: 11"
 
       - name: owners
-        description: "Proprietário da DAG."
+        description: "DAG owner."
 
       - name: source_system
-        description: "Sistema de onde os dados foram extraidos, atualmente os valores possiveis são airflow, adf e databricks_workflow"
+        description: "System where the data was extracted from, currently the possible values are airflow, adf and databricks_workflow"

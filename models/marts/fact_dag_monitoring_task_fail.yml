@@ -2,43 +2,43 @@ version: 2
 
 models:
   - name: fact_dag_monitoring_task_fail
-    description: "Tabela de eventos das falhas das tarefas do Airflow"
+    description: "Events table of Airflow tasks failures"
     columns:
       - name: task_fail_sk
-        description: "Chave surrogate key. Composta por: task_fail_id, execution_end_date e execution_start_date"
+        description: "Surrogate key. Composed of: task_fail_id, execution_end_date and execution_start_date"
         tests:
           - unique 
           - not_null
             
       - name: task_fk
-        description: "Identificador unico da execução das tarefas."
+        description: "Unique identifier of the task execution."
         tests:
           - relationships:
               to: ref('dim_dag_monitoring_task')
               field: task_sk
 
       - name: dag_fk
-        description: "Identificador das DAGs."
+        description: "Id of the DAG."
         tests:
           - relationships:
               to: ref('dim_dag_monitoring_dag')
               field: dag_sk
 
       - name: generated_date
-        description: "Data de execução da DAG."
+        description: "Date of execution of the DAG."
         tests:
           - relationships:
               to: ref('dbt_utils_day')
               field: date_day
 
       - name: execution_start_date
-        description: "Data e hora em que iniciou a execução da DAG."
+        description: " Date and hour when the DAG execution started."
 
       - name: execution_end_date
-        description: "Data e hora em que finalizou a execução da DAG."
+        description: "Date and hour when the DAG execution ended."
 
       - name: duration
-        description: "Tempo de duração da execução em segundos."
+        description: "Duration of the execution in seconds."
 
       - name: source_system
-        description: "Sistema de onde os dados foram extraidos, atualmente os valores possiveis são airflow, adf e databricks_workflow"
+        description: " System where the data was extracted from, currently the possible values are airflow, adf and databricks_workflow."
