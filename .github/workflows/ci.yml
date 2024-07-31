@@ -17,8 +17,8 @@ env:
     DBT_DEFAULT_TARGET: dev
     DEV_CATALOG_NAME: caixa-demo-core-dev
     DEV_SCHEMA_NAME: ci_dag_monitoring
-    DEV_HOST: ${{ secrets.DEV_HOST }}
-    DEV_TOKEN: ${{ secrets.DEV_TOKEN }}
+    DEV_HOST: ${{ secrets.DATABRICKS_HOST }}
+    DEV_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
     DEV_HTTP_PATH: ${{ secrets.HTTP_PATH }}
 
 
