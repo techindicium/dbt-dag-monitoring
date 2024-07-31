@@ -43,5 +43,5 @@ jobs:
       - name: Run dbt debug
         run: dbt debug
 
-    #   - name: Run dbt compile
-    #     run: dbt compile
+      - name: dbt parse  # does not need to connect to the database
+        run: dbt parse
