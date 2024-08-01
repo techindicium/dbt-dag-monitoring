@@ -1,16 +1,11 @@
 name: CI
 
-# on:
-#   pull_request:
-#     types:
-#       - opened
-#     branches:
-#       - main
-
 on:
-    push:
-        branches:
-        - feature/how-to-test      
+  pull_request:
+    types:
+      - opened
+    branches:
+      - main   
 
 env:
     DBT_PROFILES_DIR: ${{ github.workspace }}
