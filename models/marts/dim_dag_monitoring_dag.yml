@@ -2,10 +2,10 @@ version: 2
 
 models:
   - name: dim_dag_monitoring_dag
-    description: "Tabela de dimensão das DAGs do Airflow"
+    description: "Dimension table for Airflow DAGs"
     columns:
       - name: 'dag_sk'
-        description: "Chave surrogate key. Composta por: dag_id"
+        description: "Surrogate key. Composed of: dag_id"
         tests:
           - unique
           - not_null

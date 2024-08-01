@@ -2,3 +2,6 @@ venv
 dbt_packages
 target
 *logs
+.env
+env
+.user.yml
