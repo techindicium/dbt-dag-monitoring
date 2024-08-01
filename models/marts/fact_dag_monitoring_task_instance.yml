@@ -2,10 +2,10 @@ version: 2
 
 models:
   - name: fact_dag_monitoring_task_instance
-    description: "Tabela de eventos das instâncias das tarefas do Airflow"
+    description: "Events table of Airflow task instances"
     columns:
       - name: task_instance_sk
-        description: "Chave surrogate key. Composta por: task_instance_id, execution_end_date e execution_start_date"
+        description: "Surrogate key. Composed of: task_instance_id, execution_end_date, and execution_start_date"
         tests:
           - unique
           - not_null 
