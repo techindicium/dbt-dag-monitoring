@@ -198,7 +198,7 @@ force_enable = False
 unquoted_identifiers_policy = aliases
 quoted_identifiers_policy = none
 # Comma separated list of words to ignore for this rule
-ignore_words = map_index, hostname
+ignore_words = map_index, hostname, operator, task_pool, row_number
 ignore_words_regex = None
 
 [sqlfluff:rules:references.special_chars]
