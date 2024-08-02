@@ -9,9 +9,10 @@ with
             , runStart as execution_start_date
             , runEnd as execution_end_date
             , durationInMs / 1000 as duration
-            , "not_implemented_by_adf" as run_type
+            , 'not_implemented_by_adf' as run_type
             , {{ cast_as_string('runId') }} as run_id
         from {{ source('raw_adf_monitoring', 'adf_pipeline_runs') }}
     )
+
 select *
 from renamed
