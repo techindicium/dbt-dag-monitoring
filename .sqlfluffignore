@@ -1,0 +1,6 @@
+macros/
+env/
+logs/
+integration_tests/
+target/
+dbt_packages/
