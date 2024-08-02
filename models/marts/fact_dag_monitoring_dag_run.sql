@@ -1,17 +1,19 @@
 with
     dim_dag as (
-        select 
+        select
             dag_id
             , dag_sk as dag_fk
         from {{ ref('dim_dag_monitoring_dag') }}
     )
-    , util_days as (
+
+, util_days as (
         select cast(date_day as date) as date_day
         from {{ ref('dbt_utils_day') }}
     )
-    , stg_dag_run as (
+
+, stg_dag_run as (
         {% for src in var('enabled_sources') -%}
-        select 
+        select
             dag_run_id
             , dag_id
             , run_id
@@ -26,8 +28,9 @@ with
         from {{ ref('stg_dag_run_' + src) }}
         {% if not loop.last -%} union {% endif -%}
         {% endfor -%}
-    )
-    , joined as (
+)
+
+, joined as (
         select
             stg_dag_run.dag_run_id
             , dim_dag.dag_fk
@@ -38,15 +41,16 @@ with
             , stg_dag_run.execution_end_date
             , stg_dag_run.dag_state
             , stg_dag_run.external_trigger
-            , stg_dag_run.run_type 
+            , stg_dag_run.run_type
             , stg_dag_run.duration
             , stg_dag_run.source_system
         from stg_dag_run
         left join dim_dag on stg_dag_run.dag_id = dim_dag.dag_id
         left join util_days on stg_dag_run.run_date = util_days.date_day
     )
-    , joined_with_sk as (
-        select 
+
+, joined_with_sk as (
+        select
             {{ dbt_utils.generate_surrogate_key([
                 'dag_run_id'
                 , 'execution_start_date'
@@ -63,5 +67,6 @@ with
             , source_system
         from joined
     )
+
 select *
 from joined_with_sk

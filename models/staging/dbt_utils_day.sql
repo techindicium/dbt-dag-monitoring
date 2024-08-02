@@ -1,5 +1,5 @@
 {% set my_query %}
-    select cast({{current_timestamp()}} as date)
+    select cast({{ current_timestamp() }} as date)
 {% endset %}
 
 {% if execute %}

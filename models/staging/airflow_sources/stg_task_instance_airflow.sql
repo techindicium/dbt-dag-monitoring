@@ -14,14 +14,15 @@ with
             , pool as task_pool
             , priority_weight
             , operator
-            , case 
+            , case
                 when map_index = -1 then 'no mapping'
             end as map_index
         from {{ source('raw_airflow_monitoring', 'task_instance') }}
     )
-    , created_id as (
+
+, created_id as (
         /*Table does not have a unique identifier, the id was created as the unique identification of records*/
-        select 
+        select
             {{ dbt_utils.generate_surrogate_key(['task_id', 'dag_id', 'run_id']) }} as task_instance_sk
             , task_id
             , dag_id
@@ -39,5 +40,6 @@ with
             , map_index
         from renamed
     )
+
 select *
 from created_id

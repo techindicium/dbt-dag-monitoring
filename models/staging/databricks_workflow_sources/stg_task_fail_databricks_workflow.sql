@@ -9,9 +9,10 @@ with renamed as (
         , execution_end_date
         , duration
         , 'not_implemented_for_databricks_workflow' as map_index
-    from 
+    from
         {{ ref('stg_task_instance_databricks_workflow') }}
-    where 
+    where
         state_task_instance in ('MAXIMUM_CONCURRENT_RUNS_REACHED', 'CANCELED', 'FAILED', 'UPSTREAM_FAILED')
 )
+
 select * from renamed

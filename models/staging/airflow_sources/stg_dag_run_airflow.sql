@@ -13,5 +13,6 @@ with
             , {{ cast_as_string('run_id') }} as run_id
         from {{ source('raw_airflow_monitoring', 'dag_run') }}
     )
+
 select *
 from renamed
