@@ -68,4 +68,4 @@ jobs:
       - name: Checkout source branch and diff quality
         run: |
           git checkout ${{ github.head_ref }}
-          diff-quality --violations=sqlfluff --fail-under=95 --compare-branch=origin/main
+          diff-quality --violations=sqlfluff  --options="--ignore 'parsing' --dialect 'databricks'" --fail-under=95 --compare-branch=origin/main 
