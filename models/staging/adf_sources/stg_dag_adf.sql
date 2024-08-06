@@ -7,13 +7,13 @@ with exploded_by_pipeline as (
 
 , triggers_renamed as (
     select
-        id as trigger_id
+        exploded_by_pipeline.id as trigger_id
         , case
-            when properties.typeProperties.recurrence.frequency = 'Hour' then 'hourly'
-            when properties.typeProperties.recurrence.frequency = 'Day' then 'daily'
-            when properties.typeProperties.recurrence.frequency = 'Week' then 'weekly'
-            when properties.typeProperties.recurrence.frequency = 'Month' then 'monthly'
-            when properties.typeProperties.recurrence.frequency = 'Minute' then 'minutely'
+            when exploded_by_pipeline.properties.typeProperties.recurrence.frequency = 'Hour' then 'hourly'
+            when exploded_by_pipeline.properties.typeProperties.recurrence.frequency = 'Day' then 'daily'
+            when exploded_by_pipeline.properties.typeProperties.recurrence.frequency = 'Week' then 'weekly'
+            when exploded_by_pipeline.properties.typeProperties.recurrence.frequency = 'Month' then 'monthly'
+            when exploded_by_pipeline.properties.typeProperties.recurrence.frequency = 'Minute' then 'minutely'
         end as dag_frequency
         , cast(properties.typeProperties.recurrence.schedule as varchar(255)) as timetable_description
         , properties.typeProperties.recurrence.frequency as adf_frequency
