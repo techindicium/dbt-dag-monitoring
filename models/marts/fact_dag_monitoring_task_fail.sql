@@ -1,24 +1,27 @@
 with
     dim_dag as (
-        select 
+        select
             dag_id
             , dag_sk as dag_fk
         from {{ ref('dim_dag_monitoring_dag') }}
     )
-    , dim_task as (
+
+, dim_task as (
         select
             task_sk as task_fk
             , task_id
             , dag_id
-        from {{ ref('dim_dag_monitoring_task') }} 
+        from {{ ref('dim_dag_monitoring_task') }}
     )
-    , util_days as (
+
+, util_days as (
         select cast(date_day as date) as date_day
         from {{ ref('dbt_utils_day') }}
     )
-    , stg_task_fail as (
+
+, stg_task_fail as (
         {% for src in var('enabled_sources') -%}
-        select 
+        select
             task_fail_id
             , task_id
             , dag_id
@@ -32,8 +35,9 @@ with
         from {{ ref('stg_task_fail_' + src) }}
         {% if not loop.last -%} union {% endif -%}
         {% endfor -%}
-    )
-    , joined as (
+)
+
+, joined as (
         select
             stg_task_fail.task_fail_id
             , stg_task_fail.task_id
@@ -48,12 +52,13 @@ with
             , stg_task_fail.source_system
         from stg_task_fail
         left join dim_dag on stg_task_fail.dag_id = dim_dag.dag_id
-        left join dim_task on 
+        left join dim_task on
             stg_task_fail.task_id = dim_task.task_id
             and stg_task_fail.dag_id = dim_task.dag_id
         left join util_days on stg_task_fail.execution_date = util_days.date_day
     )
-    , surrogate_key as (
+
+, surrogate_key as (
         select
             {{ dbt_utils.generate_surrogate_key([
                 'task_fail_id'
@@ -70,5 +75,6 @@ with
             , source_system
         from joined
     )
+
 select *
 from surrogate_key

@@ -1,7 +1,7 @@
 with
     stg_task_instance as (
         {% for src in var('enabled_sources') -%}
-        select distinct 
+        select distinct
             task_id
             , dag_id
             , hostname
@@ -12,10 +12,14 @@ with
         from {{ ref('stg_task_instance_' + src) }}
         {% if not loop.last -%} union {% endif -%}
         {% endfor -%}
-    )   
-    , stg_task_fail as (
+    
+
+
+)
+
+, stg_task_fail as (
         {% for src in var('enabled_sources') -%}
-        select distinct 
+        select distinct
             task_id
             , dag_id
             , map_index
@@ -26,8 +30,9 @@ with
         from {{ ref('stg_task_fail_' + src) }}
         {% if not loop.last -%} union {% endif -%}
         {% endfor -%}
-    )
-    , union_task_instance_with_fail as (
+)
+
+, union_task_instance_with_fail as (
         select
             task_id
             , dag_id
@@ -48,7 +53,8 @@ with
             , source_system
         from stg_task_fail
     )
-    , dedup_dim_task as (
+
+, dedup_dim_task as (
         select
             task_id
             , dag_id
@@ -57,19 +63,20 @@ with
             , operator
             , task_pool
             , source_system
-            , row_number() over(
-                partition by 
+            , row_number() over (
+                partition by
                     task_id
                     , dag_id
                     , source_system
-                order by 
+                order by
                     task_id
                     , dag_id
                     , source_system
                 ) as dedup
         from union_task_instance_with_fail
     )
-    , dim_task_with_sk as (
+
+, dim_task_with_sk as (
         select
             {{ dbt_utils.generate_surrogate_key([
                 'task_id'
@@ -85,5 +92,6 @@ with
         from dedup_dim_task
         where dedup = 1
     )
+
 select *
 from dim_task_with_sk

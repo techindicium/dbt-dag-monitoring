@@ -9,10 +9,11 @@ with
             , start_date as execution_start_date
             , end_date as execution_end_date
             , duration
-            , case 
+            , case
                 when map_index = -1 then 'no mapping'
             end as map_index
         from {{ source('raw_airflow_monitoring', 'task_fail') }}
     )
+
 select *
 from renamed

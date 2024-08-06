@@ -13,4 +13,5 @@ with renamed as (
     from
         {{ source('raw_databricks_workflow_monitoring', 'job_runs') }}
 )
+
 select * from renamed

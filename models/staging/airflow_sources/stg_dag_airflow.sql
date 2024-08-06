@@ -4,7 +4,7 @@ with
             {{ cast_as_string('dag_id') }} as dag_id
             , {{ cast_as_string('dag_id') }} as dag_name
             , description as dag_description
-            , case 
+            , case
                 when timetable_description like '% hour, between %' then 'hourly'
                 when timetable_description like 'Between %' then 'hourly'
                 when timetable_description like '% on day % month' then 'monthly'
@@ -20,5 +20,6 @@ with
             , owners
         from {{ source('raw_airflow_monitoring', 'dag') }}
     )
+
 select *
 from renamed

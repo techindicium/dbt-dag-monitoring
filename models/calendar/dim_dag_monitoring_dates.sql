@@ -13,12 +13,12 @@ with
     , days_info as (
         select
             cast(date_day as date) as data_dia
-            , extract(DOW from date_day) as dia_da_semana
+            , extract(dow from date_day) as dia_da_semana
             , extract(month from date_day) as mes
             , extract(quarter from date_day) as trimestre
             , {{ day_of_year("date_day") }} as dia_do_ano
             , extract(year from date_day) as ano
-            , to_char(date_day, 'DD-MM') AS dia_mes
+            , to_char(date_day, 'DD-MM') as dia_mes
         from dates_raw
     )
 
@@ -70,11 +70,11 @@ with
                 else '4º Trimestre'
             end as nome_trimestre
             , case
-                when trimestre in(1,2) then 1
+                when trimestre in (1, 2) then 1
                 else 2
             end as semestre
             , case
-                when trimestre in(1,2) then '1º Semestre'
+                when trimestre in (1, 2) then '1º Semestre'
                 else '2º Semestre'
             end as nome_semestre
         from days_info
@@ -96,7 +96,7 @@ with
                 else false
             end as fl_feriado
             , case
-                when dia_da_semana in(6, 0) then false
+                when dia_da_semana in (6, 0) then false
                 when dia_mes = '01-01' then false
                 when dia_mes = '21-04' then false
                 when dia_mes = '01-05' then false
@@ -107,7 +107,7 @@ with
                 when dia_mes = '25-12' then false
                 else true
             end as fl_dia_util
-            , coalesce(dia_da_semana in(6, 0), false) as fl_final_semana
+            , coalesce(dia_da_semana in (6, 0), false) as fl_final_semana
         from days_named
     )
 

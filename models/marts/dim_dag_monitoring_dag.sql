@@ -10,18 +10,20 @@ with
             , is_paused
             , is_active
             , fileloc
-            , owners 
+            , owners
             , '{{ src }}' as source_system
-        from         
+        from
             {{ ref('stg_dag_' + src) }}
         {% if not loop.last -%} union {% endif -%}
     {% endfor -%}
-    )
-    , stg_dag_with_sk as (
+)
+
+, stg_dag_with_sk as (
         select
             {{ dbt_utils.generate_surrogate_key(['dag_id']) }} as dag_sk
             , *
         from stg_dag
     )
+
 select *
 from stg_dag_with_sk
