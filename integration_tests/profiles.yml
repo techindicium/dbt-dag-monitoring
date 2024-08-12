@@ -1,0 +1,12 @@
+dbt_dag_monitoring_tests:
+  target: '{{ env_var(''DBT_DEFAULT_TARGET'', ''dev'')}}'
+  outputs:
+    dev:
+      ansi_mode: false
+      catalog: '{{ env_var(''DEV_CATALOG_NAME'')}}'
+      host: '{{ env_var(''DEV_HOST'') }}'
+      http_path: '{{ env_var(''DEV_HTTP_PATH'') }}'
+      schema: '{{ env_var(''DEV_SCHEMA_NAME'')}}'
+      threads: 16
+      token: '{{ env_var(''DEV_TOKEN'') }}'
+      type: databricks

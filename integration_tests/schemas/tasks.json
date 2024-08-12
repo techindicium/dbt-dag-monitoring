@@ -1,0 +1,66 @@
+{
+    "type": [
+      "array",
+      "null"
+    ],
+    "items": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [],
+      "properties": {
+        "run_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "task_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [],
+          "properties": {
+            "life_cycle_state": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "result_state": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "user_cancelled_or_timedout": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "state_message": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    }   
+}
