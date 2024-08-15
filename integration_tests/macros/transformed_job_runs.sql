@@ -1,4 +1,4 @@
-{%- macro teste() -%}
+{%- macro transformed_job_runs() -%}
 {% set create_table %}
 create or replace table `{{ target.database }}`.{{ target.schema }}.databricks_job_runs(
     run_id BIGINT,
@@ -261,9 +261,9 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
 {% endset %}
 
 {% do run_query(create_table) %}
-{% do log("finished creating tables", info=true) %}
+{% do log("finished creating table " ~ target.database ~ "." ~ target.schema ~ ".databricks_job_runs", info=true) %}
 
 {% do run_query(insert_table) %}
-{% do log("finished insert tables", info=true) %}
+{% do log("finished insert table " ~ target.database ~ "." ~ target.schema ~ ".databricks_job_runs", info=true) %}
 
 {%- endmacro -%}

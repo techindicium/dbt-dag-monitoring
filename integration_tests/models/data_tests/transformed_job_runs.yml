@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: transformed_job_runs
+    description: "This source was originated from the macro transformed_job_runs."
+    catalog: "{{ target.database }}"
+    schema: "{{ target.schema }}"
+    tables:
+      - name: databricks_job_runs

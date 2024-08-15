@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: raw_databricks_workflow_monitoring
+    description: "Raw data from databricks for databricks monitoring analysis."
+    database: "{{ var('dag_monitoring_databricks_database')}}"
+    schema: "{{ var('dag_monitoring_databricks_schema') }}"
+    tables:
+      - name: job_runs
+        data_tests: 
+          - dbt_utils.equality:
+              compare_model: source('transformed_job_runs', 'databricks_job_runs')
+              ignore_columns: ['cleanup_duration', 'creator_user_name', 'job_clusters', 'number_in_job', 'original_attempt_run_id', 'run_duration', 'run_name', 'run_page_url', 'setup_duration', 'state', 'InsertedDate']
+

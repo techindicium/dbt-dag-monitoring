@@ -29,9 +29,9 @@ vars:
   dbt_dag_monitoring:
     enabled_sources: ['databricks_workflow'] #Possible values: 'airflow', 'adf' or 'databricks_workflow'     . Possivelmente tirar isso
     dag_monitoring_start_date: cast('2023-01-01' as date)
-    #dag_monitoring_airflow_database: landing_zone
-    #dag_monitoring_airflow_schema: airflow_metadata
+    dag_monitoring_airflow_database: landing_zone
+    dag_monitoring_airflow_schema: airflow_metadata
     dag_monitoring_databricks_database: caixa-demo-core_main
     dag_monitoring_databricks_schema: raw_monitoring
-    #dag_monitoring_adf_database: raw
-    #dag_monitoring_adf_schema: adf_metadata
+    dag_monitoring_adf_database: raw
+    dag_monitoring_adf_schema: adf_metadata

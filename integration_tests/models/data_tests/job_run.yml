@@ -1,7 +1,0 @@
-# version: 2
-
-# sources:
-#   - name: compare_seed_job_run_to_model
-#     data_tests:
-#       - dbt_utils.equality:
-#           compare_model: ref('expected_results__compare_relations_without_exclude')
