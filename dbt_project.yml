@@ -12,6 +12,19 @@ log-path: "logs"
 
 profile: dbt_dag_monitoring
 
+sources:
+  dbt_dag_monitoring:
+    staging:
+      adf_sources:
+        raw_adf_monitoring:
+          +enabled: false
+      databricks_workflow_sources:
+        raw_databricks_workflow_monitoring:
+          +enabled: true
+      airflow_sources:
+        raw_airflow_monitoring:
+          +enabled: false
+
 models:
   dbt_dag_monitoring:
     marts:

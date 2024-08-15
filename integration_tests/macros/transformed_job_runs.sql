@@ -4,8 +4,8 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.databricks_j
     run_id BIGINT,
     job_id BIGINT,
     trigger STRING,
-    start_time TIMESTAMP,
-    end_time TIMESTAMP,
+    start_time BIGINT,
+    end_time BIGINT,
     execution_duration INT,
     run_type STRING,
     tasks ARRAY<STRUCT<
@@ -24,8 +24,8 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.databricks_j
         depends_on ARRAY<STRUCT<
             task_key STRING
         >>,
-        end_time TIMESTAMP,
-        execution_duration INT,
+        end_time BIGINT,
+        execution_duration BIGINT,
         existing_cluster_id STRING,
         git_source STRUCT<
             git_branch STRING,
@@ -46,8 +46,8 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.databricks_j
             source STRING
         >,
         run_id BIGINT,
-        setup_duration INT,
-        start_time TIMESTAMP,
+        setup_duration BIGINT,
+        start_time BIGINT,
         state STRUCT<
             life_cycle_state STRING,
             result_state STRING,
@@ -66,8 +66,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
     984645491483676,
     823250232903490,
     'PERIODIC',
-    TIMESTAMP '1970-01-01 00:00:00.000',
-    TIMESTAMP '1970-01-01 00:00:00.000',
+    172115000884834,
+    703673872655823,
     0,
     'JOB_RUN',
     ARRAY(
@@ -82,7 +82,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
             'depends_on', ARRAY(
                 NAMED_STRUCT('task_key', 'meltano_databricks_ops')
             ),
-            'end_time', TIMESTAMP '1970-01-01 00:00:00.000',
+            'end_time', 172115372793563,
             'execution_duration', 0,
             'existing_cluster_id', '0726-190025-l9rjt3er',
             'git_source', NAMED_STRUCT(
@@ -99,7 +99,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
             ),
             'run_id', 703673872655804,
             'setup_duration', 0,
-            'start_time', TIMESTAMP '1970-01-01 00:00:00.000',
+            'start_time', 172115150810239,
             'state', NAMED_STRUCT(
                 'life_cycle_state', 'BLOCKED',
                 'result_state', NULL,
@@ -119,7 +119,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
             'depends_on', ARRAY(
                 NAMED_STRUCT('task_key', 'meltano_init')
             ),
-            'end_time', TIMESTAMP '1970-01-01 00:00:00.000',
+            'end_time', 172078572305439,
             'execution_duration', 0,
             'existing_cluster_id', '0726-190025-l9rjt3er',
             'git_source', NAMED_STRUCT(
@@ -140,7 +140,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
             ),
             'run_id', 79128842213838,
             'setup_duration', 1000,
-            'start_time', TIMESTAMP '1970-01-01 00:00:00.000',
+            'start_time', 172115372792333,
             'state', NAMED_STRUCT(
                 'life_cycle_state', 'RUNNING',
                 'result_state', NULL,
@@ -155,8 +155,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
     499818295245560,
     641280523209372,
     'RUN_JOB_TASK',
-    TIMESTAMP '1970-01-01 00:00:00.000', -- replace with correct timestamp
-    TIMESTAMP '1970-01-01 00:00:00.000', -- replace with correct timestamp
+    172115270923634,
+    172115060238044,
     0,
     'JOB_RUN',
     ARRAY(
@@ -178,7 +178,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
                 'warehouse_id', NULL
             ),
             'depends_on', NULL,
-            'end_time', TIMESTAMP '1970-01-01 00:00:00.000', -- replace with correct timestamp
+            'end_time', 172115060802344, 
             'execution_duration', 3765000,
             'existing_cluster_id', '0726-130251-aj7rmr0x',
             'git_source', NAMED_STRUCT(
@@ -198,7 +198,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
             'notebook_task', NULL,
             'run_id', 26793638330567,
             'setup_duration', 284000,
-            'start_time', TIMESTAMP '1970-01-01 00:00:00.000', -- replace with correct timestamp
+            'start_time', 172374563302374,
             'state', NAMED_STRUCT(
                 'life_cycle_state', 'TERMINATED',
                 'result_state', 'SUCCESS',
@@ -227,7 +227,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
             'depends_on', ARRAY(
                 NAMED_STRUCT('task_key', 'execute_dbt_build')
             ),
-            'end_time', TIMESTAMP '1970-01-01 00:00:00.000', -- replace with correct timestamp
+            'end_time', 172374563302374, 
             'execution_duration', 247000,
             'existing_cluster_id', '0726-130251-aj7rmr0x',
             'git_source', NAMED_STRUCT(
@@ -247,7 +247,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.databricks_job_runs VALU
             'notebook_task', NULL,
             'run_id', 276320404580646,
             'setup_duration', 2000,
-            'start_time', TIMESTAMP '1970-01-01 00:00:00.000', -- replace with correct timestamp
+            'start_time', 172374563302374, 
             'state', NAMED_STRUCT(
                 'life_cycle_state', 'TERMINATED',
                 'result_state', 'SUCCESS',
