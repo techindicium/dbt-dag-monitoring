@@ -11,8 +11,8 @@ on:
 env:
     DBT_PROFILES_DIR: ${{ github.workspace }}
     DBT_DEFAULT_TARGET: dev
-    DEV_CATALOG_NAME: caixa-demo-core_main
-    DEV_SCHEMA_NAME: raw
+    DEV_CATALOG_NAME: caixa-demo-core_dev
+    DEV_SCHEMA_NAME: dev_laysa_bitencourt
     DEV_HOST: ${{ secrets.DATABRICKS_HOST }}
     DEV_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
     DEV_HTTP_PATH: ${{ secrets.HTTP_PATH }}
@@ -44,3 +44,11 @@ jobs:
 
       - name: dbt compile
         run: dbt compile
+
+      - name: dbt seed for Databricks
+        run: dbt seed --target databricks
+
+      - name: dbt build for Databricks
+        run: dbt run --target databricks
+
+      
