@@ -2,4 +2,4 @@ version: 2
 
 macros:
   - name: transformed_job_runs
-    description: "This macro transforms the job_runs table. Recebe string em tasks e devolve como struct"
+    description: "This macro transforms the job_runs table. It receives a string in tasks and returns it as a struct. Necessary to test the integrity of job_runs, as an ordinary seed could not do the job, since columns of it are arrays." 

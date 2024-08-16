@@ -6,7 +6,7 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.databricks_j
     trigger STRING,
     start_time BIGINT,
     end_time BIGINT,
-    execution_duration INT,
+    execution_duration BIGINT,
     run_type STRING,
     tasks ARRAY<STRUCT<
         attempt_number INT,
