@@ -10,8 +10,7 @@ dbt_dag_monitoring:
             token: "{{ env_var('DEV_TOKEN') }}"
             threads: 16
             ansi_mode: false
-
-         snowflake:
+        snowflake:
             type: snowflake
             account: "{{ env_var('SNOWFLAKE_TEST_ACCOUNT') }}"
             user: "{{ env_var('SNOWFLAKE_TEST_USER') }}"
@@ -19,5 +18,7 @@ dbt_dag_monitoring:
             role: "{{ env_var('SNOWFLAKE_TEST_ROLE') }}"
             database: "{{ env_var('SNOWFLAKE_TEST_DATABASE') }}"
             warehouse: "{{ env_var('SNOWFLAKE_TEST_WAREHOUSE') }}"
-            schema: codegen_integration_tests_snowflake
+            schema: "{{ env_var('SNOWFLAKE_TEST_SCHEMA') }}"
             threads: 1
+            connect_retries: 1
+            connect_timeout: 10 # default: 10

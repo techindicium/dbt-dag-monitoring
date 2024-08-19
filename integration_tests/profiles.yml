@@ -1,7 +1,7 @@
 dbt_dag_monitoring_tests:
-  target: '{{ env_var(''DBT_DEFAULT_TARGET'', ''dev'')}}'
+  target: '{{ env_var(''DBT_DEFAULT_TARGET'', ''databricks'')}}'
   outputs:
-    dev:
+    databricks:
       ansi_mode: false
       catalog: '{{ env_var(''DEV_CATALOG_NAME'')}}'
       host: '{{ env_var(''DEV_HOST'') }}'
@@ -10,3 +10,14 @@ dbt_dag_monitoring_tests:
       threads: 16
       token: '{{ env_var(''DEV_TOKEN'') }}'
       type: databricks
+
+    snowflake:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_TEST_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_TEST_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_TEST_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_TEST_ROLE') }}"
+      database: "{{ env_var('SNOWFLAKE_TEST_DATABASE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_TEST_WAREHOUSE') }}"
+      schema: "{{ env_var('SNOWFLAKE_TEST_SCHEMA') }}"
+      threads: 1
