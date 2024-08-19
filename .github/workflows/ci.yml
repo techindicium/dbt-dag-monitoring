@@ -77,7 +77,8 @@ jobs:
           DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
-          dbt debug
+          dbt build
+          dbt seed
 
       # - name: dbt seed for Databricks
       #   run: dbt seed --target databricks
