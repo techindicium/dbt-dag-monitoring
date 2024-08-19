@@ -11,7 +11,7 @@ on:
 env:
     DBT_PROFILES_DIR: ${{ github.workspace }}
     DBT_DEFAULT_TARGET: databricks
-    DEV_CATALOG_NAME: caixa-demo-core_dev
+    DEV_CATALOG_NAME: cdi_dev
     DEV_SCHEMA_NAME: dev_laysa_bitencourt
     DEV_HOST: ${{ secrets.DATABRICKS_HOST }}
     DEV_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
