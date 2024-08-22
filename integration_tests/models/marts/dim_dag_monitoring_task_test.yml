@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: dim_dag_monitoring_task_test
+    description: "dimensions table for Airflow tasks"
+    
+    columns:
+      - name: task_sk
+        description: "Surrogate key. Composed of: task_id and dag_id" 
+        tests:
+          - unique
+          - not_null 
+            
+      - name: task_id
+        description: "task id."
+        tests:
+          - not_null
+
+      - name: dag_id
+        description: "DAG id."
+        tests:
+          - not_null
+
+      - name: map_index
+        description: "Index for mapping."
+
+      - name: hostname
+        description: "Task hostname."
+
+      - name: operator
+        description: " Task operator model."
+
+      - name: task_pool
+        description: " Airflow's pool in which the task should be executed."
+
+      - name: source_system
+        description: " System where the data was extracted from, currently the possible values are airflow, adf and databricks_workflow."

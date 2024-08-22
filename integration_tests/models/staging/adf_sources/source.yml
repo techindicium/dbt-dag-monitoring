@@ -1,0 +1,135 @@
+version: 2
+
+sources:
+  - name: raw_adf_monitoring
+    description: " Raw data extracted from ADF for ADF monitoring analysis."
+    database: "{{ var('dag_monitoring_adf_database', '')}}"
+    schema: "{{ var('dag_monitoring_adf_schema',  raw_adf_monitoring) }}"
+    tables:
+      - name: adf_pipeline_runs
+        description: "table that contains data from ADF pipeline runs."
+        columns:
+          - name: id
+            description: "Table id."
+            tests:
+              - not_null
+              - unique
+
+          - name: pipelineName
+            description: " Name of the pipeline of the dag run."
+            tests:
+              - not_null
+
+          - name: runStart
+            description: "Execution date"
+
+          - name: status
+            description: "DAG run state."
+
+          - name: invokedBy
+            description: "Points if the DAG run was triggered externally (True / False)."
+
+          - name: runStart
+            description: "Date and time when the DAG run started."
+
+          - name: runEnd
+            description: "Date and time when the DAG run ended."
+
+          - name: durationInMs
+            description: "DAG duration in Milliseconds"
+
+      - name: adf_activity_runs
+        description: "table that contains data from ADF activity runs."
+        columns:
+          - name: activityRunId
+            description: "task id."
+            tests:
+              - not_null
+
+          - name: pipelineName
+            description: "Pipeline id to which this activity belongs."
+            tests:
+              - not_null
+
+          - name: pipelineRunId
+            description: "Pipeline execution id to which this activity belongs."
+            tests:
+              - not_null
+
+          - name: activityRunStart
+            description: " Date and time when the execution started."
+
+          - name: activityRunEnd
+            description: "Date and time when the execution ended."
+
+          - name: durationInMs
+            description: "Duration of the execution in Milliseconds."
+
+          - name: map_index
+            description: "Mapping index"
+
+      - name: adf_pipelines
+        description: "Table that contains information about ADF pipelines."
+        columns:
+          - name: id
+            description: "table id."
+            tests:
+              - not_null
+              - unique
+
+          - name: is_paused
+            description: "If the dag is paused."
+
+          - name: is_active
+            description: "If the DAG is active."
+
+          - name: description
+            description: "DAG description"
+
+          - name: fileloc
+            description: "File path that needs to be imported to load this DAG."
+
+          - name: owners
+            description: "DAG owner."
+
+          - name: timetable_description
+            description: "Description of the scheduling table"
+
+          - name: ind_extraction_date
+            description: "Date of extraction of the table"
+
+      - name: adf_triggers
+        description: "Table that contains information about ADF triggers."
+        columns:
+          - name: id
+            description: "Identification of the table."
+            tests:
+              - not_null
+              - unique
+
+          - name: properties.runtimeState
+            description: "If the trigger is active or not."
+
+          - name: properties.annotations
+            description: "Annotations in the trigger."
+
+          - name: properties.pipelines
+            description: "Pipelines that are executed by this trigger."
+
+          - name: properties.typeProperties.recurrence.frequency
+            description: "Frequency with which the pipeline is executed e.g Hour, Day, Week, Month"
+          
+          - name: properties.typeProperties.recurrence.interval
+            description: "In how many 'frequency' this trigger is executed e.g 1 Day, 2 Week, being 1 and 2 the interval"
+          
+          - name: properties.typeProperties.recurrence.schedule
+            description: "Scheduling defined by the table"
+
+          - name: properties.typeProperties.recurrence.startTime
+            description: "First execution"
+
+          - name: properties.typeProperties.recurrence.timeZone
+            description: "Time zone of the trigger"
+    
+      - name: dbt_utils_day
+        description: "Table that contains data from the dates created from the dbt_utils macro."

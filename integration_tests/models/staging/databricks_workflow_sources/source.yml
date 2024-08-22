@@ -1,0 +1,64 @@
+version: 2
+
+sources:
+  - name: raw_databricks_workflow_monitoring_test
+    description: "Raw data from databricks for databricks monitoring analysis."
+    database: "{{ var('dag_monitoring_databricks_database', '')}}"
+    schema: "{{ var('dag_monitoring_databricks_schema',  '') }}"
+    tables:
+      - name: jobs
+        description: " Table that contains information about databricks jobs(DAGs)."
+        columns:
+          - name: job_id
+            description: "Table unique identifier."
+            tests:
+              - not_null
+              - unique
+
+          - name: settings
+            description: '{{ doc("settings_doc") }}'
+
+          - name: created_time
+            description: "Timestamp of the job creation"
+
+          - name: creator_user_name
+            description: "E-mail of the job creator"
+
+          - name: ind_extraction_date
+            description: "Date of extraction of the table"
+
+      - name: job_runs
+        description: "Table that contains the execution data of the Databricks pipelines(jobs)"
+        columns:
+          - name: run_id
+            description: "Unique identifier of the table. Job run id"
+            tests:
+              - not_null
+              - unique
+
+          - name: job_id
+            description: "Job id."
+       
+          - name: state
+            description: '{{ doc("state_doc") }}'
+
+          - name: trigger
+            description: "It tells how the pipeline execution was triggered."
+
+          - name: start_time
+            description: "Timestamp when the DAG execution started."
+
+          - name: end_time
+            description: "Timestamp when the DAG execution ended."
+
+          - name: execution_duration
+            description: "Duration of DAG in milliseconds."
+
+          - name: run_type
+            description: "Type of execution"
+
+          - name: tasks
+            description: '{{ doc("tasks_doc") }}'
+         
+      - name: dbt_utils_day
+        description: "Table that contains data of the dates created by the dbt_utils macro."

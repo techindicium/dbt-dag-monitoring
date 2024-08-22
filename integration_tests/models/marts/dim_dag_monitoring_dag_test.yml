@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: dim_dag_monitoring_dag_test
+    description: "Dimension table for Airflow DAGs"
+    columns:
+      - name: 'dag_sk'
+        description: "Surrogate key. Composed of: dag_id"
+        tests:
+          - unique
+          - not_null
+            
+      - name: dag_id
+        description: "Source table ID."
+        tests:
+          - unique
+          - not_null
+      
+      - name: dag_name
+        description: "Descriptive name for DAG."
+
+      - name: dag_description
+        description: "Description about the DAG."
+
+      - name: dag_frequency
+        description: "DAG frequency for execution."
+
+      - name: timetable_description
+        description: "DAGs execution scheduling."
+
+      - name: is_paused
+        description: "Is the DAG paused."
+
+      - name: is_active
+        description: "Is the DAG active."
+
+      - name: fileloc
+        description: "path to file that needs to be imported to load this DAG. `source_code` in source: 11"
+
+      - name: owners
+        description: "DAG owner."
+
+      - name: source_system
+        description: "System where the data was extracted from, currently the possible values are airflow, adf and databricks_workflow"

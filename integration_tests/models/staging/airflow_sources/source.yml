@@ -1,0 +1,152 @@
+version: 2
+
+sources:
+  - name: raw_airflow_monitoring
+    description: "Raw data extracted from Airflow for Airflow monitoring analysis."
+    database: "{{ var('dag_monitoring_airflow_database', '')}}"
+    schema: "{{ var('dag_monitoring_airflow_schema',  raw_airflow_monitoring) }}"
+    tables:
+      - name: dag_run
+        description: "Table that contains data from Airflow DAG runs."
+        columns:
+          - name: id
+            description: "Id of the table" 
+            tests:
+              - not_null
+              - unique
+
+          - name: dag_id
+            description: "Id of the dag run."
+            tests:
+              - not_null
+
+          - name: execution_date
+            description: "Date of execution."
+
+          - name: state
+            description: "state of the DAG run."
+
+          - name: external_trigger
+            description: "Points if the DAG run was triggered externally (True / False)."
+
+          - name: start_date
+            description: "Date and time when the DAG run started."
+
+          - name: end_date
+            description: "Date and time when the DAG run ended."
+
+          - name: run_type
+            description: "Type of DAG run."
+
+      - name: task_instance
+        description: "Table that contains data from Airflow task instances."
+        columns:
+          - name: task_id
+            description: "Id of the executed task"
+            tests:
+              - not_null
+
+          - name: dag_id
+            description: "Identification of the dag."
+            tests:
+              - not_null
+          
+          - name: run_id
+            description: "Identification of the run."
+
+          - name: start_date
+            description: " Date and time when the execution started."
+
+          - name: end_date
+            description: "Date and time when the execution ended."
+
+          - name: duration
+            description: "Duration of the execution in seconds."
+
+          - name: state
+            description: "The state of the task execution."
+
+          - name: try_number
+            description: "Number of execution attempts."
+
+          - name: hostname
+            description: "Task hostname."
+
+          - name: pool
+            description: "The airflow pool in which the task should be executed."
+
+          - name: priority_weight
+            description: "Priority of the task."
+
+          - name: operator
+            description: "Task model operator."
+
+          - name: queue
+            description: "Task queue."
+
+          - name: pool_slots
+            description: "Pool slots quantity."
+
+          - name: map_index
+            description: "Mapping index."
+
+      - name: task_fail
+        description: "Table that contains data from Airflow tasks with failures."
+        columns:
+          - name: id
+            description: "Table id."
+            tests:
+              - not_null
+              - unique
+
+          - name: task_id
+            description: "Task id."
+            tests:
+              - not_null
+
+          - name: dag_id
+            description: "Dag id."
+            tests:
+              - not_null
+
+          - name: start_date
+            description: "Date and time when the execution started."
+
+          - name: end_date
+            description: "Date and time when the execution ended."
+
+          - name: duration
+            description: "Duration of the execution in seconds."
+
+          - name: map_index
+            description: "Mapping index"
+
+      - name: dag
+        description: "Table that contains information about Airflow DAGs."
+        columns:
+          - name: dag_id
+            description: "Dag id."
+            tests:
+              - not_null
+              - unique
+
+          - name: is_paused
+            description: "If the dag is paused."
+
+          - name: is_active
+            description: "If the DAG is active."
+
+          - name: description
+            description: "DAG description."
+
+          - name: fileloc
+            description: "File path that needs to be imported to load this DAG."
+
+          - name: owners
+            description: "DAG owner."
+
+          - name: timetable_description
+            description: "Description of the scheduling table."
+
+      - name: dbt_utils_day
+        description: "Table that contains data from dates created from the dbt_utils macro."

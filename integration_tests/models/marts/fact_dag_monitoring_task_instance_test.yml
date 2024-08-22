@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: fact_dag_monitoring_task_instance_test
+    description: "Events table of Airflow task instances"
+    columns:
+      - name: task_instance_sk
+        description: "Surrogate key. Composed of: task_instance_id, execution_end_date, and execution_start_date"
+        tests:
+          - unique
+          - not_null 
+
+      - name: task_fk 
+        description: "Id of the tasks"
+        tests:
+          - relationships:
+              to: ref('dim_dag_monitoring_task')
+              field: task_sk 
+
+      - name: dag_fk
+        description: "Id of the DAG."
+        tests:
+          - relationships:
+              to: ref('dim_dag_monitoring_dag')
+              field: dag_sk
+
+      - name: generated_date
+        description: "Date of execution of the DAG."
+        tests:
+          - relationships:
+              to: ref('dbt_utils_day')
+              field: date_day
+
+      - name: execution_start_date
+        description: " Date and hour when the DAG execution started."
+
+      - name: execution_end_date
+        description: "Date and hour when the DAG execution ended."
+
+      - name: duration
+        description: "Duration of the execution in seconds."
+      
+      - name: state_task_instance
+        description: "The state of the task execution."
+
+      - name: try_number
+        description: "The number of attempts to execute."
+
+      - name: priority_weight
+        description: "Task priority."
+
+      - name: source_system
+        description: " System where the data was extracted from, currently the possible values are airflow, adf and databricks_workflow."

@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: fact_dag_monitoring_task_fail_test
+    description: "Events table of Airflow tasks failures"
+    columns:
+      - name: task_fail_sk
+        description: "Surrogate key. Composed of: task_fail_id, execution_end_date and execution_start_date"
+        tests:
+          - unique 
+          - not_null
+            
+      - name: task_fk
+        description: "Unique identifier of the task execution."
+        tests:
+          - relationships:
+              to: ref('dim_dag_monitoring_task')
+              field: task_sk
+
+      - name: dag_fk
+        description: "Id of the DAG."
+        tests:
+          - relationships:
+              to: ref('dim_dag_monitoring_dag')
+              field: dag_sk
+
+      - name: generated_date
+        description: "Date of execution of the DAG."
+        tests:
+          - relationships:
+              to: ref('dbt_utils_day')
+              field: date_day
+
+      - name: execution_start_date
+        description: " Date and hour when the DAG execution started."
+
+      - name: execution_end_date
+        description: "Date and hour when the DAG execution ended."
+
+      - name: duration
+        description: "Duration of the execution in seconds."
+
+      - name: source_system
+        description: " System where the data was extracted from, currently the possible values are airflow, adf and databricks_workflow."
