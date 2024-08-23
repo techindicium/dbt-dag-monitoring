@@ -71,6 +71,9 @@ jobs:
         run: |
           dbt deps
           dbt seed --target databricks
+          dbt run-operation jobs --target databricks
+          dbt run-operation job_runs --target databricks
+          dbt test --target databricks
           dbt build --target databricks
 
 
