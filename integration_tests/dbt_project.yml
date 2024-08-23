@@ -9,6 +9,7 @@ target-path: "target"
 clean-targets: ["target", "dbt_modules", "dbt_packages"]
 macro-paths: ["macros"]
 log-path: "logs"
+seed-paths: ["seeds"]
 
 profile: dbt_dag_monitoring_tests
 
@@ -16,13 +17,40 @@ dispatch:
   - macro_namespace: 'dbt_utils'
     search_order: ['dbt_utils_integration_tests', 'dbt_utils']
 
+sources:
+  dbt_dag_monitoring_tests:
+    staging:
+      adf_sources:
+        raw_adf_monitoring:
+          +enabled: false
+      databricks_workflow_sources:
+        raw_databricks_workflow_monitoring:
+          +enabled: true
+      airflow_sources:
+        raw_airflow_monitoring:
+          +enabled: false
+
+models:
+  dbt_dag_monitoring_tests:
+    marts:
+      +materialized: table
+    staging:
+      adf_sources:  
+        +enabled: false
+      airflow_sources:
+        +enabled: false
+      databricks_workflow_sources:
+        +enabled: true
+      +materialized: view
+
 vars:
   dbt_dag_monitoring_tests:
     enabled_sources: ['databricks_workflow']
     dag_monitoring_start_date: cast('2023-01-01' as date)
-    dag_monitoring_airflow_database: #landing_zone
-    dag_monitoring_airflow_schema: #airflow_metadata
-    dag_monitoring_databricks_database: caixa-demo-core_main
-    dag_monitoring_databricks_schema: raw_monitoring
-    dag_monitoring_adf_database: #raw
-    dag_monitoring_adf_schema: #adf_metadata
+    dag_monitoring_airflow_database: landing_zone
+    dag_monitoring_airflow_schema: airflow_metadata
+    dag_monitoring_databricks_database: cdi_main
+    dag_monitoring_databricks_schema: dag_monitoring
+    dag_monitoring_adf_database: raw
+    dag_monitoring_adf_schema: adf_metadata
+  

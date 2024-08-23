@@ -4,7 +4,7 @@ sources:
   - name: raw_databricks_workflow_monitoring
     description: "Raw data from databricks for databricks monitoring analysis."
     database: "{{ var('dag_monitoring_databricks_database', '')}}"
-    schema: "{{ var('dag_monitoring_databricks_schema',  raw_databricks_workflow_monitoring) }}"
+    schema: "{{ var('dag_monitoring_databricks_schema',  '') }}"
     tables:
       - name: jobs
         description: " Table that contains information about databricks jobs(DAGs)."

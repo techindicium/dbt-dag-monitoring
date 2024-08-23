@@ -12,18 +12,10 @@ env:
     DBT_PROFILES_DIR: ${{ github.workspace }}
     DBT_DEFAULT_TARGET: databricks
     DEV_CATALOG_NAME: cdi_dev
-    DEV_SCHEMA_NAME: dev_laysa_bitencourt
+    DEV_SCHEMA_NAME: ci_dbt_dag_monitoring
     DEV_HOST: ${{ secrets.DATABRICKS_HOST }}
     DEV_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
     DEV_HTTP_PATH: ${{ secrets.HTTP_PATH }}
-
-    SNOWFLAKE_TEST_ROLE: INTERNAL_PRODUCTS_CICD
-    SNOWFLAKE_TEST_DATABASE: SANDBOX
-    SNOWFLAKE_TEST_WAREHOUSE: SANDBOX_WAREHOUSE
-    SNOWFLAKE_TEST_SCHEMA: INTERNAL_PRODUCTS_CICD
-    SNOWFLAKE_TEST_ACCOUNT: ${{ secrets.SNOWFLAKE_TEST_ACCOUNT }}
-    SNOWFLAKE_TEST_USER: ${{ secrets.SNOWFLAKE_TEST_USER }}
-    SNOWFLAKE_TEST_PASSWORD: ${{ secrets.SNOWFLAKE_TEST_PASSWORD }}
 
 jobs:
   dbt-checks:
@@ -78,8 +70,8 @@ jobs:
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
-          dbt build
-          dbt seed
+          dbt seed --target databricks
+          dbt build --target databricks
 
 
       
