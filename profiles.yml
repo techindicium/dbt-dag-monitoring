@@ -1,7 +1,7 @@
 dbt_dag_monitoring:
-    target: "{{ env_var('DBT_DEFAULT_TARGET', 'dev')}}"
+    target: "{{ env_var('DBT_DEFAULT_TARGET', 'databricks')}}"
     outputs:
-        dev: 
+        databricks: 
             type: databricks
             catalog: "{{ env_var('DEV_CATALOG_NAME')}}"
             schema: "{{ env_var('DEV_SCHEMA_NAME')}}"
