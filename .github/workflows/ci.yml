@@ -75,8 +75,6 @@ jobs:
           
           dbt run-operation jobs --target databricks
           dbt run-operation job_runs --target databricks
-          dbt run-operation adf_pipeline_runs --target databricks
-          dbt run-operation adf_triggers --target databricks
           
           dbt test --target databricks
           dbt build --target databricks
@@ -89,5 +87,11 @@ jobs:
 
       - name: Run dbt tasks for adf source
         run: |
+          dbt deps
+          dbt seed --target databricks
+
+          dbt run-operation adf_pipeline_runs --target databricks
+          dbt run-operation adf_triggers --target databricks
+
           dbt test --target databricks
-          #  dbt build --target databricks
+          dbt build --target databricks
