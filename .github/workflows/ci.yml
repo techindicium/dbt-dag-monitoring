@@ -86,6 +86,9 @@ jobs:
           cd integration_tests/
 
       - name: Run dbt tasks for adf source
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
           dbt seed --target databricks
