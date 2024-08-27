@@ -3,7 +3,7 @@ with exploded_by_pipeline as (
         *
     from 
         {{ source('raw_adf_monitoring', 'adf_triggers') }}
-    lateral view explode(properties.pipelines) as pipelines
+    {{ flatten_data('properties.pipelines') }} as pipelines
 ), 
 
 triggers_renamed as (

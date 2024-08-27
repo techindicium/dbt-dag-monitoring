@@ -1,33 +1,35 @@
-with tasks as (
-    select 
-        *
-    from 
-        {{ source('raw_databricks_workflow_monitoring', 'job_runs') }},
-        lateral flatten(input => tasks)
-),  
-renamed as (
-    select 
-        cast(tasks.key as string) as task_id
-        , cast(tasks.job_id as string) as dag_id
-        , cast(tasks.run_id as string) as run_id
-        , to_timestamp( tasks.start_time / 1000) as execution_date
-        , to_timestamp( tasks.start_time / 1000) as execution_start_date
-        , to_timestamp( tasks.end_time / 1000) as execution_end_date
-        , (tasks.execution_duration / 1000) as duration
-        , tasks.state:result_state as state_task_instance
-        , tasks.attempt_number as try_number
-        , tasks:notebook_task:notebook_path as hostname
-        , 'not_implemented_for_databricks_workflow' as task_pool
-        , 'not_implemented_for_databricks_workflow' as priority_weight
-        , case 
-            when tasks:notebook_task:notebook_path is not null then tasks:notebook_task:notebook_path 
-            else tasks.key
-        end as operator
-        , 'not_implemented_for_databricks_workflow' as map_index
-    from tasks
-)
+with
+    flatten_data as (
+        select
+            job_runs.job_id
+            , job_runs.inserteddate as inserted_date
+            , exploded_tasks.*
+        from
+            {{ source('raw_databricks_workflow_monitoring', 'job_runs') }} as job_runs
+            {{ flatten_data('tasks') }} as exploded_tasks
+    ) 
+    , renamed as (
+        select 
+            {{ cast_as_string("flatten_data.task_key") }} as task_id
+            , {{ cast_as_string("flatten_data.job_id") }} as dag_id
+            , {{ cast_as_string("flatten_data.run_id") }} as run_id
+            , to_timestamp( flatten_data.start_time / 1000) as execution_date
+            , to_timestamp( flatten_data.start_time / 1000) as execution_start_date
+            , to_timestamp( flatten_data.end_time / 1000) as execution_end_date
+            , (flatten_data.execution_duration / 1000) as duration
+            , state.result_state as state_task_instance
+            , attempt_number as try_number
+            , notebook_task.notebook_path as hostname
+            , 'not_implemented_for_databricks_workflow' as task_pool
+            , 'not_implemented_for_databricks_workflow' as priority_weight
+            , case 
+                when notebook_task.notebook_path is not null then notebook_task.notebook_path 
+                else flatten_data.task_key
+            end as operator
+            , 'not_implemented_for_databricks_workflow' as map_index
+        from flatten_data
+    )
 select 
     {{ dbt_utils.generate_surrogate_key(['task_id', 'dag_id', 'run_id']) }} as task_instance_sk
     , * 
-from 
-    renamed
+from renamed
