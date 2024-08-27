@@ -36,11 +36,11 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.adf_pipeline
 INSERT INTO `{{ target.database }}`.{{ target.schema }}.adf_pipeline_runs
 VALUES 
 (
-    '/SUBSCRIPTIONS/9F07555C-22AC-4CE8-9DEV-RG/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/TLO-DATASTUDIO-ADF-D/pipe082b73db5',
-    '9f81a5eb-a7ca-482e-833e-db6082b73db5',
+    '/SUBSCRIPTITLO-DATASTUDIO-ADF-D/pipe082b73db5',
+    '9f81a5eb--833e-db6082b73db5',
     NULL,  -- debugRunId
-    '9f81a5eb-a7ca-482e-833e-db6082b73db5',
-    'PL-FEMFILESCSVTODatalakeLandingZone-N',
+    '9f81a5eb-833e-db6082b73db5',
+    'PL-FEMFILingZone-N',
     NAMED_STRUCT(
         'ENVIRONMENT', 'FILESCSV',
         'RESET_TYPE', 'FULL',
@@ -65,7 +65,7 @@ VALUES
     true
 ),
 (
-    '/SUBSCRIPTIONS/9/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/TLO-DATASTUDIO-ADF-D/pipelinerua1-9313-73fa5c0a3f0e',
+    '/SUBSCRIPTIOTASTUDIO-ADF-D/pipelinerua1-9313-73fa5c0a3f0e',
     '64c7a8c7-30e2-4fa1-9313-73fa5c0a3f0e',
     NULL,  -- debugRunId
     '64c7a8c7-30e2-4fa1-9313-73fa5c0a3f0e',

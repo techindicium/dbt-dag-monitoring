@@ -97,7 +97,7 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.job_runs(
 INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 (
     0,
-    'marcus.canto@indicium.tech',
+    'marcum.tech',
     1720785705439,
     0,
     NULL,
@@ -106,8 +106,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     539935187772655,
     524911,
     539935187772655,
-    '[dev marcus_canto] dag_monitoring_notebook_job',
-    'https://adb-124029731635903.3.azuredatabricks.net/?o=124029731635903#job/724712624070673/run/539935187772655',
+    '[dev marcusook_job',
+    'https://ad29731635903#job/724712624070673/run/539935187772655',
     'JOB_RUN',
     NAMED_STRUCT(
         "pause_status", NULL,
@@ -208,7 +208,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 ),
 (
     0,
-    'marcus.canto@indicium.tech',
+    'marcus.m.tech',
     1720781204456,
     0,
     NULL,
@@ -217,8 +217,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     1104206444717471,
     114044,
     1104206444717471,
-    '[dev marcus_canto] dag_monitoring_notebook_job',
-    'https://adb-124029731635903.3.azuredatabricks.net/?o=124029731635903#job/388879741463141/run/1104206444717471',
+    '[deok_job',
+    'https://adb-12402#job/388879741463141/run/1104206444717471',
     'JOB_RUN',
     NAMED_STRUCT( 
         "pause_status", NULL, 
@@ -238,8 +238,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             'attempt_number', 0,
             'cleanup_duration', 0,
             'cluster_instance', NAMED_STRUCT(
-                'cluster_id', '0726-130251-aj7rmr0x',
-                'spark_context_id', '1302841573581174040'
+                'cluster_id', '0726-1mr0x',
+                'spark_context_id', '130284174040'
             ),
             'dbt_task', NAMED_STRUCT(
                 'commands', ARRAY(
@@ -254,15 +254,15 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             'depends_on', NULL,
             'end_time', 172115060802344, 
             'execution_duration', 3765000,
-            'existing_cluster_id', '0726-130251-aj7rmr0x',
+            'existing_cluster_id', '0726-130x',
             'git_source', NAMED_STRUCT(
                 'git_branch', NULL,
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', NAMED_STRUCT(
-                    'used_commit', '527373ab887ba768d1949e110fc19cac9f763fe9'
+                    'used_commit', '527373ab88fc19cac9f763fe9'
                 ),
                 'git_tag', 'production',
-                'git_url', 'https://bitbucket.org/indiciumtech/caixa_dbt_core'
+                'git_url', 'https://bitbucketaixa_dbt_core'
             ),
             'libraries', ARRAY(
                 NAMED_STRUCT('pypi', NAMED_STRUCT('package', 'dbt-databricks==1.7')),
@@ -311,7 +311,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                     'used_commit', '527373ab887ba768d1949e110fc19cac9f763fe9'
                 ),
                 'git_tag', 'production',
-                'git_url', 'https://bitbucket.org/indiciumtech/caixa_dbt_core'
+                'git_url', 'https://bitbu/caixa_dbt_core'
             ),
             'libraries', ARRAY(
                 NAMED_STRUCT('pypi', NAMED_STRUCT('package', 'dbt-databricks==1.7')),
