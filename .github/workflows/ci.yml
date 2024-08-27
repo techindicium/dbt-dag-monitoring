@@ -97,6 +97,4 @@ jobs:
           dbt run-operation adf_triggers --target databricks
 
           dbt test --target databricks
-
-          dbt seed --target databricks
           dbt build --target databricks

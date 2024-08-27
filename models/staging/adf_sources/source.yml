@@ -4,7 +4,7 @@ sources:
   - name: raw_adf_monitoring
     description: " Raw data extracted from ADF for ADF monitoring analysis."
     database: "{{ var('dag_monitoring_adf_database', '')}}"
-    schema: "{{ var('dag_monitoring_adf_schema',  raw_adf_monitoring) }}"
+    schema: "{{ var('dag_monitoring_adf_schema',  '') }}"
     tables:
       - name: adf_pipeline_runs
         description: "table that contains data from ADF pipeline runs."

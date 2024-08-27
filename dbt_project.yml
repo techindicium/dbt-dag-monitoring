@@ -9,6 +9,7 @@ target-path: "target"
 clean-targets: ["target", "dbt_modules", "dbt_packages"]
 macro-paths: ["macros"]
 log-path: "logs"
+seed-paths: ["seeds"] 
 
 profile: dbt_dag_monitoring
 
@@ -17,10 +18,10 @@ sources:
     staging:
       adf_sources:
         raw_adf_monitoring:
-          +enabled: false
+          +enabled: true
       databricks_workflow_sources:
         raw_databricks_workflow_monitoring:
-          +enabled: true
+          +enabled: false
       airflow_sources:
         raw_airflow_monitoring:
           +enabled: false
@@ -31,20 +32,20 @@ models:
       +materialized: table
     staging:
       adf_sources:  
-        +enabled: false
+        +enabled: true
       airflow_sources:
         +enabled: false
       databricks_workflow_sources:
-        +enabled: true
+        +enabled: false
       +materialized: view
 
 vars:
   dbt_dag_monitoring:
-    enabled_sources: ['databricks_workflow'] #Possible values: 'airflow', 'adf' or 'databricks_workflow'
+    enabled_sources: ['adf'] #Possible values: 'airflow', 'adf' or 'databricks_workflow'
     dag_monitoring_start_date: cast('2023-01-01' as date)
     dag_monitoring_airflow_database: landing_zone
     dag_monitoring_airflow_schema: airflow_metadata
     dag_monitoring_databricks_database: cdi_dev
-    dag_monitoring_databricks_schema: ci_dbt_dag_monitoring
+    dag_monitoring_databricks_schema: dev_laysa_bitencourt
     dag_monitoring_adf_database: cdi_dev
-    dag_monitoring_adf_schema: ci_dbt_dag_monitoring
+    dag_monitoring_adf_schema: dev_laysa_bitencourt
