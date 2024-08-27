@@ -40,7 +40,7 @@ models:
 
 vars:
   dbt_dag_monitoring:
-    enabled_sources: ['databricks_workflow_sources'] #Possible values: 'airflow', 'adf' or 'databricks_workflow'
+    enabled_sources: ['databricks_workflow'] #Possible values: 'airflow', 'adf' or 'databricks_workflow'
     dag_monitoring_start_date: cast('2023-01-01' as date)
     dag_monitoring_airflow_database: landing_zone
     dag_monitoring_airflow_schema: airflow_metadata
