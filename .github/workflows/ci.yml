@@ -72,7 +72,19 @@ jobs:
         run: |
           dbt deps
           dbt seed --target databricks
+          
           dbt run-operation jobs --target databricks
           dbt run-operation job_runs --target databricks
+          dbt run-operation adf_pipeline_runs --target databricks
+          dbt run-operation adf_triggers --target databricks
+          
           dbt test --target databricks
           dbt build --target databricks
+
+      - name: switch enabled sources for adf source
+        run: ./change_dbt_project_adf_source.sh
+
+      - name: Run dbt tasks for adf source
+        run: |
+          dbt test --target databricks
+          #  dbt build --target databricks
