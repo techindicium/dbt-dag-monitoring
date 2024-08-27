@@ -83,7 +83,7 @@ jobs:
 
       - name: switch enabled sources for adf source
         run: |
-          cd ..
+          cd ${{ github.workspace }}
           . change_dbt_project_adf_source.sh
           cd integration_tests/
 
