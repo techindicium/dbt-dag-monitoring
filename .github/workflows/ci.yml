@@ -60,10 +60,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      
-      - name: enter integration tests
+
+      - name: switch enabled sources for adf source
         run: |
+          . change_dbt_project_adf_source.sh
           cd integration_tests/
+      
+      #- name: enter integration tests
+      #  run: |
+      #    cd integration_tests/
       
       - name: Run dbt integration tests
         env:
@@ -81,11 +86,11 @@ jobs:
           dbt test --target databricks
           dbt build --target databricks
 
-      - name: switch enabled sources for adf source
-        run: |
-          cd ..
-          ./change_dbt_project_adf_source.sh
-          cd integration_tests/
+      #- name: switch enabled sources for adf source
+      #  run: |
+      #    cd ..
+      #    ./change_dbt_project_adf_source.sh
+      #    cd integration_tests/
 
       - name: Run dbt tasks for adf source
         run: |
