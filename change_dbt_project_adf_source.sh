@@ -2,6 +2,7 @@
 
 # Enable adf sources in dbt_project.yml
 sed -i '/raw_adf_monitoring:/,/enabled:/s/enabled: false/enabled: true/' dbt_project.yml
+
 # Disable databricks sources in dbt_project.yml
 sed -i 's/\(raw_databricks_workflow_monitoring:\s*\n\s*+enabled:\s*\)true/\1false/' dbt_project.yml
 
