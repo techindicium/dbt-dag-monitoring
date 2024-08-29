@@ -19,9 +19,9 @@ with
             task_id
             , dag_id
             , map_index
-            , null as hostname
-            , null as operator
-            , null as task_pool
+            , {{ cast_as_string('null') }} as hostname
+            , {{ cast_as_string('null') }} as operator
+            , {{ cast_as_string('null') }} as task_pool
             , '{{ src }}' as source_system
         from {{ ref('stg_task_fail_' + src) }}
         {% if not loop.last -%} union {% endif -%}
