@@ -43,7 +43,7 @@ with
             , stg_dag_run.source_system
         from stg_dag_run
         left join dim_dag on stg_dag_run.dag_id = dim_dag.dag_id
-        left join util_days on stg_dag_run.run_date = util_days.date_day
+        left join util_days on {{ cast_as_date('stg_dag_run.run_date') }} = {{ cast_as_date('util_days.date_day') }}
     )
     , joined_with_sk as (
         select 

@@ -1,10 +1,20 @@
+{% set end_date_query %}
+select {{ date_add("year", "100", "current_date()") }} 
+{% endset %}
+
+{% if execute %}
+    {%set end_date = run_query(end_date_query).columns[0].values()[0] %}
+    {% else %}
+    {% set end_date = ' ' %}
+{% endif %}
+
 /* generating dates using a dbt-utils macro */
 with
     dates_raw as (
     {{ dbt_utils.date_spine(
         datepart="day",
         start_date="cast('1970-01-01' as date)",
-        end_date="dateadd(year, 100, cast(current_date as date))"
+        end_date="cast('" ~ end_date ~ "' as date)"
         )
     }}
 )
@@ -13,12 +23,12 @@ with
     , days_info as (
         select
             cast(date_day as date) as data_dia
-            , extract(DOW from date_day) as dia_da_semana
+            , extract(DAYOFWEEK from date_day) as dia_da_semana
             , extract(month from date_day) as mes
             , extract(quarter from date_day) as trimestre
             , {{ day_of_year("date_day") }} as dia_do_ano
             , extract(year from date_day) as ano
-            , to_char(date_day, 'DD-MM') AS dia_mes
+            , {{ dia_mes('date_day') }} as dia_mes
         from dates_raw
     )
 

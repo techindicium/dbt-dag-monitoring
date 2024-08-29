@@ -13,9 +13,9 @@ with
             {{ cast_as_string("flatten_data.task_key") }} as task_id
             , {{ cast_as_string("flatten_data.job_id") }} as dag_id
             , {{ cast_as_string("flatten_data.run_id") }} as run_id
-            , to_timestamp( flatten_data.start_time / 1000) as execution_date
-            , to_timestamp( flatten_data.start_time / 1000) as execution_start_date
-            , to_timestamp( flatten_data.end_time / 1000) as execution_end_date
+            , {{cast_as_timestamp('flatten_data.start_time')}} as execution_date
+            , {{cast_as_timestamp('flatten_data.start_time')}} as execution_start_date
+            , {{cast_as_timestamp('flatten_data.end_time')}} as execution_end_date
             , (flatten_data.execution_duration / 1000) as duration
             , state.result_state as state_task_instance
             , attempt_number as try_number
