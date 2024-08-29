@@ -3,6 +3,11 @@
 {%- endmacro %}
 
 {%- macro databricks__adf_triggers() -%}
+{% macro adf_triggers() -%}
+    {{ return(adapter.dispatch('adf_triggers')()) }}
+{%- endmacro %}
+
+{%- macro databricks__adf_triggers() -%}
 {% set create_table %}
 create or replace table `{{ target.database }}`.{{ target.schema }}.adf_triggers (
     id STRING,
@@ -147,157 +152,6 @@ insert into `{{ target.database }}`.{{ target.schema }}.adf_triggers VALUES
 
 {% do run_query(insert_table) %}
 {% do log("finished insert table triggers", info=true) %}
-{%- endmacro -%}
-
-{%- macro snowflake__adf_triggers() -%}
-{% set create_table %}
-create or replace table `{{ target.database }}`.{{ target.schema }}.adf_triggers (
-    id VARCHAR,
-    name VARCHAR,
-    type VARCHAR,
-    properties OBJECT
-        AS (
-            annotations ARRAY,
-            pipelines ARRAY
-                AS (
-                    pipelineReference OBJECT
-                        AS (
-                            referenceName VARCHAR,
-                            type VARCHAR
-                        ),
-                    parameters OBJECT
-                        AS (
-                            days_before VARCHAR,
-                            environment VARCHAR,
-                            reset_type VARCHAR,
-                            Job_ID VARCHAR,
-                            DatabricksWorkspaceID VARCHAR,
-                            WaitRecheckSeconds INT
-                        )
-                ),
-            type VARCHAR,
-            typeProperties OBJECT
-                AS (
-                    recurrence OBJECT
-                        AS (
-                            frequency VARCHAR,
-                            interval INT,
-                            startTime VARCHAR,
-                            timeZone VARCHAR,
-                            schedule OBJECT
-                                AS (
-                                    minutes ARRAY,
-                                    hours ARRAY,
-                                    weekDays ARRAY,
-                                    monthDays ARRAY
-                                )
-                        ),
-                    parentTrigger VARCHAR,
-                    requestedStartTime VARCHAR,
-                    requestedEndTime VARCHAR,
-                    rerunConcurrency INT
-                ),
-            runtimeState VARCHAR
-        )
-);
-{% endset %}
-
-{% set insert_table %}
-INSERT INTO "{{ target.database }}.{{ target.schema }}.adf_triggers" SELECT
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-prod-duration_estimation-monthly',
-    'TR-fd-prod-duration_estimation-monthly',
-    'Microsoft.DataFactory/factories/triggers',
-    OBJECT_CONSTRUCT(
-        'annotations', ARRAY_CONSTRUCT('fraud-detection', 'prod', 'duration-estimation'),
-        'pipelines', ARRAY_CONSTRUCT(
-            OBJECT_CONSTRUCT(
-                'pipelineReference', OBJECT_CONSTRUCT(
-                    'referenceName', 'fd-prod-duration_estimation',
-                    'type', 'PipelineReference'
-                ),
-                'parameters', OBJECT_CONSTRUCT(
-                    'days_before', NULL,
-                    'environment', NULL,
-                    'reset_type', NULL,
-                    'Job_ID', NULL,
-                    'DatabricksWorkspaceID', NULL,
-                    'WaitRecheckSeconds', NULL
-                )
-            )
-        ),
-        'type', 'ScheduleTrigger',
-        'typeProperties', OBJECT_CONSTRUCT(
-            'recurrence', OBJECT_CONSTRUCT(
-                'frequency', 'Month',
-                'interval', 1,
-                'startTime', '2020-10-14T04:30:00',
-                'timeZone', 'E. South America Standard Time',
-                'schedule', OBJECT_CONSTRUCT(
-                    'minutes', ARRAY_CONSTRUCT(30),
-                    'hours', ARRAY_CONSTRUCT(4),
-                    'weekDays', NULL,
-                    'monthDays', ARRAY_CONSTRUCT(14)
-                )
-            ),
-            'parentTrigger', NULL,
-            'requestedStartTime', NULL,
-            'requestedEndTime', NULL,
-            'rerunConcurrency', NULL
-        ),
-        'runtimeState', NULL
-    )
-UNION ALL 
-SELECT
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-dev-predict-main',
-    'TR-fd-dev-predict-main',
-    'Microsoft.DataFactory/factories/triggers',
-    OBJECT_CONSTRUCT(
-        'annotations', ARRAY_CONSTRUCT('fraud-detection', 'dev', 'predict'),
-        'pipelines', ARRAY_CONSTRUCT(
-            OBJECT_CONSTRUCT(
-                'pipelineReference', OBJECT_CONSTRUCT(
-                    'referenceName', 'fd-dev-predict-main',
-                    'type', 'PipelineReference'
-                ),
-                'parameters', OBJECT_CONSTRUCT(
-                    'days_before', NULL,
-                    'environment', NULL,
-                    'reset_type', NULL,
-                    'Job_ID', NULL,
-                    'DatabricksWorkspaceID', NULL,
-                    'WaitRecheckSeconds', NULL
-                )
-            )
-        ),
-        'type', 'ScheduleTrigger',
-        'typeProperties', OBJECT_CONSTRUCT(
-            'recurrence', OBJECT_CONSTRUCT(
-                'frequency', 'Week',
-                'interval', 1,
-                'startTime', '2021-01-26T21:50:00',
-                'timeZone', 'E. South America Standard Time',
-                'schedule', OBJECT_CONSTRUCT(
-                    'minutes', ARRAY_CONSTRUCT(0),
-                    'hours', ARRAY_CONSTRUCT(5),
-                    'weekDays', ARRAY_CONSTRUCT('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
-                    'monthDays', NULL
-                )
-            ),
-            'parentTrigger', NULL,
-            'requestedStartTime', NULL,
-            'requestedEndTime', NULL,
-            'rerunConcurrency', NULL
-        ),
-        'runtimeState', 'Stopped'
-    )
-;
-{% endset %}
-
-{% do run_query(create_table) %}
-{% do log("finished creating table adf_triggers", info=true) %}
-
-{% do run_query(insert_table) %}
-{% do log("finished insert table adf_triggers", info=true) %}
 {%- endmacro -%}
 
 
@@ -471,8 +325,8 @@ VALUES
 {% endset %}
 
 {% do run_query(create_table) %}
-{% do log("finished creating table adf_triggers", info=true) %}
+{% do log("finished creating table triggers", info=true) %}
 
 {% do run_query(insert_table) %}
-{% do log("finished insert table adf_triggers", info=true) %}
+{% do log("finished insert table triggers", info=true) %}
 {%- endmacro -%}
