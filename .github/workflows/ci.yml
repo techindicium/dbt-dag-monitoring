@@ -77,7 +77,7 @@ jobs:
           dbt run-operation job_runs --target databricks
           
           dbt test --target databricks
-          dbt build --target databricks
+          dbt build --exclude-resource-type seed --target databricks
 
       - name: switch enabled sources for adf source
         run: |
@@ -97,4 +97,18 @@ jobs:
           dbt run-operation adf_triggers --target databricks
 
           dbt test --target databricks
+          dbt build --exclude-resource-type seed --target databricks
+
+      - name: switch enabled sources for airflow source
+        run: |
+          cd ${{ github.workspace }}
+          . change_dbt_project_airflow_source.sh
+          cd integration_tests/
+
+      - name: Run dbt tasks for airflow source
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps
           dbt build --target databricks
