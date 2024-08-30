@@ -70,10 +70,14 @@ jobs:
           DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
-          dbt deps
+          dbt deps 
+
+          dbt seed --target databricks
           
           dbt run-operation jobs --target databricks
           dbt run-operation job_runs --target databricks
+          
+          dbt test -s source:* --target databricks
           
           dbt build --target databricks
 
@@ -90,8 +94,12 @@ jobs:
         run: |
           dbt deps
 
+          dbt seed --target databricks
+
           dbt run-operation adf_pipeline_runs --target databricks
           dbt run-operation adf_triggers --target databricks
+
+          dbt test -s source:* --target databricks
 
           dbt build --target databricks
 
@@ -107,4 +115,9 @@ jobs:
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
+
+          dbt seed --target databricks
+
+          dbt test -s source:* --target databricks
+
           dbt build --target databricks
