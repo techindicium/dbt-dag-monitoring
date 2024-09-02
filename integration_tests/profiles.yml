@@ -10,3 +10,14 @@ dbt_dag_monitoring_integration_tests:
       threads: 16
       token: '{{ env_var(''DEV_TOKEN'') }}'
       type: databricks
+
+    bigquery:
+      dataset: "{{ env_var('BIGQUERY_DATASET') }}"
+      project: "{{ env_var('BIGQUERY_PROJECT') }}"
+      job_execution_timeout_seconds: "{{ env_var('DBT_JOB_TIMEOUT') | int }}"
+      threads: "{{ env_var('DBT_THREADS') | int }}"
+      job_retries: "{{ env_var('DBT_JOB_RETRIES') | int }}"
+      method: oauth
+      location: us
+      priority: interactive
+      type: bigquery
