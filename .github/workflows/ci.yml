@@ -41,9 +41,17 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      
+      - name: Authenticate to GCP
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: "${{ secrets.BIGQUERY_AUTH }}"
 
-      - name: Run dbt debug
+      - name: Run dbt debug for Databricks
         run: dbt debug 
+      
+      - name: Run dbt debug for BigQuery
+        run: dbt debug --target bigquery
 
       - name: dbt deps
         run: dbt deps
@@ -76,66 +84,64 @@ jobs:
         with:
           credentials_json: "${{ secrets.BIGQUERY_AUTH }}"
       
-      # - name: Run dbt integration tests
-      #   env:
-      #     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-      #     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
-      #   run: |
-      #     dbt deps --target databricks
+      - name: Run dbt integration tests
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps --target databricks
 
-      #     dbt seed --target databricks
+          dbt seed --target databricks
           
-      #     dbt run-operation jobs --target databricks
-      #     dbt run-operation job_runs --target databricks
+          dbt run-operation jobs --target databricks
+          dbt run-operation job_runs --target databricks
           
-      #     dbt test -s source:* --target databricks
+          dbt test -s source:* --target databricks
           
-      #     dbt build --target databricks
+          dbt build --target databricks
 
+      - name: switch enabled sources for adf source
+        run: |
+          cd ${{ github.workspace }}
+          . change_dbt_project_adf_source.sh
+          cd integration_tests/
 
+      - name: Run dbt tasks for adf source
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps
 
-      # - name: switch enabled sources for adf source
-      #   run: |
-      #     cd ${{ github.workspace }}
-      #     . change_dbt_project_adf_source.sh
-      #     cd integration_tests/
+          dbt seed --target databricks
 
-      # - name: Run dbt tasks for adf source
-      #   env:
-      #     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-      #     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
-      #   run: |
-      #     dbt deps
+          dbt run-operation adf_pipeline_runs --target databricks
+          dbt run-operation adf_triggers --target databricks
 
-      #     dbt seed --target databricks
+          dbt test -s source:* --target databricks
 
-      #     dbt run-operation adf_pipeline_runs --target databricks
-      #     dbt run-operation adf_triggers --target databricks
+          dbt build --target databricks
 
-      #     dbt test -s source:* --target databricks
+      - name: switch enabled sources for airflow source
+        run: |
+          cd ${{ github.workspace }}
+          . change_dbt_project_airflow_source.sh
+          cd integration_tests/
 
-      #     dbt build --target databricks
+      - name: Run dbt tasks for airflow source
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps
 
-      # - name: switch enabled sources for airflow source
-      #   run: |
-      #     cd ${{ github.workspace }}
-      #     . change_dbt_project_airflow_source.sh
-      #     cd integration_tests/
+          dbt seed --target databricks
 
-      # - name: Run dbt tasks for airflow source
-      #   env:
-      #     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-      #     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
-      #   run: |
-      #     dbt deps
+          dbt test -s source:* --target databricks
 
-      #     dbt seed --target databricks
+          dbt build --target databricks
 
-      #     dbt test -s source:* --target databricks
-
-      #     dbt build --target databricks
-
-      #     dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
+          dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
 
       - name: change databricks database to bigquery database
         run: |
