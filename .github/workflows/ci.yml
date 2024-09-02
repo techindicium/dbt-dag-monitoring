@@ -55,6 +55,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
+      
+      - name: Authenticate to GCP
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: "${{ secrets.CREDS_SANDBOX_BIGQUERY }}"
 
       - name: Install dependencies
         run: |
@@ -70,9 +75,54 @@ jobs:
           DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
-          dbt deps
+          dbt deps 
+
           dbt seed --target databricks
+          
           dbt run-operation jobs --target databricks
           dbt run-operation job_runs --target databricks
-          dbt test --target databricks
+          
+          dbt test -s source:* --target databricks
+          
+          dbt build --target databricks
+
+      - name: switch enabled sources for adf source
+        run: |
+          cd ${{ github.workspace }}
+          . change_dbt_project_adf_source.sh
+          cd integration_tests/
+
+      - name: Run dbt tasks for adf source
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps
+
+          dbt seed --target databricks
+
+          dbt run-operation adf_pipeline_runs --target databricks
+          dbt run-operation adf_triggers --target databricks
+
+          dbt test -s source:* --target databricks
+
+          dbt build --target databricks
+
+      - name: switch enabled sources for airflow source
+        run: |
+          cd ${{ github.workspace }}
+          . change_dbt_project_airflow_source.sh
+          cd integration_tests/
+
+      - name: Run dbt tasks for airflow source
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps
+
+          dbt seed --target databricks
+
+          dbt test -s source:* --target databricks
+
           dbt build --target databricks
