@@ -1,4 +1,4 @@
-"id","task_id","dag_id","start_date","end_date","duration","map_index","run_id"
+id,task_id,dag_id,start_date,end_date,duration,map_index,run_id
 1,dbt_freshness,dbt_bitrix,2022-12-12 14:59:57.480 -0300,2022-12-12 14:59:59.035 -0300,1,-1,scheduled__2022-12-11T06:00:00+00:00
 2,dbt_source_test,dbt_bitrix,2022-12-12 15:01:00.909 -0300,2022-12-12 15:01:02.861 -0300,1,-1,scheduled__2022-12-11T06:00:00+00:00
 3,dbt_freshness,dbt_bitrix,2022-12-15 16:09:59.406 -0300,2022-12-15 16:10:01.164 -0300,1,-1,scheduled__2022-12-14T06:00:00+00:00
