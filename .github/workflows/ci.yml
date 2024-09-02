@@ -157,14 +157,12 @@ jobs:
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps --target bigquery
-
-          dbt seed --target bigquery
           
           dbt run-operation jobs --target bigquery
           dbt run-operation job_runs --target bigquery
           
           dbt test -s source:* --target bigquery
           
-          dbt build --target bigquery
+          dbt build --exclude-resource-type seed --target bigquery
 
 
