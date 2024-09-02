@@ -17,6 +17,12 @@ env:
     DEV_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
     DEV_HTTP_PATH: ${{ secrets.HTTP_PATH }}
 
+    BIGQUERY_DATASET: ci_dbt_dag_monitoring
+    BIGQUERY_PROJECT: indicium-sandbox
+    DBT_JOB_TIMEOUT: 300
+    DBT_THREADS: 16
+    DBT_JOB_RETRIES: 1
+
 
 jobs:
   dbt-checks:
@@ -37,7 +43,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run dbt debug
-        run: dbt debug
+        run: dbt debug 
 
       - name: dbt deps
         run: dbt deps
@@ -75,7 +81,7 @@ jobs:
       #     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
       #     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
       #   run: |
-      #     dbt deps 
+      #     dbt deps --target databricks
 
       #     dbt seed --target databricks
           
@@ -85,6 +91,8 @@ jobs:
       #     dbt test -s source:* --target databricks
           
       #     dbt build --target databricks
+
+
 
       # - name: switch enabled sources for adf source
       #   run: |
@@ -128,5 +136,27 @@ jobs:
       #     dbt build --target databricks
 
       #     dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
+
+      - name: change databricks database to bigquery database
+        run: |
+          cd ${{ github.workspace }}
+          sed -i 's/dag_monitoring_databricks_database: cdi_dev/dag_monitoring_databricks_database: indicium-sandbox/' dbt_project.yml
+          cd integration_tests/
+
+      - name: Run dbt integration tests
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps --target bigquery
+
+          dbt seed --target bigquery
+          
+          dbt run-operation jobs --target bigquery
+          dbt run-operation job_runs --target bigquery
+          
+          dbt test -s source:* --target bigquery
+          
+          dbt build --target bigquery
 
 
