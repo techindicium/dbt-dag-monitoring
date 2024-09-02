@@ -56,10 +56,10 @@ jobs:
         with:
           python-version: '3.8'
       
-      - name: Authenticate to GCP
-        uses: "google-github-actions/auth@v2"
-        with:
-          credentials_json: "${{ secrets.CREDS_SANDBOX_BIGQUERY }}"
+      # - name: Authenticate to GCP
+      #   uses: "google-github-actions/auth@v2"
+      #   with:
+      #     credentials_json: "${{ secrets.CREDS_SANDBOX_BIGQUERY }}"
 
       - name: Install dependencies
         run: |
@@ -85,6 +85,8 @@ jobs:
           dbt test -s source:* --target databricks
           
           dbt build --target databricks
+
+
 
       - name: switch enabled sources for adf source
         run: |
@@ -126,3 +128,19 @@ jobs:
           dbt test -s source:* --target databricks
 
           dbt build --target databricks
+  
+  drop-schema:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Databricks CLI
+      uses: databricks/setup-cli@v1
+      with:
+        databricks-host: ${{ secrets.DATABRICKS_HOST }}
+        databricks-token: ${{ secrets.DATABRICKS_TOKEN }}
+
+    - name: Drop schema
+      run: databricks sql --query "DROP SCHEMA IF EXISTS ci_dbt_dag_monitoring CASCADE;"
