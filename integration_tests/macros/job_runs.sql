@@ -730,3 +730,433 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 {% do log("finished insert table job_runs", info=true) %}
 
 {%- endmacro -%}
+
+
+{%- macro bigquery__job_runs() -%}
+{% set create_table %}
+CREATE OR REPLACE TABLE `{{ target.database }}`.{{ target.schema }}.job_runs (
+    cleanup_duration BIGINT,
+    creator_user_name STRING,
+    end_time BIGINT,
+    execution_duration BIGINT,
+    job_clusters ARRAY<STRUCT<
+        job_cluster_key string,
+        new_cluster STRUCT<
+            cluster_name string,
+            data_security_mode string,
+            driver_node_type_id string,
+            enable_elastic_disk boolean,
+            node_type_id string,
+            num_workers bigint,
+            runtime_engine string,
+            spark_version string
+        >
+    >>,
+    job_id BIGINT,
+    number_in_job BIGINT,
+    original_attempt_run_id BIGINT,
+    run_duration BIGINT,
+    run_id BIGINT,
+    run_name STRING,
+    run_page_url STRING,
+    run_type STRING,
+    schedule STRUCT<
+        pause_status STRING,
+        quartz_cron_expression STRING,
+        timezone_id STRING
+    >,
+    setup_duration BIGINT,
+    start_time BIGINT,
+    state STRUCT<
+        life_cycle_state STRING,
+        result_state STRING,
+        state_message STRING,
+        user_cancelled_or_timedout BOOLEAN
+    >,
+    tasks array<struct<
+        attempt_number bigint,
+        cleanup_duration bigint,
+        cluster_instance struct<
+            cluster_id string,
+            spark_context_id string
+        >,
+        dbt_task struct<
+            commands array<string>,
+            project_directory string,
+            schema string,
+            warehouse_id string
+        >,
+        depends_on array<struct<
+            task_key string
+        >>,
+        end_time bigint,
+        execution_duration bigint,
+        existing_cluster_id string,
+        git_source struct<
+            git_branch string,
+            git_provider string,
+            git_snapshot struct<
+                used_commit string
+            >,
+            git_tag string,
+            git_url string
+        >,
+        libraries array<struct<
+            pypi struct<
+                package string
+            >
+        >>,
+        notebook_task struct<
+            notebook_path string,
+            source string
+        >,
+        run_id bigint,
+        setup_duration bigint,
+        start_time bigint,
+        state struct<
+            life_cycle_state string,
+            result_state string,
+            state_message string,
+            user_cancelled_or_timedout boolean
+        >,
+        task_key string
+    >>,
+    trigger STRING,
+    insertedDate TIMESTAMP
+);
+
+{% endset %}
+
+{% set insert_table %}
+
+INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
+(
+    0,
+    'marcus.canto@indicium.tech',
+    1720785705439,
+    0,
+    NULL,
+    724712624070673,
+    539935187772655,
+    539935187772655,
+    524911,
+    539935187772655,
+    '[dev marcus_canto] dag_monitoring_notebook_job',
+    'https://adb-124029731635903.3.azuredatabricks.net/?o=124029731635903#job/724712624070673/run/539935187772655',
+    'JOB_RUN',
+    STRUCT(
+        NULL AS pause_status,
+        NULL AS quartz_cron_expression,
+        NULL AS timezone_id
+    ),
+    0,
+    1720785180528,
+    STRUCT(
+        'TERMINATED' AS life_cycle_state,
+        'SUCCESS' AS result_state,
+        NULL AS state_message,
+        FALSE AS user_cancelled_or_timedout
+    ),
+    ARRAY<
+        STRUCT<
+            attempt_number BIGINT,
+            cleanup_duration BIGINT,
+            cluster_instance STRUCT<
+                cluster_id STRING,
+                spark_context_id STRING
+            >,
+            dbt_task STRUCT<
+                commands ARRAY<STRING>,
+                project_directory STRING,
+                schema STRING,
+                warehouse_id STRING
+            >,
+            depends_on ARRAY<STRUCT<task_key STRING>>,
+            end_time BIGINT,
+            execution_duration BIGINT,
+            existing_cluster_id STRING,
+            git_source STRUCT<
+                git_branch STRING,
+                git_provider STRING,
+                git_snapshot STRUCT<used_commit STRING>,
+                git_tag STRING,
+                git_url STRING
+            >,
+            libraries ARRAY<STRUCT<pypi STRUCT<package STRING>>>,
+            notebook_task STRUCT<
+                notebook_path STRING,
+                source STRING
+            >,
+            run_id BIGINT,
+            setup_duration BIGINT,
+            start_time BIGINT,
+            state STRUCT<
+                life_cycle_state STRING,
+                result_state STRING,
+                state_message STRING,
+                user_cancelled_or_timedout BOOLEAN
+            >,
+            task_key STRING
+        >
+    >[
+        STRUCT(
+            0 AS attempt_number,
+            0 AS cleanup_duration,
+            STRUCT(
+                '0726-190025-l9rjt3er' AS cluster_id,
+                NULL AS spark_context_id
+            ) AS cluster_instance,
+            NULL AS dbt_task,
+            ARRAY<STRUCT<task_key STRING>>[
+                STRUCT('meltano_databricks_ops' AS task_key)
+            ] AS depends_on,
+            172115372793563 AS end_time,
+            0 AS execution_duration,
+            '0726-190025-l9rjt3er' AS existing_cluster_id,
+            STRUCT(
+                'git_branch_value' AS git_branch,
+                'bitbucketCloud' AS git_provider,
+                NULL AS git_snapshot,
+                NULL AS git_tag,
+                'https://bitbucket.org/indiciumtech/platform_meltano_on_databricks' AS git_url
+            ) AS git_source,
+            NULL AS libraries,
+            STRUCT(
+                'src/execute_table_dbr' AS notebook_path,
+                'GIT' AS source
+            ) AS notebook_task,
+            703673872655804 AS run_id,
+            0 AS setup_duration,
+            172115150810239 AS start_time,
+            STRUCT(
+                'BLOCKED' AS life_cycle_state,
+                NULL AS result_state,
+                '' AS state_message,
+                FALSE AS user_cancelled_or_timedout
+            ) AS state,
+            'execute_table_dbr' AS task_key
+        ),
+        STRUCT(
+            0 AS attempt_number,
+            0 AS cleanup_duration,
+            STRUCT(
+                '0726-190025-l9rjt3er' AS cluster_id,
+                '2280680787151510917' AS spark_context_id
+            ) AS cluster_instance,
+            NULL AS dbt_task,
+            ARRAY<STRUCT<task_key STRING>>[
+                STRUCT('meltano_init' AS task_key)
+            ] AS depends_on,
+            172078572305439 AS end_time,
+            0 AS execution_duration,
+            '0726-190025-l9rjt3er' AS existing_cluster_id,
+            STRUCT(
+                'git_branch_value' AS git_branch,
+                'bitbucketCloud' AS git_provider,
+                STRUCT(
+                    '2fc709b03d0059a18a9b994504e270c9114c1b07' AS used_commit
+                ) AS git_snapshot,
+                NULL AS git_tag,
+                'https://bitbucket.org/indiciumtech/platform_meltano_on_databricks' AS git_url
+            ) AS git_source,
+            ARRAY<STRUCT<pypi STRUCT<package STRING>>>[
+                STRUCT(STRUCT('meltano==3.3.2' AS package) AS pypi)
+            ] AS libraries,
+            STRUCT(
+                'src/meltano_databricks_ops' AS notebook_path,
+                'GIT' AS source
+            ) AS notebook_task,
+            79128842213838 AS run_id,
+            1000 AS setup_duration,
+            172115372792333 AS start_time,
+            STRUCT(
+                'RUNNING' AS life_cycle_state,
+                NULL AS result_state,
+                'In run' AS state_message,
+                FALSE AS user_cancelled_or_timedout
+            ) AS state,
+            'meltano_databricks_ops' AS task_key
+        )
+    ] ,
+    'ONE_TIME',
+    '2024-08-11T07:12:47.784Z'
+),
+(
+    0,
+    'marcus.canto@indicium.tech',
+    1720781204456,
+    0,
+    NULL,
+    388879741463141,
+    1104206444717471,
+    1104206444717471,
+    114044,
+    1104206444717471,
+    '[dev marcus_canto] dag_monitoring_notebook_job',
+    'https://adb-124029731635903.3.azuredatabricks.net/?o=124029731635903#job/388879741463141/run/1104206444717471',
+    'JOB_RUN',
+    STRUCT(
+        NULL AS pause_status,
+        NULL AS quartz_cron_expression,
+        NULL AS timezone_id
+    ),
+    0,
+    1720781090412,
+    STRUCT(
+        'TERMINATED' AS life_cycle_state,
+        'SUCCESS' AS result_state,
+        NULL AS state_message,
+        FALSE AS user_cancelled_or_timedout
+    ),
+    ARRAY<
+        STRUCT<
+            attempt_number BIGINT,
+            cleanup_duration BIGINT,
+            cluster_instance STRUCT<
+                cluster_id STRING,
+                spark_context_id STRING
+            >,
+            dbt_task STRUCT<
+                commands ARRAY<STRING>,
+                project_directory STRING,
+                schema STRING,
+                warehouse_id STRING
+            >,
+            depends_on ARRAY<STRUCT<task_key STRING>>,
+            end_time BIGINT,
+            execution_duration BIGINT,
+            existing_cluster_id STRING,
+            git_source STRUCT<
+                git_branch STRING,
+                git_provider STRING,
+                git_snapshot STRUCT<used_commit STRING>,
+                git_tag STRING,
+                git_url STRING
+            >,
+            libraries ARRAY<STRUCT<pypi STRUCT<package STRING>>>,
+            notebook_task STRUCT<
+                notebook_path STRING,
+                source STRING
+            >,
+            run_id BIGINT,
+            setup_duration BIGINT,
+            start_time BIGINT,
+            state STRUCT<
+                life_cycle_state STRING,
+                result_state STRING,
+                state_message STRING,
+                user_cancelled_or_timedout BOOLEAN
+            >,
+            task_key STRING
+        >
+    >[
+        STRUCT(
+            0 AS attempt_number,
+            0 AS cleanup_duration,
+            STRUCT(
+                '0726-130251-aj7rmr0x' AS cluster_id,
+                '1302841573581174040' AS spark_context_id
+            ) AS cluster_instance,
+            STRUCT(
+                ARRAY<STRING>[
+                    'dbt debug --target prod',
+                    'dbt deps',
+                    'dbt build --target prod --exclude databricks_monitoring dbt_dag_monitoring extraction_monitoring elementary_dbt_monitoring'
+                ] AS commands,
+                'dbt' AS project_directory,
+                'default' AS schema,
+                NULL AS warehouse_id
+            ) AS dbt_task,
+            NULL AS depends_on,
+            172115060802344 AS end_time,
+            3765000 AS execution_duration,
+            '0726-130251-aj7rmr0x' AS existing_cluster_id,
+            STRUCT(
+                NULL AS git_branch,
+                'bitbucketCloud' AS git_provider,
+                STRUCT(
+                    '527373ab887ba768d1949e110fc19cac9f763fe9' AS used_commit
+                ) AS git_snapshot,
+                'production' AS git_tag,
+                'https://bitbucket.org/indiciumtech/caixa_dbt_core' AS git_url
+            ) AS git_source,
+            ARRAY<STRUCT<pypi STRUCT<package STRING>>>[
+                STRUCT(STRUCT('dbt-databricks==1.7' AS package) AS pypi),
+                STRUCT(STRUCT('databricks-sdk==0.28.0' AS package) AS pypi),
+                STRUCT(STRUCT('dbt-core==1.7.10' AS package) AS pypi)
+            ] AS libraries,
+            NULL AS notebook_task,
+            26793638330567 AS run_id,
+            284000 AS setup_duration,
+            172374563302374 AS start_time,
+            STRUCT(
+                'TERMINATED' AS life_cycle_state,
+                'SUCCESS' AS result_state,
+                '' AS state_message,
+                FALSE AS user_cancelled_or_timedout
+            ) AS state,
+            'execute_dbt_build' AS task_key
+        ),
+        STRUCT(
+            0 AS attempt_number,
+            0 AS cleanup_duration,
+            STRUCT(
+                '0726-130251-aj7rmr0x' AS cluster_id,
+                '1302841573581174040' AS spark_context_id
+            ) AS cluster_instance,
+            STRUCT(
+                ARRAY<STRING>[
+                    'dbt debug --target prod',
+                    'dbt deps',
+                    'dbt build --target prod --select elementary_dbt_monitoring'
+                ] AS commands,
+                'dbt' AS project_directory,
+                'default' AS schema,
+                NULL AS warehouse_id
+            ) AS dbt_task,
+            ARRAY<STRUCT<task_key STRING>>[
+                STRUCT('execute_dbt_build' AS task_key)
+            ] AS depends_on,
+            172374563302374 AS end_time,
+            247000 AS execution_duration,
+            '0726-130251-aj7rmr0x' AS existing_cluster_id,
+            STRUCT(
+                NULL AS git_branch,
+                'bitbucketCloud' AS git_provider,
+                STRUCT(
+                    '527373ab887ba768d1949e110fc19cac9f763fe9' AS used_commit
+                ) AS git_snapshot,
+                'production' AS git_tag,
+                'https://bitbucket.org/indiciumtech/caixa_dbt_core' AS git_url
+            ) AS git_source,
+            ARRAY<STRUCT<pypi STRUCT<package STRING>>>[
+                STRUCT(STRUCT('dbt-databricks==1.7' AS package) AS pypi),
+                STRUCT(STRUCT('databricks-sdk==0.28.0' AS package) AS pypi),
+                STRUCT(STRUCT('dbt-core==1.7.10' AS package) AS pypi)
+            ] AS libraries,
+            NULL AS notebook_task,
+            276320404580646 AS run_id,
+            2000 AS setup_duration,
+            172374563302374 AS start_time,
+            STRUCT(
+                'TERMINATED' AS life_cycle_state,
+                'SUCCESS' AS result_state,
+                '' AS state_message,
+                FALSE AS user_cancelled_or_timedout
+            ) AS state,
+            'execute_elementary_dbt_monitoring' AS task_key
+        )
+    ],
+    'ONE_TIME',
+    '2024-08-11T07:12:47.784Z'
+);
+
+{% endset %}
+
+{% do run_query(create_table) %}
+{% do log("finished creating table job_runs", info=true) %}
+
+{% do run_query(insert_table) %}
+{% do log("finished insert table job_runs", info=true) %}
+
+{%- endmacro -%}
