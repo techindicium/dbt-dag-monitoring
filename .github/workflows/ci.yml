@@ -45,41 +45,43 @@ jobs:
   #     - name: dbt compile
   #       run: dbt compile
 
-  # integration-test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
+  integration-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: '3.8'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
-  #     - name: Install dependencies
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       
-  #     - name: enter integration tests
-  #       run: |
-  #         cd integration_tests/
+      - name: enter integration tests
+        run: |
+          cd integration_tests/
       
-  #     - name: Run dbt integration tests
-  #       env:
-  #         DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-  #         DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
-  #       run: |
-  #         dbt deps 
+      - name: Run dbt integration tests
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps 
 
-  #         dbt seed --target databricks
+          dbt seed --target databricks
           
-  #         dbt run-operation jobs --target databricks
-  #         dbt run-operation job_runs --target databricks
+          dbt run-operation jobs --target databricks
+          dbt run-operation job_runs --target databricks
           
-  #         dbt test -s source:* --target databricks
+          dbt test -s source:* --target databricks
           
-  #         dbt build --target databricks
+          dbt build --target databricks
+
+          dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
 
   #     - name: switch enabled sources for adf source
   #       run: |
@@ -122,22 +124,22 @@ jobs:
 
   #         dbt build --target databricks
 
-  drop-schema:
-    runs-on: ubuntu-latest
+  # drop-schema:
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2
 
-    - name: move to integration tests folder
-      run: |
-            cd integration_tests/
+  #   - name: move to integration tests folder
+  #     run: |
+  #           cd integration_tests/
 
-    - name: Run dbt integration tests
-      env:
-        DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-        DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
-      run: |
-        dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
+  #   - name: Run dbt integration tests
+  #     env:
+  #       DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+  #       DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+  #     run: |
+  #       dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
 
 
