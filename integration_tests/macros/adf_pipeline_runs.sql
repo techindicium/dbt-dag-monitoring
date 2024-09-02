@@ -3,11 +3,6 @@
 {%- endmacro %}
 
 {%- macro databricks__adf_pipeline_runs() -%}
-{% macro adf_pipeline_runs() -%}
-    {{ return(adapter.dispatch('adf_pipeline_runs')()) }}
-{%- endmacro %}
-
-{%- macro databricks__adf_pipeline_runs() -%}
 {% set create_table %}
 create or replace table `{{ target.database }}`.{{ target.schema }}.adf_pipeline_runs(
     id STRING,
@@ -33,10 +28,8 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.adf_pipeline
     status STRING,
     message STRING,
     pipelineReturnValue MAP<STRING, STRING>,
-    pipelineReturnValue MAP<STRING, STRING>,
     lastUpdated TIMESTAMP,
     annotations ARRAY<STRING>,
-    runDimension MAP<STRING, STRING>,
     runDimension MAP<STRING, STRING>,
     isLatest BOOLEAN
 );
@@ -46,27 +39,22 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.adf_pipeline
 INSERT INTO `{{ target.database }}`.{{ target.schema }}.adf_pipeline_runs
 VALUES 
 (
-    '/SUBSCRIPTIONS/9F07555C-22AC-4CE8-9DEV-RG/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/TLO-DATASTUDIO-ADF-D/pipe082b73db5',
-    '9f81a5eb-a7ca-482e-833e-db6082b73db5',
+    '/SUBSCRIPTIONS/9F075ORIES/TLO-DATASTUDIO-ADF-D/pipe082b73db5',
+    '9f81a5eb-db6082b73db5',
     NULL,
-    '9f81a5eb-a7ca-482e-833e-db6082b73db5',
-    'PL-FEMFILESCSVTODatalakeLandingZone-N',
-    '/SUBSCRIPTIONS/9F07555C-22AC-4CE8-9DEV-RG/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/TLO-DATASTUDIO-ADF-D/pipe082b73db5',
-    '9f81a5eb-a7ca-482e-833e-db6082b73db5',
-    NULL,
-    '9f81a5eb-a7ca-482e-833e-db6082b73db5',
-    'PL-FEMFILESCSVTODatalakeLandingZone-N',
+    '9f81a5eb-a7c82b73db5',
+    'PL-FEMFILESCSLandingZone-N',
     NAMED_STRUCT(
         'ENVIRONMENT', 'FILESCSV',
         'RESET_TYPE', 'FULL',
         'DAYS_BEFORE', NULL
     ),
     NAMED_STRUCT(
-        'id', 'cf613b7b-e0c4-431d-b272-e924dc0cfbe8',
-        'name', 'cf613b7b-e0c4-431d-b272-e924dc0cfbe8',
+        'id', 'cf613b7b-e0c4cfbe8',
+        'name', 'cf613b7b-e0ce924dc0cfbe8',
         'invokedByType', 'PipelineActivity',
-        'pipelineName', 'PL-OrquestradorSourceTOBronzeZeroLoadingControl',
-        'pipelineRunId', '598ec8ee-604c-47c7-a3c0-e049c4b8c558'
+        'pipelineName', 'PL-OrquestraZeroLoadingControl',
+        'pipelineRunId', '598ec8ee-6e049c4b8c558'
     ),
     '2024-08-20T03:30:06.6061079Z',
     '2024-08-20T03:47:03.9865228Z',
@@ -74,21 +62,16 @@ VALUES
     'Succeeded',
     NULL,
     MAP(),
-    MAP(),
     '2024-08-20T03:47:03.9879388Z',
-    ARRAY(),
-    MAP(),
     ARRAY(),
     MAP(),
     true
 ),
 (
-    '/SUBSCRIPTIONS/9/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/TLO-DATASTUDIO-ADF-D/pipelinerua1-9313-73fa5c0a3f0e',
-    '/SUBSCRIPTIONS/9/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/TLO-DATASTUDIO-ADF-D/pipelinerua1-9313-73fa5c0a3f0e',
-    '64c7a8c7-30e2-4fa1-9313-73fa5c0a3f0e',
+    '/SUBSCRIPTIONS/9//pipelinerua1-9313-73fa5c0a3f0e',
+    '64c7a8c7--73fa5c0a3f0e',
     NULL,
-    NULL,
-    '64c7a8c7-30e2-4fa1-9313-73fa5c0a3f0e',
+    '64c7a8c7-30e23fa5c0a3f0e',
     'NET_REC_DAILY_PRICE_UPDATE',
     NAMED_STRUCT(
         'ENVIRONMENT', NULL,
@@ -96,7 +79,7 @@ VALUES
         'DAYS_BEFORE', '1'
     ),
     NAMED_STRUCT(
-        'id', '08584774516819036014561066769CU22',
+        'id', '0858477451681969CU22',
         'name', 'NET_REC_DAILY_UPDATE',
         'invokedByType', 'ScheduleTrigger',
         'pipelineName', NULL,
@@ -108,12 +91,10 @@ VALUES
     'Succeeded',
     NULL,
     MAP(),
-    MAP(),
     '2024-08-20T13:15:52.6550273Z',
     ARRAY(
         'ted'
     ),
-    MAP(),  
     MAP(),  
     true
 );
@@ -165,21 +146,21 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.adf_pipeline
 INSERT INTO `{{ target.database }}.{{ target.schema }}.adf_pipeline_runs`
 VALUES 
 (
-    '/SUBSCRIPTIONS/9F07555C-22AC-4CE8-9DEV-RG/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/TLO-DATASTUDIO-ADF-D/pipe082b73db5',
-    '9f81a5eb-a7ca-482e-833e-db6082b73db5',
+    '/SUBSCRIPTIONS/9FFACTORIES/TLO-DATASTUDIO-ADF-D/pipe082b73db5',
+    '9f81a5eb-db6082b73db5',
     NULL,
-    '9f81a5eb-a7ca-482e-833e-db6082b73db5',
-    'PL-FEMFILESCSVTODatalakeLandingZone-N',
+    '9f81a5eb-a73e-db6082b73db5',
+    'PL-FEMFILESCSingZone-N',
     STRUCT(
         'FILESCSV' AS ENVIRONMENT,
         'FULL' AS RESET_TYPE,
         NULL AS DAYS_BEFORE
     ),
     STRUCT(
-        'cf613b7b-e0c4-431d-b272-e924dc0cfbe8' AS id,
-        'cf613b7b-e0c4-431d-b272-e924dc0cfbe8' AS name,
+        'cf613b7b-e04dc0cfbe8' AS id,
+        'cf613b7b-e0c4924dc0cfbe8' AS name,
         'PipelineActivity' AS invokedByType,
-        'PL-OrquestradorSourceTOBronzeZeroLoadingControl' AS pipelineName,
+        'PL-OrquestradorSooLoadingControl' AS pipelineName,
         '598ec8ee-604c-47c7-a3c0-e049c4b8c558' AS pipelineRunId
     ),
     TIMESTAMP('2024-08-20T03:30:06.606107Z'),
@@ -194,10 +175,10 @@ VALUES
     TRUE
 ),
 (
-    '/SUBSCRIPTIONS/9/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/TLO-DATASTUDIO-ADF-D/pipelinerua1-9313-73fa5c0a3f0e',
-    '64c7a8c7-30e2-4fa1-9313-73fa5c0a3f0e',
+    '/SUBSCRIPTIONS/9/PROVIDERS/MO-ADF-D/pipelinerua1-9313-73fa5c0a3f0e',
+    '64c7a8c7-30313-73fa5c0a3f0e',
     NULL,
-    '64c7a8c7-30e2-4fa1-9313-73fa5c0a3f0e',
+    '64c7a8c7-30313-73fa5c0a3f0e',
     'NET_REC_DAILY_PRICE_UPDATE',
     STRUCT(
         NULL AS ENVIRONMENT,

@@ -3,11 +3,6 @@
 {%- endmacro %}
 
 {%- macro databricks__adf_triggers() -%}
-{% macro adf_triggers() -%}
-    {{ return(adapter.dispatch('adf_triggers')()) }}
-{%- endmacro %}
-
-{%- macro databricks__adf_triggers() -%}
 {% set create_table %}
 create or replace table `{{ target.database }}`.{{ target.schema }}.adf_triggers (
     id STRING,
@@ -58,9 +53,9 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.adf_triggers
 {% set insert_table %}
 insert into `{{ target.database }}`.{{ target.schema }}.adf_triggers VALUES 
 (
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-prod-duration_estimation-monthly',
-    'TR-fd-prod-duration_estimation-monthly',
-    'Microsoft.DataFactory/factories/triggers',
+    '/subscriptions/9f07555crvices-atastudio-adf-d/triggers/TR-fd-prod-duration_estimation-monthly',
+    'TR-fd-prod-dion-monthly',
+    'Microsoft.Dataes/triggers',
     NAMED_STRUCT(
         'annotations', ARRAY('fraud-detection', 'prod', 'duration-estimation'),
         'pipelines', ARRAY(
@@ -102,9 +97,9 @@ insert into `{{ target.database }}`.{{ target.schema }}.adf_triggers VALUES
     )
 ),
 (
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-dev-predict-main',
+    '/subscriptions/TR-fd-dev-predict-main',
     'TR-fd-dev-predict-main',
-    'Microsoft.DataFactory/factories/triggers',
+    'Microsoft.Dats/triggers',
     NAMED_STRUCT(
         'annotations', ARRAY('fraud-detection', 'dev', 'predict'),
         'pipelines', ARRAY(
@@ -208,9 +203,9 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.adf_triggers
 INSERT INTO `{{ target.database }}`.{{ target.schema }}.adf_triggers 
 VALUES 
 (
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-prod-duration_estimation-monthly',
-    'TR-fd-prod-duration_estimation-monthly',
-    'Microsoft.DataFactory/factories/triggers',
+    '/subscriptions/9f0755tories/tlo-datastudio-adf-d/triggers/TR-fd-prod-duration_estimation-monthly',
+    'TR-fd-prod-ation-monthly',
+    'Microsoft.Dattories/triggers',
     STRUCT(
         ARRAY<STRING>['fraud-detection', 'prod', 'duration-estimation'],
         ARRAY<STRUCT<
@@ -265,7 +260,7 @@ VALUES
     )
 ),
 (
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-dev-predict-main',
+    '/subscriptions/y/factories/tlo-datastudio-adf-d/triggers/TR-fd-dev-predict-main',
     'TR-fd-dev-predict-main',
     'Microsoft.DataFactory/factories/triggers',
     STRUCT(
@@ -325,8 +320,8 @@ VALUES
 {% endset %}
 
 {% do run_query(create_table) %}
-{% do log("finished creating table adf_triggers", info=true) %}
+{% do log("finished creating table triggers", info=true) %}
 
 {% do run_query(insert_table) %}
-{% do log("finished insert table adf_triggers", info=true) %}
+{% do log("finished insert table triggers", info=true) %}
 {%- endmacro -%}

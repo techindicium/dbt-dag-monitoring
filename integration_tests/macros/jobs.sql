@@ -145,7 +145,6 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.jobs VALUES
 
 {% endmacro %}
 
-
 {% macro bigquery__jobs() %}
 {% set create_table %}
 create or replace table `{{ target.database }}`.{{ target.schema }}.jobs (
@@ -280,10 +279,11 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.jobs VALUES
 
 {% endset %}
 
-
 {% do run_query(create_table) %}
 {% do log("finished creating table jobs", info=true) %}
 
 {% do run_query(insert_table) %}
 {% do log("finished insert table jobs ", info=true) %}
+
+
 {% endmacro %}

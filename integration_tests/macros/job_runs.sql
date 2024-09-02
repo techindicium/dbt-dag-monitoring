@@ -3,11 +3,6 @@
 {%- endmacro %}
 
 {%- macro databricks__job_runs() -%}
-{% macro job_runs() -%}
-    {{ return(adapter.dispatch('job_runs')()) }}
-{%- endmacro %}
-
-{%- macro databricks__job_runs() -%}
 {% set create_table %}
 create or replace table `{{ target.database }}`.{{ target.schema }}.job_runs(
     cleanup_duration BIGINT,
@@ -106,7 +101,7 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.job_runs(
 INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 (
     0,
-    'marcu.tech',
+    'marcutech',
     1720785705439,
     0,
     NULL,
@@ -115,8 +110,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     539935187772655,
     524911,
     539935187772655,
-    '[dev marcbook_job',
-    'https://adb-124029redata4712624070673/run/539935187772655',
+    '[devook_job',
+    'https://adb-124029731635b/724712624070673/run/539935187772655',
     'JOB_RUN',
     NAMED_STRUCT(
         "pause_status", NULL,
@@ -141,17 +136,17 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             ),
             'dbt_task', NULL,
             'depends_on', ARRAY(
-                NAMED_STRUCT('task_key', 'meltans_ops')
+                NAMED_STRUCT('task_key', 'meltano_databricks_ops')
             ),
             'end_time', 172115372793563,
             'execution_duration', 0,
-            'existing_cluster_id', '0726-t3er',
+            'existing_cluster_id', '0726-190025-l9rjt3er',
             'git_source', NAMED_STRUCT(
                 'git_branch', 'git_task',
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', NULL,
                 'git_tag', NULL,
-                'git_url', 'https://bitbuckeeltano_on_databricks'
+                'git_url', 'https://bitbucket.org/inno_on_databricks'
             ),
             'libraries', NULL,
             'notebook_task', NAMED_STRUCT(
@@ -173,8 +168,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             'attempt_number', 0,
             'cleanup_duration', 0,
             'cluster_instance', NAMED_STRUCT(
-                'cluster_id', '0726-19t3er',
-                'spark_context_id', '228060917'
+                'cluster_id', '0726-190025-l9rjt3er',
+                'spark_context_id', '2280680787151510917'
             ),
             'dbt_task', NULL,
             'depends_on', ARRAY(
@@ -182,15 +177,15 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             ),
             'end_time', 172078572305439,
             'execution_duration', 0,
-            'existing_cluster_id', '0726jt3er',
+            'existing_cluster_id', '0726-190025-l9rjt3er',
             'git_source', NAMED_STRUCT(
                 'git_branch', 'git_task',
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', NAMED_STRUCT(
-                    'used_commit', '2fc709b03d014c1b07'
+                    'used_commit', '2fc709b03d0059a18a9b994504e270c9114c1b07'
                 ),
                 'git_tag', NULL,
-                'git_url', 'https://bitbucken_databricks'
+                'git_url', 'https://bitbucabricks'
             ),
             'libraries', ARRAY(
                 NAMED_STRUCT('pypi', NAMED_STRUCT('package', 'meltano==3.3.2'))
@@ -217,7 +212,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 ),
 (
     0,
-    'marcutech',
+    'marcu.tech',
     1720781204456,
     0,
     NULL,
@@ -226,8 +221,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     1104206444717471,
     114044,
     1104206444717471,
-    '[dev marcuk_job',
-    'https://adb-12402ob/388879741463141/run/1104206444717471',
+    '[dev matebook_job',
+    'https://adb-124029731635903.03#job/388879741463141/run/1104206444717471',
     'JOB_RUN',
     NAMED_STRUCT( 
         "pause_status", NULL, 
@@ -249,8 +244,6 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             'cluster_instance', NAMED_STRUCT(
                 'cluster_id', '0726-130251-aj7rmr0x',
                 'spark_context_id', '1302841573581174040'
-                'cluster_id', '0726-130251-aj7rmr0x',
-                'spark_context_id', '1302841573581174040'
             ),
             'dbt_task', NAMED_STRUCT(
                 'commands', ARRAY(
@@ -266,16 +259,13 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             'end_time', 172115060802344, 
             'execution_duration', 3765000,
             'existing_cluster_id', '0726-130251-aj7rmr0x',
-            'existing_cluster_id', '0726-130251-aj7rmr0x',
             'git_source', NAMED_STRUCT(
                 'git_branch', NULL,
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', NAMED_STRUCT(
-                    'used_commit', '527373ab887ba768d1949e110fc19cac9f763fe9'
-                    'used_commit', '527373ab887ba768d1949e110fc19cac9f763fe9'
+                    'used_commit', '527373ab887ac9f763fe9'
                 ),
                 'git_tag', 'production',
-                'git_url', 'https://bitbucket.org/indiciumtech/caixa_dbt_core'
                 'git_url', 'https://bitbucket.org/indiciumtech/caixa_dbt_core'
             ),
             'libraries', ARRAY(
@@ -322,11 +312,10 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                 'git_branch', NULL,
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', NAMED_STRUCT(
-                    'used_commit', '527373ab887ba768d1949e110fc19cac9f763fe9'
+                    'used_commit', '527373ab887ba7ac9f763fe9'
                 ),
                 'git_tag', 'production',
-                'git_url', 'https://bitbucket.org/indiciumtech/caixa_dbt_core'
-                'git_url', 'https://bitbucket.org/indiciumtech/caixa_dbt_core'
+                'git_url', 'https:///ccore'
             ),
             'libraries', ARRAY(
                 NAMED_STRUCT('pypi', NAMED_STRUCT('package', 'dbt-databricks==1.7')),
@@ -459,7 +448,7 @@ CREATE OR REPLACE TABLE `{{ target.database }}`.{{ target.schema }}.job_runs (
 INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 (
     0,
-    'marcus.canto@indicium.tech',
+    'marcum.tech',
     1720785705439,
     0,
     NULL,
@@ -468,8 +457,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     539935187772655,
     524911,
     539935187772655,
-    '[dev martebook_job',
-    'https://adb-12402973163/724712624070673/run/539935187772655',
+    '[dev marg_notebook_job',
+    'https://adb-124029734070673/run/539935187772655',
     'JOB_RUN',
     STRUCT(
         NULL AS pause_status,
@@ -545,7 +534,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                 'bitbucketCloud' AS git_provider,
                 NULL AS git_snapshot,
                 NULL AS git_tag,
-                'https://bitbucket.orgtano_on_databricks' AS git_url
+                'https://bitbucket.oo_on_databricks' AS git_url
             ) AS git_source,
             NULL AS libraries,
             STRUCT(
@@ -567,8 +556,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             0 AS attempt_number,
             0 AS cleanup_duration,
             STRUCT(
-                '0726-rjt3er' AS cluster_id,
-                '2280651510917' AS spark_context_id
+                '0726-190025-l9rjt3er' AS cluster_id,
+                '2280680787151510917' AS spark_context_id
             ) AS cluster_instance,
             NULL AS dbt_task,
             ARRAY<STRUCT<task_key STRING>>[
@@ -581,10 +570,10 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                 'git_branch_value' AS git_branch,
                 'bitbucketCloud' AS git_provider,
                 STRUCT(
-                    '2fc709b03114c1b07' AS used_commit
+                    '2fc709b03d0059a18a9b994504e270c9114c1b07' AS used_commit
                 ) AS git_snapshot,
                 NULL AS git_tag,
-                'https://bitbucketltano_on_databricks' AS git_url
+                'https://bitbucket.or_databricks' AS git_url
             ) AS git_source,
             ARRAY<STRUCT<pypi STRUCT<package STRING>>>[
                 STRUCT(STRUCT('meltano==3.3.2' AS package) AS pypi)
@@ -610,7 +599,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 ),
 (
     0,
-    'marcu.tech',
+    'marcus.tech',
     1720781204456,
     0,
     NULL,
@@ -619,8 +608,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     1104206444717471,
     114044,
     1104206444717471,
-    '[dev marcus_canto] dag_monitoring_notebook_job',
-    'https://adb-12402973ob/388879741463141/run/1104206444717471',
+    '[dev notebook_job',
+    'https://adb-1288879741463141/run/1104206444717471',
     'JOB_RUN',
     STRUCT(
         NULL AS pause_status,
@@ -681,8 +670,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             0 AS attempt_number,
             0 AS cleanup_duration,
             STRUCT(
-                '0726-mr0x' AS cluster_id,
-                '13028481174040' AS spark_context_id
+                '0726-130251-aj7rmr0x' AS cluster_id,
+                '1302841573581174040' AS spark_context_id
             ) AS cluster_instance,
             STRUCT(
                 ARRAY<STRING>[
@@ -702,10 +691,10 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                 NULL AS git_branch,
                 'bitbucketCloud' AS git_provider,
                 STRUCT(
-                    '527373ab887ba768d13fe9' AS used_commit
+                    '527373ab887ba768d1949e110fc19cac9f763fe9' AS used_commit
                 ) AS git_snapshot,
                 'production' AS git_tag,
-                'https://bitaixa_dbt_core' AS git_url
+                'https://bita_dbt_core' AS git_url
             ) AS git_source,
             ARRAY<STRUCT<pypi STRUCT<package STRING>>>[
                 STRUCT(STRUCT('dbt-databricks==1.7' AS package) AS pypi),
@@ -751,10 +740,10 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                 NULL AS git_branch,
                 'bitbucketCloud' AS git_provider,
                 STRUCT(
-                    '527373ab89f763fe9' AS used_commit
+                    '527373ab887ba768d1949e110fc19cac9f763fe9' AS used_commit
                 ) AS git_snapshot,
                 'production' AS git_tag,
-                'https://bitbuck/caixa_dbt_core' AS git_url
+                'https://bitbucket._core' AS git_url
             ) AS git_source,
             ARRAY<STRUCT<pypi STRUCT<package STRING>>>[
                 STRUCT(STRUCT('dbt-databricks==1.7' AS package) AS pypi),
