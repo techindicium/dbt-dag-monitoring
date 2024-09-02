@@ -133,7 +133,7 @@ jobs:
 
     # Run the Databricks workflow named "my-job" as defined in the
     # bundle that was just deployed.
-    - run: databricks schemas list cdi_dev
+    - run: databricks schemas delete cdi_dev.ci_dbt_dag_monitoring
       env:
         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
