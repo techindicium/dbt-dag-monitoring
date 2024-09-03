@@ -53,7 +53,7 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.adf_triggers
 {% set insert_table %}
 insert into `{{ target.database }}`.{{ target.schema }}.adf_triggers VALUES 
 (
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-prod-duration_estimation-monthly',
+    '/subscriptions/9f07555crvdio-adf-d/triggers/TR-fd-prod-duration_estimation-monthly',
     'TR-fd-prod-duration_estimation-monthly',
     'Microsoft.DataFactory/factories/triggers',
     NAMED_STRUCT(
@@ -95,9 +95,9 @@ insert into `{{ target.database }}`.{{ target.schema }}.adf_triggers VALUES
         ),
         'runtimeState', NULL
     )
-),
-(
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-dev-predict-main',
+UNION ALL
+SELECT
+    '/subscriptionscto-dev-predict-main',
     'TR-fd-dev-predict-main',
     'Microsoft.DataFactory/factories/triggers',
     NAMED_STRUCT(
@@ -155,56 +155,13 @@ create or replace table `{{ target.database }}`.{{ target.schema }}.adf_triggers
     id VARCHAR,
     name VARCHAR,
     type VARCHAR,
-    properties OBJECT
-        AS (
-            annotations ARRAY,
-            pipelines ARRAY
-                AS (
-                    pipelineReference OBJECT
-                        AS (
-                            referenceName VARCHAR,
-                            type VARCHAR
-                        ),
-                    parameters OBJECT
-                        AS (
-                            days_before VARCHAR,
-                            environment VARCHAR,
-                            reset_type VARCHAR,
-                            Job_ID VARCHAR,
-                            DatabricksWorkspaceID VARCHAR,
-                            WaitRecheckSeconds INT
-                        )
-                ),
-            type VARCHAR,
-            typeProperties OBJECT
-                AS (
-                    recurrence OBJECT
-                        AS (
-                            frequency VARCHAR,
-                            interval INT,
-                            startTime VARCHAR,
-                            timeZone VARCHAR,
-                            schedule OBJECT
-                                AS (
-                                    minutes ARRAY,
-                                    hours ARRAY,
-                                    weekDays ARRAY,
-                                    monthDays ARRAY
-                                )
-                        ),
-                    parentTrigger VARCHAR,
-                    requestedStartTime VARCHAR,
-                    requestedEndTime VARCHAR,
-                    rerunConcurrency INT
-                ),
-            runtimeState VARCHAR
-        )
+    properties VARIANT
 );
 {% endset %}
 
 {% set insert_table %}
 INSERT INTO "{{ target.database }}.{{ target.schema }}.adf_triggers" SELECT
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-prod-duration_estimation-monthly',
+    '/subscriptions/9f0gers/TR-fd-prod-duration_estimation-monthly',
     'TR-fd-prod-duration_estimation-monthly',
     'Microsoft.DataFactory/factories/triggers',
     OBJECT_CONSTRUCT(
@@ -248,7 +205,7 @@ INSERT INTO "{{ target.database }}.{{ target.schema }}.adf_triggers" SELECT
     )
 UNION ALL 
 SELECT
-    '/subscriptions/9f07555crvices-dev-rg/providers/Microsoft.DataFactory/factories/tlo-datastudio-adf-d/triggers/TR-fd-dev-predict-main',
+    '/subscrtudio-adf-d/triggers/TR-fd-dev-predict-main',
     'TR-fd-dev-predict-main',
     'Microsoft.DataFactory/factories/triggers',
     OBJECT_CONSTRUCT(

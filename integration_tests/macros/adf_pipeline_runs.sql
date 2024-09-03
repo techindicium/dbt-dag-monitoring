@@ -115,29 +115,17 @@ CREATE OR REPLACE TABLE `{{ target.database }}`.{{ target.schema }}.adf_pipeline
     debugRunId VARCHAR,
     runGroupId VARCHAR,
     pipelineName VARCHAR,
-    parameters OBJECT
-        AS (
-            ENVIRONMENT VARCHAR,
-            RESET_TYPE VARCHAR,
-            DAYS_BEFORE VARCHAR
-        ),
-    invokedBy OBJECT
-        AS (
-            id VARCHAR,
-            name VARCHAR,
-            invokedByType VARCHAR,
-            pipelineName VARCHAR,
-            pipelineRunId VARCHAR
-        ),
+    parameters VARIANT,
+    invokedBy VARIANT,
     runStart TIMESTAMP,
     runEnd TIMESTAMP,
     durationInMs BIGINT,
     status VARCHAR,
     message VARCHAR,
-    pipelineReturnValue OBJECT,
+    pipelineReturnValue VARIANT,
     lastUpdated TIMESTAMP,
     annotations ARRAY,
-    runDimension OBJECT,
+    runDimension VARIANT,
     isLatest BOOLEAN
 );
 {% endset %}
@@ -166,13 +154,14 @@ SELECT
     '2024-08-20T03:47:03.9865228Z',
     1017380,
     'Succeeded',
+    NULL,
     OBJECT_CONSTRUCT(),
     '2024-08-20T03:47:03.9879388Z',
     ARRAY_CONSTRUCT(),
     OBJECT_CONSTRUCT(),
     TRUE
 UNION ALL
-SELECT
+    SELECT 
     '/SUBSCRIPTIONS/9/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/TLO-DATASTUDIO-ADF-D/pipelinerua1-9313-73fa5c0a3f0e',
     '64c7a8c7-30e2-4fa1-9313-73fa5c0a3f0e',
     NULL,

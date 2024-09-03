@@ -164,12 +164,12 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.jobs SELECT
     CAST(466340877826952 AS BIGINT),
     OBJECT_CONSTRUCT(
         'email_notifications', OBJECT_CONSTRUCT(
-            'on_failure', ARRAY_CONSTRUCT('produtos_horizontais@indicium1.opsgenie.net'),
+            'on_failure', ARRAY_CONSTRUCT('produtosgenie.net'),
             'no_alert_for_skipped_runs', NULL
         ),
         'format', 'MULTI_TASK',
         'max_concurrent_runs', 1,
-        'name', '[prod] core_dag_monitoring_data_transformation_dbt_job',
+        'name', '[prod] coreion_dbt_job',
         'schedule', OBJECT_CONSTRUCT(
             'pause_status', NULL,
             'quartz_cron_expression', NULL,
@@ -191,16 +191,16 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.jobs SELECT
 UNION ALL
     SELECT
     CAST(1722544845800 AS BIGINT),
-    CAST('13bc3f4b-d299-4b58-9d09-5444571518ae' AS VARCHAR),
+    CAST('13bc3f4b44571518ae' AS VARCHAR),
     CAST(823250232903490 AS BIGINT),
     OBJECT_CONSTRUCT(
         'email_notifications', OBJECT_CONSTRUCT(
-            'on_failure', ARRAY_CONSTRUCT('produtos_horizontais@indicium1.opsgenie.net'),
+            'on_failure', ARRAY_CONSTRUCT('prod.opsgenie.net'),
             'no_alert_for_skipped_runs', NULL
         ),
         'format', 'MULTI_TASK',
         'max_concurrent_runs', 1,
-        'name', '[prod] core_dag_monitoring_extraction_meltano_job',
+        'name', '[prod] cltano_job',
         'schedule', OBJECT_CONSTRUCT(
             'pause_status', 'UNPAUSED',
             'quartz_cron_expression', '0 0 0/3 * * ? *',
@@ -226,12 +226,12 @@ UNION ALL
     CAST(790689006770532 AS BIGINT),
     OBJECT_CONSTRUCT(
         'email_notifications', OBJECT_CONSTRUCT(
-            'on_failure', ARRAY_CONSTRUCT('produtos_horizontais@indicium1.opsgenie.net'),
+            'on_failure', ARRAY_CONSTRUCT('produtosopsgenie.net'),
             'no_alert_for_skipped_runs', NULL
         ),
         'format', 'MULTI_TASK',
         'max_concurrent_runs', 1,
-        'name', '[prod] investment_postgres_extraction_spark_job',
+        'name', '[prod] invspark_job',
         'schedule', OBJECT_CONSTRUCT(
             'pause_status', 'UNPAUSED',
             'quartz_cron_expression', '0 0 0/4 * * ? *',

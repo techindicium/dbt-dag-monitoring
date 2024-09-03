@@ -355,21 +355,7 @@ CREATE OR REPLACE TABLE "{{ target.database }}.{{ target.schema }}.job_runs" (
     creator_user_name STRING,
     end_time BIGINT,
     execution_duration BIGINT,
-    job_clusters ARRAY (
-        OBJECT(
-            'job_cluster_key', STRING,
-            'new_cluster', OBJECT(
-                'cluster_name', STRING,
-                'data_security_mode', STRING,
-                'driver_node_type_id', STRING,
-                'enable_elastic_disk', BOOLEAN,
-                'node_type_id', STRING,
-                'num_workers', BIGINT,
-                'runtime_engine', STRING,
-                'spark_version', STRING
-            )
-        )
-    ),
+    job_clusters VARIANT,
     job_id BIGINT,
     number_in_job BIGINT,
     original_attempt_run_id BIGINT,
@@ -378,74 +364,12 @@ CREATE OR REPLACE TABLE "{{ target.database }}.{{ target.schema }}.job_runs" (
     run_name STRING,
     run_page_url STRING,
     run_type STRING,
-    schedule OBJECT(
-        'pause_status', STRING,
-        'quartz_cron_expression', STRING,
-        'timezone_id', STRING
-    ),
+    schedule VARIANT,
     setup_duration BIGINT,
     start_time BIGINT,
-    state OBJECT(
-        'life_cycle_state', STRING,
-        'result_state', STRING,
-        'state_message', STRING,
-        'user_cancelled_or_timedout', BOOLEAN
-    ),
-    tasks ARRAY(
-        OBJECT(
-            'attempt_number', BIGINT,
-            'cleanup_duration', BIGINT,
-            'cluster_instance', OBJECT(
-                'cluster_id', STRING,
-                'spark_context_id', STRING
-            ),
-            'dbt_task', OBJECT(
-                'commands', ARRAY(STRING),
-                'project_directory', STRING,
-                'schema', STRING,
-                'warehouse_id', STRING
-            ),
-            'depends_on', ARRAY(
-                OBJECT(
-                    'task_key', STRING
-                )
-            ),
-            'end_time', BIGINT,
-            'execution_duration', BIGINT,
-            'existing_cluster_id', STRING,
-            'git_source', OBJECT(
-                'git_branch', STRING,
-                'git_provider', STRING,
-                'git_snapshot', OBJECT(
-                    'used_commit', STRING
-                ),
-                'git_tag', STRING,
-                'git_url', STRING
-            ),
-            'libraries', ARRAY(
-                OBJECT(
-                    'pypi', OBJECT(
-                        'package', STRING
-                    )
-                )
-            ),
-            'notebook_task', OBJECT(
-                'notebook_path', STRING,
-                'source', STRING
-            ),
-            'run_id', BIGINT,
-            'setup_duration', BIGINT,
-            'start_time', BIGINT,
-            'state', OBJECT(
-                'life_cycle_state', STRING,
-                'result_state', STRING,
-                'state_message', STRING,
-                'user_cancelled_or_timedout', BOOLEAN
-            ),
-            'task_key', STRING
-        )
-    ),
-    trigger STRING,
+    state VARIANT,
+    "tasks" VARIANT,
+    "trigger" STRING,
     insertedDate TIMESTAMP
 );
 
@@ -456,7 +380,7 @@ CREATE OR REPLACE TABLE "{{ target.database }}.{{ target.schema }}.job_runs" (
 INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 (
     0,
-    'marcus.canto@indicium.tech',
+    'marm.tech',
     1720785705439,
     0,
     ARRAY_CONSTRUCT(
@@ -479,8 +403,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     539935187772655,
     524911,
     539935187772655,
-    '[dev marcus_canto] dag_monitoring_notebook_job',
-    'https://adb-124029731635903.3.azuredatabricks.net/?o=124029731635903#job/724712624070673/run/539935187772655',
+    '[deook_job',
+    'https://73/run/539935187772655',
     'JOB_RUN',
     OBJECT_CONSTRUCT(
         'pause_status', NULL,
@@ -515,7 +439,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', NULL,
                 'git_tag', NULL,
-                'git_url', 'https://bitbucket.org/indiciumtech/platform_meltano_on_databricks'
+                'git_url', 'https://bitabricks'
             ),
             'libraries', NULL,
             'notebook_task', OBJECT_CONSTRUCT(
@@ -551,10 +475,10 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                 'git_branch', 'git_task',
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', OBJECT_CONSTRUCT(
-                    'used_commit', '2fc709b03d0059a18a9b994504e270c9114c1b07'
+                    'used_commit', '2fc70970c9114c1b07'
                 ),
                 'git_tag', NULL,
-                'git_url', 'https://bitbucket.org/indiciumtech/platform_meltano_on_databricks'
+                'git_url', 'https://bitano_on_databricks'
             ),
             'libraries', ARRAY_CONSTRUCT(
                 OBJECT_CONSTRUCT('pypi', OBJECT_CONSTRUCT('package', 'meltano==3.3.2'))
@@ -577,10 +501,10 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     ),
     'ONE_TIME',
     '2024-08-11T07:12:47.784Z'
-),
-(
-    0,
-    'marcus.canto@indicium.tech',
+UNION ALL
+    SELECT
+         0,
+    'marm.tech',
     1720781204456,
     0,
     ARRAY_CONSTRUCT(
@@ -603,8 +527,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     1104206444717471,
     114044,
     1104206444717471,
-    '[dev marcus_canto] dag_monitoring_notebook_job',
-    'https://adb-124029731635903.3.azuredatabricks.net/?o=124029731635903#job/388879741463141/run/1104206444717471',
+    '[dev mbook_job',
+    'https://adb-12402973463141/run/1104206444717471',
     'JOB_RUN',
     OBJECT_CONSTRUCT(
         'pause_status', NULL,
@@ -624,8 +548,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             'attempt_number', 0,
             'cleanup_duration', 0,
             'cluster_instance', OBJECT_CONSTRUCT(
-                'cluster_id', '0726-130251-aj7rmr0x',
-                'spark_context_id', '1302841573581174040'
+                'cluster_id', '0726-130mr0x',
+                'spark_context_id', '13028414040'
             ),
             'dbt_task', OBJECT_CONSTRUCT(
                 'commands', ARRAY_CONSTRUCT(
@@ -640,15 +564,15 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             'depends_on', NULL,
             'end_time', 172115060802344,
             'execution_duration', 3765000,
-            'existing_cluster_id', '0726-130251-aj7rmr0x',
+            'existing_cluster_id', '0726-130rmr0x',
             'git_source', OBJECT_CONSTRUCT(
                 'git_branch', NULL,
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', OBJECT_CONSTRUCT(
-                    'used_commit', '527373ab887ba768d1949e110fc19cac9f763fe9'
+                    'used_commit', '527373abac9f763fe9'
                 ),
                 'git_tag', 'production',
-                'git_url', 'https://bitbucket.org/indiciumtech/caixa_dbt_core'
+                'git_url', 'https://bitbucketixa_dbt_core'
             ),
             'libraries', ARRAY_CONSTRUCT(
                 OBJECT_CONSTRUCT('pypi', OBJECT_CONSTRUCT('package', 'dbt-databricks==1.7')),
@@ -689,15 +613,15 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
             ),
             'end_time', 172374563302374,
             'execution_duration', 247000,
-            'existing_cluster_id', '0726-130251-aj7rmr0x',
+            'existing_cluster_id', '0726-r0x',
             'git_source', OBJECT_CONSTRUCT(
                 'git_branch', NULL,
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', OBJECT_CONSTRUCT(
-                    'used_commit', '527373ab887ba768d1949e110fc19cac9f763fe9'
+                    'used_commit', '527373ab8c9f763fe9'
                 ),
                 'git_tag', 'production',
-                'git_url', 'https://bitbucket.org/indiciumtech/caixa_dbt_core'
+                'git_url', 'https://bitbucixa_dbt_core'
             ),
             'libraries', ARRAY_CONSTRUCT(
                 OBJECT_CONSTRUCT('pypi', OBJECT_CONSTRUCT('package', 'dbt-databricks==1.7')),
