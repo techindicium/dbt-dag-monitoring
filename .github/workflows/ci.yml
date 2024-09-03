@@ -171,6 +171,7 @@ jobs:
       - name: switch enabled sources for adf source
         run: |
           cd ${{ github.workspace }}
+          sed -i 's/dag_monitoring_adf_database: cdi_dev/dag_monitoring_adf_database: indicium-sandbox/' dbt_project.yml
           . change_dbt_project_adf_source.sh
           cd integration_tests/
 
