@@ -56,7 +56,7 @@ with
         left join dim_task on 
             stg_task_instance.task_id = dim_task.task_id
             and stg_task_instance.dag_id = dim_task.dag_id
-        left join util_days on stg_task_instance.execution_date = util_days.date_day
+        left join util_days on {{ cast_as_date('stg_task_instance.execution_date') }} = {{ cast_as_date('util_days.date_day') }}
     )
     , surrogate_key as (
         select 

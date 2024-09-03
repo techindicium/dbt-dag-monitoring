@@ -16,7 +16,7 @@ triggers_renamed as (
             when properties.typeProperties.recurrence.frequency  = 'Month' then 'monthly'
             when properties.typeProperties.recurrence.frequency  = 'Minute' then 'minutely'
         end as dag_frequency
-        ,cast(properties.typeProperties.recurrence.schedule as varchar(255)) as timetable_description
+        ,{{ cast_as_string('properties.typeProperties.recurrence.schedule') }} as timetable_description
         ,properties.typeProperties.recurrence.frequency as adf_frequency
         ,properties.typeProperties.recurrence.startTime as start_time
         , case 
@@ -28,7 +28,7 @@ triggers_renamed as (
             else 'true'
             end as is_paused
         ,properties.runtimeState
-        ,pipelines.pipelineReference.referenceName as pipeline_name
+        ,{{adf_pipelines_name('pipelines.pipelineReference.referenceName') }} as pipeline_name
         
     from exploded_by_pipeline
 ),
