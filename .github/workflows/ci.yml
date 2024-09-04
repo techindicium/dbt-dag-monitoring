@@ -213,7 +213,7 @@ jobs:
 
           dbt test -s source:* --target bigquery
 
-          dbt build --target bigquery
+          dbt build --exclude-resource-type seed --target bigquery
 
           dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
 
