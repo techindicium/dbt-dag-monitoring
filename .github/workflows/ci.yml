@@ -196,6 +196,7 @@ jobs:
         run: |
           cd ${{ github.workspace }}
           . change_dbt_project_airflow_source.sh
+          sed -i 's/dag_monitoring_airflow_database: cdi_dev/dag_monitoring_adf_database: indicium-sandbox/' dbt_project.yml
           cd integration_tests/
 
       - name: Run dbt tasks for Airflow source in BigQuery connection
