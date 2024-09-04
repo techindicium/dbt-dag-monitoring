@@ -205,8 +205,6 @@ jobs:
         run: |
           dbt deps
 
-          dbt seed --target bigquery
-
           dbt run-operation seed__dag_run --target bigquery
           dbt run-operation seed__dag --target bigquery
           dbt run-operation seed__task_fail --target bigquery
