@@ -7,6 +7,10 @@
    date_format({{ column }}, '{{ format }}')
 {%- endmacro %}
 
+{% macro snowflake__dia_mes(column, format='dd-MM') -%}
+   to_char(cast({{ column }} as date), '{{ format }}')
+{%- endmacro %}
+
 
 {% macro bigquery__dia_mes(column, format='%d-%m') -%}
    cast(parse_date('{{ format }}', cast({{ column }} as string)) as string)
