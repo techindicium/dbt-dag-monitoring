@@ -216,18 +216,10 @@ jobs:
         env:
           DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_TEST_ACCOUNT}}
-          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_TEST_USER }}
-          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_TEST_PASSWORD}}
-          SNOWFLAKE_ROLE: INTERNAL_PRODUCTS_CICD
-          SNOWFLAKE_DATABASE: SANDBOX
-          SNOWFLAKE_WAREHOUSE: SANDBOX_WAREHOUSE
-          SNOWFLAKE_SCHEMA: ci_dbt_dag_monitoring
-          
         run: |
           dbt deps
 
-          dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target bigquery
+          dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target snowflake
           
           dbt run-operation jobs --target snowflake
           dbt run-operation job_runs --target snowflake
