@@ -23,6 +23,14 @@ env:
     DBT_THREADS: 16
     DBT_JOB_RETRIES: 1
 
+    SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_TEST_ACCOUNT}}
+    SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_TEST_USER }}
+    SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_TEST_PASSWORD}}
+    SNOWFLAKE_ROLE: "INTERNAL_PRODUCTS_CICD"
+    SNOWFLAKE_DATABASE: SANDBOX"
+    SNOWFLAKE_WAREHOUSE: SANDBOX_WAREHOUSE
+    SNOWFLAKE_SCHEMA: ci_dbt_dag_monitoring
+
 
 jobs:
   dbt-checks:
@@ -52,6 +60,9 @@ jobs:
       
       - name: Run dbt debug for BigQuery
         run: dbt debug --target bigquery
+
+      - name: Run dbt debug for Snowflake
+        run: dbt debug --target snowflake
 
       - name: dbt deps
         run: dbt deps

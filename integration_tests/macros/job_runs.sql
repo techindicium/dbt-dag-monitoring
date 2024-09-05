@@ -616,7 +616,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
         NULL AS quartz_cron_expression,
         NULL AS timezone_id
     ),
-    0,
+    0,NSERT TABLE 
     1720781090412,
     STRUCT(
         'TERMINATED' AS life_cycle_state,
@@ -779,7 +779,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 
 {%- macro snowflake__job_runs() -%}
 {% set create_table %}
-CREATE OR REPLACE TABLE "{{ target.database }}.{{ target.schema }}.job_runs" (
+CREATE OR REPLACE TABLE "{{ target.database }}"."{{ target.schema }}".job_runs (
     cleanup_duration BIGINT,
     creator_user_name STRING,
     end_time BIGINT,
@@ -806,8 +806,8 @@ CREATE OR REPLACE TABLE "{{ target.database }}.{{ target.schema }}.job_runs" (
 
 {% set insert_table %}
 
-INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
-(
+INSERT INTO "{{ target.database }}"."{{ target.schema }}".job_runs 
+SELECT
     0,
     'marm.tech',
     1720785705439,
@@ -832,8 +832,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     539935187772655,
     524911,
     539935187772655,
-    '[deook_job',
-    'https://73/run/539935187772655',
+    '[dev marcu_notebook_job',
+    'https://adb-124029?o=124029731635903#job/724712624070673/run/539935187772655',
     'JOB_RUN',
     OBJECT_CONSTRUCT(
         'pause_status', NULL,
@@ -868,7 +868,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', NULL,
                 'git_tag', NULL,
-                'git_url', 'https://bitabricks'
+                'git_url', 'https://bitbucket.org/indiciumtech/platform_meltano_on_databricks'
             ),
             'libraries', NULL,
             'notebook_task', OBJECT_CONSTRUCT(
@@ -904,10 +904,10 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
                 'git_branch', 'git_task',
                 'git_provider', 'bitbucketCloud',
                 'git_snapshot', OBJECT_CONSTRUCT(
-                    'used_commit', '2fc70970c9114c1b07'
+                    'used_commit', '2fc709b03d0059a18a9b994504e270c9114c1b07'
                 ),
                 'git_tag', NULL,
-                'git_url', 'https://bitano_on_databricks'
+                'git_url', 'https://bitbucket.org/indiciumtech/platform_meltano_on_databricks'
             ),
             'libraries', ARRAY_CONSTRUCT(
                 OBJECT_CONSTRUCT('pypi', OBJECT_CONSTRUCT('package', 'meltano==3.3.2'))
@@ -931,8 +931,8 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     'ONE_TIME',
     '2024-08-11T07:12:47.784Z'
 UNION ALL
-    SELECT
-         0,
+SELECT
+    0,
     'marm.tech',
     1720781204456,
     0,
@@ -946,7 +946,7 @@ UNION ALL
                 'enable_elastic_disk', NULL,
                 'node_type_id', NULL,
                 'num_workers', NULL,
-                'runtime_engine', NULL,
+              'runtime_engine', NULL,
                 'spark_version', NULL
             )
         )
@@ -1027,7 +1027,7 @@ UNION ALL
                 'cluster_id', '0726-130251-aj7rmr0x',
                 'spark_context_id', '1302841573581174040'
             ),
-            'dbt_task', OBJECT_CONSTRUCT(
+           'dbt_task', OBJECT_CONSTRUCT(
                 'commands', ARRAY_CONSTRUCT(
                     'dbt debug --target prod',
                     'dbt deps',
@@ -1057,7 +1057,7 @@ UNION ALL
                 OBJECT_CONSTRUCT('pypi', OBJECT_CONSTRUCT('package', 'databricks-sdk==0.28.0')),
                 OBJECT_CONSTRUCT('pypi', OBJECT_CONSTRUCT('package', 'dbt-core==1.7.10'))
             ),
-            'notebook_task', NULL,
+           'notebook_task', NULL,
             'run_id', 276320404580646,
             'setup_duration', 2000,
             'start_time', 172374563302374,
@@ -1066,13 +1066,13 @@ UNION ALL
                 'result_state', 'SUCCESS',
                 'state_message', '',
                 'user_cancelled_or_timedout', FALSE
-            ),
+           ),
             'task_key', 'execute_elementary_dbt_monitoring'
         )
     ),
     'ONE_TIME',
     '2024-08-11T07:12:47.784Z'
-);
+;
 
 {% endset %}
 
