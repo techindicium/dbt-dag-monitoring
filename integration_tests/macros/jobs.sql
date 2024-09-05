@@ -290,7 +290,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.jobs VALUES
 
 {% macro snowflake__jobs() %}
 {% set create_table %}
-CREATE OR REPLACE TABLE "{{ target.database }}"."{{ target.schema }}".jobs (
+CREATE OR REPLACE TABLE "{{ target.schema }}".jobs (
     created_time BIGINT,
     creator_user_name VARCHAR,
     job_id BIGINT,
@@ -301,7 +301,7 @@ CREATE OR REPLACE TABLE "{{ target.database }}"."{{ target.schema }}".jobs (
 
 {% set insert_table %}
 
-INSERT INTO "{{ target.database }}"."{{ target.schema }}".jobs SELECT
+INSERT INTO "{{ target.schema }}".jobs SELECT
     CAST(1722606667504 AS BIGINT),
     CAST('13bc3f4b-d299-4b58-9d09-5444571518ae' AS VARCHAR),
     CAST(466340877826952 AS BIGINT),
