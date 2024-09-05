@@ -32,4 +32,3 @@ dbt_dag_monitoring_integration_tests:
       warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
       schema: "{{ env_var('SNOWFLAKE_SCHEMA') }}"
       threads: 10
-      # authenticator: externalbrowser
