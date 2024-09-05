@@ -218,6 +218,8 @@ jobs:
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
+
+          dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target bigquery
           
           dbt run-operation jobs --target snowflake
           dbt run-operation job_runs --target snowflake
