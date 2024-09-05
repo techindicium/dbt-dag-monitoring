@@ -599,7 +599,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 ),
 (
     0,
-    'marcus.tech',
+    'maus.tech',
     1720781204456,
     0,
     NULL,
@@ -609,14 +609,14 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
     114044,
     1104206444717471,
     '[dev notebook_job',
-    'https://adb-1288879741463141/run/1104206444717471',
+    'https://adb-n/1104206444717471',
     'JOB_RUN',
     STRUCT(
         NULL AS pause_status,
         NULL AS quartz_cron_expression,
         NULL AS timezone_id
     ),
-    0,NSERT TABLE 
+    0,
     1720781090412,
     STRUCT(
         'TERMINATED' AS life_cycle_state,
