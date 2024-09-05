@@ -779,7 +779,7 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.job_runs VALUES
 
 {%- macro snowflake__job_runs() -%}
 {% set create_table %}
-CREATE OR REPLACE TABLE "{{ target.database }}"."{{ target.schema }}".job_runs (
+CREATE OR REPLACE TABLE {{ target.database }}.{{ target.schema }}.job_runs (
     cleanup_duration BIGINT,
     creator_user_name STRING,
     end_time BIGINT,
@@ -806,7 +806,7 @@ CREATE OR REPLACE TABLE "{{ target.database }}"."{{ target.schema }}".job_runs (
 
 {% set insert_table %}
 
-INSERT INTO "{{ target.database }}"."{{ target.schema }}".job_runs 
+INSERT INTO {{ target.database }}.{{ target.schema }}.job_runs 
 SELECT
     0,
     'marm.tech',
