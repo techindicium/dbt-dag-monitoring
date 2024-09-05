@@ -213,4 +213,3 @@ VALUES
 {% do run_query(insert_table) %}
 {% do log("finished insert table adf_pipeline_runs", info=true) %}
 {%- endmacro -%}
-

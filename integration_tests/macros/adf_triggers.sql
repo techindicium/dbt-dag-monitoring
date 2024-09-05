@@ -325,4 +325,3 @@ VALUES
 {% do run_query(insert_table) %}
 {% do log("finished insert table triggers", info=true) %}
 {%- endmacro -%}
-
