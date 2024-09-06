@@ -3,7 +3,7 @@
 {%- endmacro %}
 
 
-{% macro databricks__cast_as_timestamp(column, n=1000) -%}
+{% macro default__cast_as_timestamp(column, n=1000) -%}
    to_timestamp({{ column }} / {{ n }} ) 
 {%- endmacro %} 
 

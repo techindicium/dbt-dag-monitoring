@@ -3,7 +3,7 @@
 {%- endmacro %}
 
 
-{% macro default__cast_as_string(column) -%}
+{% macro databricks__cast_as_string(column) -%}
    cast({{ column }} as string) 
 {%- endmacro %}
 
@@ -14,6 +14,15 @@
       cast({{ column }} as string)
    {% endif -%}
 {%- endmacro %}
+
+{% macro snowflake__cast_as_string(column) -%}
+    {% if column ==  'null' -%}
+      {{ column }}
+   {% else -%}
+      cast({{ column }} as string) 
+   {% endif -%}
+{%- endmacro %}
+
 
 {% macro redshift__cast_as_string(column) -%}
    cast({{ column }} as varchar) 

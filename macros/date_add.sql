@@ -3,7 +3,7 @@
 {%- endmacro %}
 
 
-{% macro databricks__date_add(datepart, interval, column, default='INTERVAL') -%}
+{% macro default__date_add(datepart, interval, column, default='INTERVAL') -%}
    dateadd({{ datepart }}, {{ interval }}, {{ column }} ) 
 {%- endmacro %} 
 
