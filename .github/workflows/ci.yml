@@ -15,7 +15,7 @@ env:
     DEV_SCHEMA_NAME: ci_dbt_dag_monitoring
     DEV_HOST: ${{ secrets.DATABRICKS_HOST }}
     DEV_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-    DEV_HTTP_PATH: ${{ secrets.HTTP_PATH }}
+    DEV_HTTP_PATH: ${{ secrets.DATABRICKS_HTTP_PATH }}
 
     BIGQUERY_DATASET: ci_dbt_dag_monitoring
     BIGQUERY_PROJECT: indicium-sandbox
