@@ -57,6 +57,9 @@ jobs:
         run: dbt deps
 
       - name: dbt compile
+        env: 
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: dbt compile
 
   integration-test:
