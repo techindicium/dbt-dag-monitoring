@@ -251,7 +251,7 @@ jobs:
           
           dbt build  --exclude-resource-type seed --target snowflake
 
-      - name: change BigQuery database to Snowflake database
+      - name: switch enabled sources for airflow source 
         run: |
           cd ${{ github.workspace }}
           sed -i 's/dag_monitoring_airflow_database: indicium-sandbox/dag_monitoring_airflow_database: sandbox/' dbt_project.yml
