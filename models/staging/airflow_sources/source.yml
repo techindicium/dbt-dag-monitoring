@@ -3,8 +3,8 @@ version: 2
 sources:
   - name: raw_airflow_monitoring
     description: "Raw data extracted from Airflow for Airflow monitoring analysis."
-    database: "{{ var('dag_monitoring_airflow_database')}}"
-    schema: "{{ var('dag_monitoring_airflow_schema') }}"
+    database: "{{ var('dag_monitoring_airflow_database', '')}}"
+    schema: "{{ var('dag_monitoring_airflow_schema',  '') }}"
     tables:
       - name: dag_run
         description: "Table that contains data from Airflow DAG runs."
