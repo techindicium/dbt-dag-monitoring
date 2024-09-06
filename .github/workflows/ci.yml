@@ -56,11 +56,6 @@ jobs:
       - name: dbt deps
         run: dbt deps
 
-      - name: Append to dbt_project.yml the variables needed to test the project
-        run: |
-          chmod +x append_to_dbt_project.sh
-          ./append_to_dbt_project.sh
-
       - name: dbt compile
         run: dbt compile
 
@@ -80,11 +75,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       
-      - name: Append to dbt_project.yml the variables needed to test the project
-        run: |
-          chmod +x append_to_dbt_project.sh
-          ./append_to_dbt_project.sh
-      
       - name: enter integration tests
         run: |
           cd integration_tests/
@@ -94,114 +84,114 @@ jobs:
         with:
           credentials_json: "${{ secrets.BIGQUERY_AUTH }}"
       
-      # - name: Run dbt integration tests Databricks source in Databricks connection
-      #   env:
-      #     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-      #     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
-      #   run: |
-      #     dbt deps --target databricks
-          
-      #     dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target databricks
-
-      #     dbt seed --target databricks
-          
-      #     dbt run-operation jobs --target databricks
-      #     dbt run-operation job_runs --target databricks
-          
-      #     dbt test -s source:* --target databricks
-          
-      #     dbt build --target databricks
-
-      # - name: switch enabled sources for adf source
-      #   run: |
-      #     cd ${{ github.workspace }}
-      #     . change_dbt_project_adf_source.sh
-      #     cd integration_tests/
-
-      # - name: Run dbt tasks for ADF source in Databricks connection
-      #   env:
-      #     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-      #     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
-      #   run: |
-      #     dbt deps
-
-      #     dbt seed --target databricks
-
-      #     dbt run-operation adf_pipeline_runs --target databricks
-      #     dbt run-operation adf_triggers --target databricks
-
-      #     dbt test -s source:* --target databricks
-
-      #     dbt build --target databricks
-
-      # - name: switch enabled sources for airflow source 
-      #   run: |
-      #     cd ${{ github.workspace }}
-      #     . change_dbt_project_airflow_source.sh
-      #     cd integration_tests/
-
-      # - name: Run dbt tasks for Airflow source in Databricks connection
-      #   env:
-      #     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-      #     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
-      #   run: |
-      #     dbt deps
-
-      #     dbt seed --target databricks
-
-      #     dbt test -s source:* --target databricks
-
-      #     dbt build --target databricks
-
-      #     dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
-
-      - name: change databricks database to bigquery database
-        run: |
-          cd ${{ github.workspace }}
-          sed -i 's/dag_monitoring_databricks_database: cdi_dev/dag_monitoring_databricks_database: indicium-sandbox/' dbt_project.yml
-          . change_dbt_project_databricks_source.sh
-          cd integration_tests/
-
-      - name: Run dbt integration tests Databricks source in BigQuery connection
+      - name: Run dbt integration tests Databricks source in Databricks connection
         env:
           DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
-          dbt deps --target bigquery
+          dbt deps --target databricks
           
-          dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target bigquery
+          dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target databricks
 
-          dbt run-operation jobs --target bigquery
-          dbt run-operation job_runs --target bigquery
+          dbt seed --target databricks
           
-          dbt test -s source:* --target bigquery
+          dbt run-operation jobs --target databricks
+          dbt run-operation job_runs --target databricks
           
-          dbt build --exclude-resource-type seed --target bigquery
+          dbt test -s source:* --target databricks
+          
+          dbt build --target databricks
 
       - name: switch enabled sources for adf source
         run: |
           cd ${{ github.workspace }}
-          sed -i 's/dag_monitoring_adf_database: cdi_dev/dag_monitoring_adf_database: indicium-sandbox/' dbt_project.yml
           . change_dbt_project_adf_source.sh
           cd integration_tests/
 
-      - name: Run dbt integration tests ADF source in BigQuery connection
+      - name: Run dbt tasks for ADF source in Databricks connection
         env:
           DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
 
-          dbt seed -s adf_pipelines --target bigquery
+          dbt seed --target databricks
 
-          dbt run-operation adf_activity_runs --target bigquery
-          dbt run-operation adf_pipeline_runs --target bigquery
-          dbt run-operation adf_triggers --target bigquery
+          dbt run-operation adf_pipeline_runs --target databricks
+          dbt run-operation adf_triggers --target databricks
 
-          dbt test -s source:* --target bigquery
+          dbt test -s source:* --target databricks
 
-          dbt build --exclude-resource-type seed --target bigquery
+          dbt build --target databricks
 
-          dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target bigquery
+      - name: switch enabled sources for airflow source 
+        run: |
+          cd ${{ github.workspace }}
+          . change_dbt_project_airflow_source.sh
+          cd integration_tests/
+
+      - name: Run dbt tasks for Airflow source in Databricks connection
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps
+
+          dbt seed --target databricks
+
+          dbt test -s source:* --target databricks
+
+          dbt build --target databricks
+
+          dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
+
+      # - name: change databricks database to bigquery database
+      #   run: |
+      #     cd ${{ github.workspace }}
+      #     sed -i 's/dag_monitoring_databricks_database: cdi_dev/dag_monitoring_databricks_database: indicium-sandbox/' dbt_project.yml
+      #     . change_dbt_project_databricks_source.sh
+      #     cd integration_tests/
+
+      # - name: Run dbt integration tests Databricks source in BigQuery connection
+      #   env:
+      #     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+      #     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+      #   run: |
+      #     dbt deps --target bigquery
+          
+      #     dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target bigquery
+
+      #     dbt run-operation jobs --target bigquery
+      #     dbt run-operation job_runs --target bigquery
+          
+      #     dbt test -s source:* --target bigquery
+          
+      #     dbt build --exclude-resource-type seed --target bigquery
+
+      # - name: switch enabled sources for adf source
+      #   run: |
+      #     cd ${{ github.workspace }}
+      #     sed -i 's/dag_monitoring_adf_database: cdi_dev/dag_monitoring_adf_database: indicium-sandbox/' dbt_project.yml
+      #     . change_dbt_project_adf_source.sh
+      #     cd integration_tests/
+
+      # - name: Run dbt integration tests ADF source in BigQuery connection
+      #   env:
+      #     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+      #     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+      #   run: |
+      #     dbt deps
+
+      #     dbt seed -s adf_pipelines --target bigquery
+
+      #     dbt run-operation adf_activity_runs --target bigquery
+      #     dbt run-operation adf_pipeline_runs --target bigquery
+      #     dbt run-operation adf_triggers --target bigquery
+
+      #     dbt test -s source:* --target bigquery
+
+      #     dbt build --exclude-resource-type seed --target bigquery
+
+      #     dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target bigquery
 
 
