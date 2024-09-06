@@ -208,11 +208,11 @@ jobs:
       - name: change databricks database to bigquery database
         run: |
           cd ${{ github.workspace }}
-          sed -i 's/dag_monitoring_databricks_database: cdi_dev/dag_monitoring_databricks_database: sandbox/' dbt_project.yml
-          # . change_dbt_project_databricks_source.sh
+          sed -i 's/dag_monitoring_databricks_database: indicium-sandbox/dag_monitoring_databricks_database: sandbox/' dbt_project.yml
+          . change_dbt_project_databricks_source.sh
           cd integration_tests/
 
-      - name: Run dbt integration tests Databricks source in Databricks connection
+      - name: Run dbt integration tests Databricks source in Snowflake connection
         env:
           DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
           DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
