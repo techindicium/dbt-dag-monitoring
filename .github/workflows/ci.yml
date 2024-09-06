@@ -205,7 +205,7 @@ jobs:
 
           dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target bigquery
 
-      - name: change databricks database to bigquery database
+      - name: change BigQuery database to Snowflake database
         run: |
           cd ${{ github.workspace }}
           sed -i 's/dag_monitoring_databricks_database: indicium-sandbox/dag_monitoring_databricks_database: sandbox/' dbt_project.yml
