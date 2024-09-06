@@ -287,3 +287,120 @@ INSERT INTO `{{ target.database }}`.{{ target.schema }}.jobs VALUES
 
 
 {% endmacro %}
+
+{% macro snowflake__jobs() %}
+{% set create_table %}
+CREATE OR REPLACE TABLE {{ target.database }}.{{ target.schema }}.jobs (
+    created_time BIGINT,
+    creator_user_name VARCHAR,
+    job_id BIGINT,
+    settings VARIANT,
+    insertedDate TIMESTAMP
+);
+{% endset %}
+
+{% set insert_table %}
+
+INSERT INTO {{ target.database }}.{{ target.schema }}.jobs SELECT
+    CAST(1722606667504 AS BIGINT),
+    CAST('13bc3f4b-d299-4b58-9d09-5444571518ae' AS VARCHAR),
+    CAST(466340877826952 AS BIGINT),
+    OBJECT_CONSTRUCT(
+        'email_notifications', OBJECT_CONSTRUCT(
+            'on_failure', ARRAY_CONSTRUCT('produtosgenie.net'),
+            'no_alert_for_skipped_runs', NULL
+        ),
+        'format', 'MULTI_TASK',
+        'max_concurrent_runs', 1,
+        'name', '[prod] coreion_dbt_job',
+        'schedule', OBJECT_CONSTRUCT(
+            'pause_status', NULL,
+            'quartz_cron_expression', NULL,
+            'timezone_id', NULL
+        ),
+        'tags', OBJECT_CONSTRUCT(
+            'dev', NULL,
+            'env', 'prod'
+        ),
+        'timeout_seconds', 0,
+        'trigger', OBJECT_CONSTRUCT(
+            'file_arrival', OBJECT_CONSTRUCT(
+                'url', NULL
+            ),
+            'paused_status', NULL
+        )
+    ),
+    CAST('2024-08-20T09:11:36.525Z' AS TIMESTAMP)
+UNION ALL
+    SELECT
+    CAST(1722544845800 AS BIGINT),
+    CAST('13bc3f4b44571518ae' AS VARCHAR),
+    CAST(823250232903490 AS BIGINT),
+    OBJECT_CONSTRUCT(
+        'email_notifications', OBJECT_CONSTRUCT(
+            'on_failure', ARRAY_CONSTRUCT('prod.opsgenie.net'),
+            'no_alert_for_skipped_runs', NULL
+        ),
+        'format', 'MULTI_TASK',
+        'max_concurrent_runs', 1,
+        'name', '[prod] cltano_job',
+        'schedule', OBJECT_CONSTRUCT(
+            'pause_status', 'UNPAUSED',
+            'quartz_cron_expression', '0 0 0/3 * * ? *',
+            'timezone_id', 'UTC'
+        ),
+        'tags', OBJECT_CONSTRUCT(
+            'dev', NULL,
+            'env', 'prod'
+        ),
+        'timeout_seconds', 0,
+        'trigger', OBJECT_CONSTRUCT(
+            'file_arrival', OBJECT_CONSTRUCT(
+                'url', NULL
+            ),
+            'paused_status', NULL
+        )
+    ),
+    CAST('2024-08-20T09:11:36.525Z' AS TIMESTAMP)
+UNION ALL
+    SELECT
+    CAST(1722538441265 AS BIGINT),
+    CAST('13bc3f4b-d299-4b58-9d09-5444571518ae' AS VARCHAR),
+    CAST(790689006770532 AS BIGINT),
+    OBJECT_CONSTRUCT(
+        'email_notifications', OBJECT_CONSTRUCT(
+            'on_failure', ARRAY_CONSTRUCT('produtosopsgenie.net'),
+            'no_alert_for_skipped_runs', NULL
+        ),
+        'format', 'MULTI_TASK',
+        'max_concurrent_runs', 1,
+        'name', '[prod] invspark_job',
+        'schedule', OBJECT_CONSTRUCT(
+            'pause_status', 'UNPAUSED',
+            'quartz_cron_expression', '0 0 0/4 * * ? *',
+            'timezone_id', 'UTC'
+        ),
+        'tags', OBJECT_CONSTRUCT(
+            'dev', NULL,
+            'env', 'prod'
+        ),
+        'timeout_seconds', 0,
+        'trigger', OBJECT_CONSTRUCT(
+            'file_arrival', OBJECT_CONSTRUCT(
+                'url', NULL
+            ),
+            'paused_status', NULL
+        )
+    ),
+    CAST('2024-08-20T09:11:36.525Z' AS TIMESTAMP)
+;
+
+
+{% endset %}
+
+{% do run_query(create_table) %}
+{% do log("finished creating table jobs", info=true) %}
+
+{% do run_query(insert_table) %}
+{% do log("finished insert table jobs ", info=true) %}
+{% endmacro %}

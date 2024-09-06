@@ -2,7 +2,7 @@
     {{ return(adapter.dispatch('adf_pipeline_runs')()) }}
 {%- endmacro %}
 
-{%- macro databricks__adf_pipeline_runs() -%}
+{%- macro default__adf_pipeline_runs() -%}
 {% set create_table %}
 create or replace table `{{ target.database }}`.{{ target.schema }}.adf_pipeline_runs(
     id STRING,
