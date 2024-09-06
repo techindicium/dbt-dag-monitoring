@@ -2,7 +2,7 @@
     {{ return(adapter.dispatch('adf_triggers')()) }}
 {%- endmacro %}
 
-{%- macro databricks__adf_triggers() -%}
+{%- macro default__adf_triggers() -%}
 {% set create_table %}
 create or replace table `{{ target.database }}`.{{ target.schema }}.adf_triggers (
     id STRING,

@@ -23,6 +23,14 @@ env:
     DBT_THREADS: 16
     DBT_JOB_RETRIES: 1
 
+    SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_TEST_ACCOUNT}}
+    SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_TEST_USER }}
+    SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_TEST_PASSWORD}}
+    SNOWFLAKE_ROLE: INTERNAL_PRODUCTS_CICD
+    SNOWFLAKE_DATABASE: SANDBOX
+    SNOWFLAKE_WAREHOUSE: SANDBOX_WAREHOUSE
+    SNOWFLAKE_SCHEMA: ci_dbt_dag_monitoring
+
 
 jobs:
   dbt-checks:
@@ -52,6 +60,9 @@ jobs:
       
       - name: Run dbt debug for BigQuery
         run: dbt debug --target bigquery
+
+      - name: Run dbt debug for Snowflake
+        run: dbt debug --target snowflake
 
       - name: dbt deps
         run: dbt deps
@@ -214,6 +225,31 @@ jobs:
           dbt test -s source:* --target bigquery
 
           dbt build --exclude-resource-type seed --target bigquery
+          
+          dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target bigquery
 
-          dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
+      - name: change BigQuery database to Snowflake database
+        run: |
+          cd ${{ github.workspace }}
+          sed -i 's/dag_monitoring_databricks_database: indicium-sandbox/dag_monitoring_databricks_database: sandbox/' dbt_project.yml
+          . change_dbt_project_databricks_source.sh
+          cd integration_tests/
+
+      - name: Run dbt integration tests Databricks source in Snowflake connection
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps
+
+          dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target snowflake
+          
+          dbt run-operation jobs --target snowflake
+          dbt run-operation job_runs --target snowflake
+          
+          dbt test -s source:* --target snowflake
+          
+          dbt build  --exclude-resource-type seed --target snowflake
+
+          dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target snowflake
 
