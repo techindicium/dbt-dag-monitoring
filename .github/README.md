@@ -18,6 +18,12 @@ When testing new features in the project, the user can save time by having crede
 In case you do not find the schema to observe on a DW, it is because of the schema creation and schema deletion just after the CI is done for that specific DW.
 To clarify how the integration test functions in the continuous integration, we can take a look at the diagram below:
 
+<img src="integration_tests/docs/integration_tests_diagram.png" width="300" />
 
+> [!NOTE]  
+> Databricks works as a DW and as a source for the models.
 
+As you can see on the image above, the .sh files are used to give a transition between an origin and a destination source.
+
+As we have pattern on the sources of making the transitions between Databricks to ADF to Airflow, we needed a new shell file that is the “change_dbt_project_from_databricks_to_airflow.sh” to make the last transition Databricks to Airflow, as ADF was not tested on Snowflake.
 
