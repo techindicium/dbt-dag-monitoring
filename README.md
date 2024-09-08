@@ -6,7 +6,7 @@ This package allows you to easily monitor your DAGs from well known orchestratio
 - [Before creating a branch](#Before-creating-a-branch)
 - [Revisions](#revisions)
   - [Tools supported](#tools-supported)
-- [Quickstart](#quickstart)
+- [Quickstart](#:running:-Quickstart)
   - [requirements](#requirements)
   - [Profiles](#profiles)
   - [Installation](#installation)
