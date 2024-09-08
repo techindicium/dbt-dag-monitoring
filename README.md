@@ -10,7 +10,7 @@ This package allows you to easily monitor your DAGs from well known orchestratio
   - [requirements](#requirements)
   - [Profiles](#profiles)
   - [Installation](#installation)
-  - [Configuring models package](#dbt-project-structure)
+  - [Configuring models package](#Configuring-models-package)
   - [Airflow metadata](#Airflow-metadata)
   - [ADF metadata](#ADF-metadata)
   - [Databricks Workflow Data](#Databricks-Workflow-Data)
