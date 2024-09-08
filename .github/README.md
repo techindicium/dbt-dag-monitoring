@@ -18,5 +18,7 @@ When testing new features in the project, the user can save time by having crede
 In case you do not find the schema to observe on a DW, it is because of the schema creation and schema deletion just after the CI is done for that specific DW.
 To clarify how the integration test functions in the continuous integration, we can take a look at the diagram below:
 
+![How integration tests work](integration_tests/docs/integration_tests_diagram.png)
+
 
 
