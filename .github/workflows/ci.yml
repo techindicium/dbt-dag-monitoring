@@ -113,7 +113,7 @@ jobs:
 
       - name: switch enabled sources for adf source
         run: 
-          . for_CI/change_dbt_project_adf_source.sh
+          . ./for_CI/change_dbt_project_adf_source.sh
 
       - name: Run dbt tasks for ADF source in Databricks connection
         run: |
