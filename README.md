@@ -167,5 +167,5 @@ specifically the streams:
 > [!IMPORTANT]  
 > When using the integration tests folder, for the sake of the continuous integration code run seamlessly, you can NOT change in your pull request the default value of the vars, models and sources being Databricks inside the integration_tests/dbt_project.yml. Following the source pattern is important.
 
-More information on the README.md in .github folder.
+More information on the README.md in integration_tests folder.
 
