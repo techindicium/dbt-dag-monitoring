@@ -251,5 +251,25 @@ jobs:
           
           dbt build  --exclude-resource-type seed --target snowflake
 
+      - name: switch enabled sources for airflow source 
+        run: |
+          cd ${{ github.workspace }}
+          sed -i 's/dag_monitoring_airflow_database: indicium-sandbox/dag_monitoring_airflow_database: sandbox/' dbt_project.yml
+          . change_dbt_project_from_databricks_to_airflow.sh
+          cd integration_tests/
+  
+      - name: Run dbt integration tests Airflow source in Snowflake connection
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
+        run: |
+          dbt deps
+          
+          dbt seed -s seeds/airflow/* --target snowflake
+          
+          dbt test -s source:* --target snowflake
+          
+          dbt build  --exclude-resource-type seed --target snowflake
+
           dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target snowflake
 
