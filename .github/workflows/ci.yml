@@ -146,7 +146,7 @@ jobs:
 
       - name: change databricks database to bigquery database
         run: |
-          sed -i 's/dag_monitoring_databricks_database: cdi_dev/dag_monitoring_databricks_database: indicium-sandbox/' dbt_project.yml
+          sed -i 's/dag_monitoring_databricks_database: cdi_dev/dag_monitoring_databricks_database: indicium-sandbox/' ${{ github.workspace }}/integration_tests/dbt_project.yml
           . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_databricks_source.sh
 
       - name: Run dbt integration tests Databricks source in BigQuery connection
