@@ -96,62 +96,61 @@ jobs:
         with:
           credentials_json: "${{ secrets.BIGQUERY_AUTH }}"
       
-      # - name: Run dbt integration tests Databricks source in Databricks connection
-      #   run: |
-      #     dbt deps --target databricks
+      - name: Run dbt integration tests Databricks source in Databricks connection
+        run: |
+          dbt deps --target databricks
           
-      #     dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target databricks
+          dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target databricks
 
-      #     dbt seed --target databricks
+          dbt seed --target databricks
           
-      #     dbt run-operation jobs --target databricks
-      #     dbt run-operation job_runs --target databricks
+          dbt run-operation jobs --target databricks
+          dbt run-operation job_runs --target databricks
           
-      #     dbt test -s source:* --target databricks
+          dbt test -s source:* --target databricks
           
-      #     dbt build --target databricks
+          dbt build --target databricks
 
-      # - name: switch enabled sources for adf source
-      #   run: 
-      #     . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_adf_source.sh
+      - name: switch enabled sources for adf source
+        run: 
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_adf_source.sh
 
-      # - name: Run dbt tasks for ADF source in Databricks connection
-      #   run: |
-      #     dbt deps
+      - name: Run dbt tasks for ADF source in Databricks connection
+        run: |
+          dbt deps
 
-      #     dbt seed --target databricks
+          dbt seed --target databricks
 
-      #     dbt run-operation adf_pipeline_runs --target databricks
-      #     dbt run-operation adf_triggers --target databricks
+          dbt run-operation adf_pipeline_runs --target databricks
+          dbt run-operation adf_triggers --target databricks
 
-      #     dbt test -s source:* --target databricks
+          dbt test -s source:* --target databricks
 
-      #     dbt build --target databricks
+          dbt build --target databricks
 
-      # - name: switch enabled sources for airflow source 
-      #   run: |
-      #     . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_airflow_source.sh
+      - name: switch enabled sources for airflow source 
+        run: |
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_airflow_source.sh
 
-      # - name: Run dbt tasks for Airflow source in Databricks connection
-      #   run: |
-      #     dbt deps
+      - name: Run dbt tasks for Airflow source in Databricks connection
+        run: |
+          dbt deps
 
-      #     dbt seed --target databricks
+          dbt seed --target databricks
 
-      #     dbt test -s source:* --target databricks
+          dbt test -s source:* --target databricks
 
-      #     dbt build --target databricks
+          dbt build --target databricks
 
-      #     dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
+          dbt run-operation drop_schema --args '{schema_name: ci_dbt_dag_monitoring}'
 
       - name: change databricks database to bigquery database
         run: |
           . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_databricks_source.sh
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh databricks cdi_dev indicium-sandbox 
 
       - name: Run dbt integration tests Databricks source in BigQuery connection
         run: |
-          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh databricks cdi_dev indicium-sandbox  
-
           dbt deps --target bigquery
           
           dbt run-operation create_schema --args '{schema_name: ci_dbt_dag_monitoring}' --target bigquery
@@ -223,7 +222,7 @@ jobs:
       - name: switch enabled sources for airflow source 
         run: |
           . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh airflow indicium-sandbox sandbox
-          . ${{ github.workspace }}/integration_tests/change_dbt_project_from_databricks_to_airflow.sh
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_from_databricks_to_airflow.sh
   
       - name: Run dbt integration tests Airflow source in Snowflake connection
         env:
