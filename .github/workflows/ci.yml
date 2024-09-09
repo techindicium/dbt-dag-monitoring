@@ -9,7 +9,8 @@ on:
       - main   
 
 env:
-    DBT_PROFILES_DIR: ${{ github.workspace }}
+    DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
+    DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
     DBT_DEFAULT_TARGET: databricks
     DEV_CATALOG_NAME: cdi_dev
     DEV_SCHEMA_NAME: ci_dbt_dag_monitoring
@@ -60,7 +61,7 @@ jobs:
       
       - name: Run dbt debug for BigQuery
         run: dbt debug --target bigquery
-
+          
       - name: Run dbt debug for Snowflake
         run: dbt debug --target snowflake
 
@@ -96,9 +97,6 @@ jobs:
           credentials_json: "${{ secrets.BIGQUERY_AUTH }}"
       
       - name: Run dbt integration tests Databricks source in Databricks connection
-        env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps --target databricks
           
@@ -114,15 +112,10 @@ jobs:
           dbt build --target databricks
 
       - name: switch enabled sources for adf source
-        run: |
-          cd ${{ github.workspace }}
-          . change_dbt_project_adf_source.sh
-          cd integration_tests/
+        run: 
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_adf_source.sh
 
       - name: Run dbt tasks for ADF source in Databricks connection
-        env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
 
@@ -137,14 +130,9 @@ jobs:
 
       - name: switch enabled sources for airflow source 
         run: |
-          cd ${{ github.workspace }}
-          . change_dbt_project_airflow_source.sh
-          cd integration_tests/
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_airflow_source.sh
 
       - name: Run dbt tasks for Airflow source in Databricks connection
-        env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
 
@@ -158,15 +146,10 @@ jobs:
 
       - name: change databricks database to bigquery database
         run: |
-          cd ${{ github.workspace }}
-          sed -i 's/dag_monitoring_databricks_database: cdi_dev/dag_monitoring_databricks_database: indicium-sandbox/' dbt_project.yml
-          . change_dbt_project_databricks_source.sh
-          cd integration_tests/
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_databricks_source.sh
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh databricks cdi_dev indicium-sandbox 
 
       - name: Run dbt integration tests Databricks source in BigQuery connection
-        env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps --target bigquery
           
@@ -181,15 +164,10 @@ jobs:
 
       - name: switch enabled sources for adf source
         run: |
-          cd ${{ github.workspace }}
-          sed -i 's/dag_monitoring_adf_database: cdi_dev/dag_monitoring_adf_database: indicium-sandbox/' dbt_project.yml
-          . change_dbt_project_adf_source.sh
-          cd integration_tests/
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh adf cdi_dev indicium-sandbox
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_adf_source.sh
 
       - name: Run dbt integration tests ADF source in BigQuery connection
-        env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
 
@@ -200,20 +178,15 @@ jobs:
           dbt run-operation adf_triggers --target bigquery
 
           dbt test -s source:* --target bigquery
-
+      
           dbt build --exclude-resource-type seed --target bigquery
       
       - name: switch enabled sources for airflow source 
         run: |
-          cd ${{ github.workspace }}
-          . change_dbt_project_airflow_source.sh
-          sed -i 's/dag_monitoring_airflow_database: cdi_dev/dag_monitoring_adf_database: indicium-sandbox/' dbt_project.yml
-          cd integration_tests/
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_airflow_source.sh
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh airflow cdi_dev indicium-sandbox
 
       - name: Run dbt tasks for Airflow source in BigQuery connection
-        env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
 
@@ -230,15 +203,10 @@ jobs:
 
       - name: change BigQuery database to Snowflake database
         run: |
-          cd ${{ github.workspace }}
-          sed -i 's/dag_monitoring_databricks_database: indicium-sandbox/dag_monitoring_databricks_database: sandbox/' dbt_project.yml
-          . change_dbt_project_databricks_source.sh
-          cd integration_tests/
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh databricks indicium-sandbox sandbox
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_databricks_source.sh
 
       - name: Run dbt integration tests Databricks source in Snowflake connection
-        env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
-          DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
         run: |
           dbt deps
 
@@ -253,10 +221,8 @@ jobs:
 
       - name: switch enabled sources for airflow source 
         run: |
-          cd ${{ github.workspace }}
-          sed -i 's/dag_monitoring_airflow_database: indicium-sandbox/dag_monitoring_airflow_database: sandbox/' dbt_project.yml
-          . change_dbt_project_from_databricks_to_airflow.sh
-          cd integration_tests/
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh airflow indicium-sandbox sandbox
+          . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_from_databricks_to_airflow.sh
   
       - name: Run dbt integration tests Airflow source in Snowflake connection
         env:
