@@ -1,5 +1,5 @@
 > [!WARNING]  
-> ADF source and models was NOT tested in Snowflake connection!
+> ADF source and models were NOT tested in Snowflake connection!
 
 This README is about the integration tests step inside the ci.yml.
 
