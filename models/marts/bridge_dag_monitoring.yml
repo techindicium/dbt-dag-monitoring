@@ -9,7 +9,6 @@ models:
 
       - name: dag_fk
         description: "Foreign key for each dag."
-        tests:
 
       - name: task_fk
         description: "Foreign key for each task."
