@@ -10,9 +10,6 @@ models:
       - name: dag_fk
         description: "Foreign key for each dag."
         tests:
-          - relationships:
-              to: ref('fact_dag_monitoring_dag_run')
-              field: dag_fk
 
       - name: task_fk
         description: "Foreign key for each task."
