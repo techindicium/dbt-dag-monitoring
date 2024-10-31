@@ -51,5 +51,5 @@ vars:
     dag_monitoring_airflow_schema: raw_monitoring
     dag_monitoring_databricks_database: mesh_dev_db
     dag_monitoring_databricks_schema: raw_monitoring
-    dag_monitoring_adf_database: mesh_dev_db
-    dag_monitoring_adf_schema: raw_monitoring
+    dag_monitoring_adf_database: indicium-sandbox
+    dag_monitoring_adf_schema: ci_dbt_dag_monitoring
