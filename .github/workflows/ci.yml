@@ -147,7 +147,7 @@ jobs:
       - name: change databricks database to bigquery database
         run: |
           . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_databricks_source.sh
-          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh databricks cdi_dev indicium-sandbox 
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh databricks mesh_dev_db indicium-sandbox 
 
       - name: Run dbt integration tests Databricks source in BigQuery connection
         run: |
@@ -164,7 +164,7 @@ jobs:
 
       - name: switch enabled sources for adf source
         run: |
-          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh adf cdi_dev indicium-sandbox
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh adf mesh_dev_db indicium-sandbox
           . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_adf_source.sh
 
       - name: Run dbt integration tests ADF source in BigQuery connection
@@ -184,7 +184,7 @@ jobs:
       - name: switch enabled sources for airflow source 
         run: |
           . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_airflow_source.sh
-          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh airflow cdi_dev indicium-sandbox
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh airflow mesh_dev_db indicium-sandbox
 
       - name: Run dbt tasks for Airflow source in BigQuery connection
         run: |
