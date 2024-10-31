@@ -12,8 +12,8 @@ env:
     DBT_PROFILES_DIR: ${{ github.workspace }}/integration_tests
     DBT_PROJECT_DIR: ${{ github.workspace }}/integration_tests
     DBT_DEFAULT_TARGET: databricks
-    DEV_CATALOG_NAME: cdi_dev
-    DEV_SCHEMA_NAME: ci_dbt_dag_monitoring
+    DEV_CATALOG_NAME: mesh_dev_db
+    DEV_SCHEMA_NAME: raw_monitoring
     DEV_HOST: ${{ secrets.DATABRICKS_HOST }}
     DEV_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
     DEV_HTTP_PATH: ${{ secrets.DATABRICKS_HTTP_PATH }}
