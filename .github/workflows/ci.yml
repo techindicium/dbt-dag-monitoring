@@ -147,7 +147,7 @@ jobs:
       - name: change databricks database to bigquery database
         run: |
           . ${{ github.workspace }}/integration_tests/for_CI/change_dbt_project_databricks_source.sh
-          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh databricks cdi_dev indicium-sandbox 
+          . ${{ github.workspace }}/integration_tests/for_CI/change_of_database.sh databricks cdi_dev indicium-sandbox
 
       - name: Run dbt integration tests Databricks source in BigQuery connection
         run: |

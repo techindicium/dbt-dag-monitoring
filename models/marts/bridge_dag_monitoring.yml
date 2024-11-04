@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: bridge_dag_monitoring
+    description: "Bridge table used to make relationships between marts."
+    columns:
+      - name: 'generated_date'
+        description: "Date of execution of the DAG."
+
+      - name: dag_fk
+        description: "Foreign key for each dag."
+
+      - name: task_fk
+        description: "Foreign key for each task."
+
+      - name: dag_run_fk
+        description: "Foreign key for fact_dag_monitoring_dag_run. Composed of: dag_run_id, execution_start_date and execution_end_date"
+
+      - name: task_fail_fk
+        description: "Foreign key for fact_dag_monitoring_task_fail. Composed of: task_fail_id, execution_end_date and execution_start_date"
+
+      - name: task_instance_fk
+        description: "Foreign key for fact_dag_monitoring_task_instance. Composed of: task_instance_id, execution_end_date, and execution_start_date"
