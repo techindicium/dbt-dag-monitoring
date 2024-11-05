@@ -36,7 +36,7 @@ with
     , days_named as (
         select
             *
-            , {{ day_of_week_per_platform('week_day') }}
+            , {{ day_of_week('week_day') }}
             , case
                 when month_number = 1 then 'January'
                 when month_number = 2 then 'February'

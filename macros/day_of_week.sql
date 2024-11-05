@@ -1,8 +1,8 @@
-{% macro day_of_week_per_platform(column) %}
-    {{ return(adapter.dispatch('day_of_week_per_platform')(column)) }}
+{% macro day_of_week(column) %}
+    {{ return(adapter.dispatch('day_of_week')(column)) }}
 {%- endmacro %}
 
-{% macro databricks__day_of_week_per_platform(column) %}
+{% macro databricks__day_of_week(column) %}
             case
                 when {{ column }} = 1 then 'Sunday'
                 when {{ column }} = 2 then 'Monday'
@@ -14,7 +14,7 @@
             end as name_of_day
 {% endmacro %}
 
-{% macro snowflake__day_of_week_per_platform(column) %}
+{% macro snowflake__day_of_week(column) %}
             case
                 when {{ column }} = 0 then 'Sunday'
                 when {{ column }} = 1 then 'Monday'
@@ -26,7 +26,7 @@
             end as name_of_day
 {% endmacro %}
 
-{% macro bigquery__day_of_week_per_platform(column) %}
+{% macro bigquery__day_of_week(column) %}
             case
                 when {{ column }} = 1 then 'Sunday'
                 when {{ column }} = 2 then 'Monday'
