@@ -19,66 +19,66 @@ with
     }}
 )
 
-/* extracting some date information and changing some columns language to portuguese */
+/* extracting some date information*/
     , days_info as (
         select
-            cast(date_day as date) as data_dia
-            , extract(DAYOFWEEK from date_day) as dia_da_semana
-            , extract(month from date_day) as mes
-            , extract(quarter from date_day) as trimestre
-            , {{ day_of_year("date_day") }} as dia_do_ano
-            , extract(year from date_day) as ano
-            , {{ dia_mes('date_day') }} as dia_mes
+            cast(date_day as date) as date_day
+            , extract(DAYOFWEEK from date_day) as week_day
+            , extract(month from date_day) as month_number
+            , extract(quarter from date_day) as quarter_number
+            , {{ day_of_year("date_day") }} as day_of_year
+            , extract(year from date_day) as year_date
+            , {{ month_day('date_day') }} as month_day
         from dates_raw
     )
 
-/* changing meaning of columns to portuguese */
+/**/
     , days_named as (
         select
             *
-            , {{ de_para_dias_da_semana('dia_da_semana') }}
+            , {{ day_of_week_per_platform('week_day') }}
             , case
-                when mes = 1 then 'Janeiro'
-                when mes = 2 then 'Fevereiro'
-                when mes = 3 then 'Março'
-                when mes = 4 then 'Abril'
-                when mes = 5 then 'Maio'
-                when mes = 6 then 'Junho'
-                when mes = 7 then 'Julho'
-                when mes = 8 then 'Agosto'
-                when mes = 9 then 'Setembro'
-                when mes = 10 then 'Outubro'
-                when mes = 11 then 'Novembro'
-                else 'Dezembro'
-            end as nome_do_mes
+                when month_number = 1 then 'January'
+                when month_number = 2 then 'February'
+                when month_number = 3 then 'March'
+                when month_number = 4 then 'April'
+                when month_number = 5 then 'May'
+                when month_number = 6 then 'June'
+                when month_number = 7 then 'July'
+                when month_number = 8 then 'August'
+                when month_number = 9 then 'September'
+                when month_number = 10 then 'October'
+                when month_number = 11 then 'November'
+                else 'December'
+            end as month_name
             , case
-                when mes = 1 then 'Jan'
-                when mes = 2 then 'Fev'
-                when mes = 3 then 'Mar'
-                when mes = 4 then 'Abr'
-                when mes = 5 then 'Mai'
-                when mes = 6 then 'Jun'
-                when mes = 7 then 'Jul'
-                when mes = 8 then 'Ago'
-                when mes = 9 then 'Set'
-                when mes = 10 then 'Out'
-                when mes = 11 then 'Nov'
-                else 'Dez'
-            end as abrev_do_mes
+                when month_number = 1 then 'Jan'
+                when month_number = 2 then 'Feb'
+                when month_number = 3 then 'Mar'
+                when month_number = 4 then 'Apr'
+                when month_number = 5 then 'May'
+                when month_number = 6 then 'Jun'
+                when month_number = 7 then 'Jul'
+                when month_number = 8 then 'Aug'
+                when month_number = 9 then 'Sep'
+                when month_number = 10 then 'Oct'
+                when month_number = 11 then 'Nov'
+                else 'Dec'
+            end as month_short
             , case
-                when trimestre = 1 then '1º Trimestre'
-                when trimestre = 2 then '2º Trimestre'
-                when trimestre = 3 then '3º Trimestre'
-                else '4º Trimestre'
-            end as nome_trimestre
+                when quarter_number = 1 then '1º quarter'
+                when quarter_number = 2 then '2º quarter'
+                when quarter_number = 3 then '3º quarter'
+                else '4º quarter'
+            end as quarter_name
             , case
-                when trimestre in(1,2) then 1
+                when quarter_number in(1,2) then 1
                 else 2
-            end as semestre
+            end as semester
             , case
-                when trimestre in(1,2) then '1º Semestre'
-                else '2º Semestre'
-            end as nome_semestre
+                when quarter_number in(1,2) then '1º Semester'
+                else '2º Semester'
+            end as semester_name
         from days_info
     )
 
@@ -87,50 +87,50 @@ with
         select
             *
             , case
-                when dia_mes = '01-01' then true
-                when dia_mes = '21-04' then true
-                when dia_mes = '01-05' then true
-                when dia_mes = '07-09' then true
-                when dia_mes = '12-10' then true
-                when dia_mes = '02-11' then true
-                when dia_mes = '15-11' then true
-                when dia_mes = '25-12' then true
+                when month_day = '01-01' then true
+                when month_day = '21-04' then true
+                when month_day = '01-05' then true
+                when month_day = '07-09' then true
+                when month_day = '12-10' then true
+                when month_day = '02-11' then true
+                when month_day = '15-11' then true
+                when month_day = '25-12' then true
                 else false
-            end as fl_feriado
+            end as fl_holiday
             , case
-                when dia_da_semana in(6, 0) then false
-                when dia_mes = '01-01' then false
-                when dia_mes = '21-04' then false
-                when dia_mes = '01-05' then false
-                when dia_mes = '07-09' then false
-                when dia_mes = '12-10' then false
-                when dia_mes = '02-11' then false
-                when dia_mes = '15-11' then false
-                when dia_mes = '25-12' then false
+                when week_day in(6, 0) then false
+                when month_day = '01-01' then false
+                when month_day = '21-04' then false
+                when month_day = '01-05' then false
+                when month_day = '07-09' then false
+                when month_day = '12-10' then false
+                when month_day = '02-11' then false
+                when month_day = '15-11' then false
+                when month_day = '25-12' then false
                 else true
-            end as fl_dia_util
-            , coalesce(dia_da_semana in(6, 0), false) as fl_final_semana
+            end as fl_business_day
+            , coalesce(week_day in(6, 0), false) as fl_weekends
         from days_named
     )
 
 /* reorganizing the columns */
     , final_cte as (
         select
-            data_dia
-            , dia_da_semana
-            , nome_do_dia
-            , mes
-            , nome_do_mes
-            , abrev_do_mes
-            , trimestre
-            , nome_trimestre
-            , semestre
-            , nome_semestre
-            , fl_feriado
-            , fl_dia_util
-            , fl_final_semana
-            , dia_do_ano
-            , ano
+            date_day
+            , week_day
+            , name_of_day
+            , month_number
+            , month_name
+            , month_short
+            , quarter_number
+            , quarter_name
+            , semester
+            , semester_name
+            , fl_holiday
+            , fl_business_day
+            , fl_weekends
+            , day_of_year
+            , year_date
         from flags_cte
     )
 
