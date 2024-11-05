@@ -16,7 +16,7 @@
 
 {% macro snowflake__day_of_week_per_platform(column) %}
             case
-                when {{ column }} = 0 then 'Domingo'
+                when {{ column }} = 0 then 'Sunday'
                 when {{ column }} = 1 then 'Monday'
                 when {{ column }} = 2 then 'Tuesday'
                 when {{ column }} = 3 then 'Wednesday'
@@ -28,7 +28,7 @@
 
 {% macro bigquery__day_of_week_per_platform(column) %}
             case
-                when {{ column }} = 1 then 'Domingo'
+                when {{ column }} = 1 then 'Sunday'
                 when {{ column }} = 2 then 'Monday'
                 when {{ column }} = 3 then 'Tuesday'
                 when {{ column }} = 4 then 'Wednesday'
