@@ -36,15 +36,7 @@ with
     , days_named as (
         select
             *
-            , case
-                when dia_da_semana = 1 then 'Segunda-feira'
-                when dia_da_semana = 2 then 'Terça-feira'
-                when dia_da_semana = 3 then 'Quarta-feira'
-                when dia_da_semana = 4 then 'Quinta-feira'
-                when dia_da_semana = 5 then 'Sexta-feira'
-                when dia_da_semana = 6 then 'Sábado'
-                when dia_da_semana = 0 then 'Domingo'
-            end as nome_do_dia
+            , {{ de_para_dias_da_semana('dia_da_semana') }}
             , case
                 when mes = 1 then 'Janeiro'
                 when mes = 2 then 'Fevereiro'
