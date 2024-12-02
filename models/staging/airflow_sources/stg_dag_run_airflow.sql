@@ -8,7 +8,7 @@ with
             , external_trigger
             , start_date as execution_start_date
             , end_date as execution_end_date
-            , ({{ cast_as_date('end_date') }} - {{ cast_as_date('start_date') }}) as duration
+            , datediff(second, start_date, end_date) as duration
             , run_type
             , {{ cast_as_string('run_id') }} as run_id
         from {{ source('raw_airflow_monitoring', 'dag_run') }}
